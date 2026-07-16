@@ -39,12 +39,15 @@ class RepositoryContractTests(unittest.TestCase):
         collector = (ROOT / "scripts/collect-diff.py").read_text(encoding="utf-8")
         gitdiff = (ROOT / "src/gitdiff.py").read_text(encoding="utf-8")
         text = wrapper + "\n" + collector + "\n" + gitdiff
-        for forbidden in ("npm install", "npm test", "pytest", "tox", "make ", "eval ", "source ", "bash -c"):
+        for forbidden in (
+            "npm install", "npm test", "pytest", "tox", "make ", "eval ",
+            "source ", "bash -c", "pip install",
+        ):
             self.assertNotIn(forbidden, text)
         self.assertIn("core.pager=cat", gitdiff)
         self.assertIn("--no-ext-diff", gitdiff)
         self.assertIn("--no-textconv", gitdiff)
-        self.assertIn("secret-scanner scan --diff", wrapper)
+        self.assertIn("python -m src scan --diff", wrapper)
         self.assertIn("MAX_DIFF_BYTES", gitdiff)
         self.assertIn("selectors.DefaultSelector", gitdiff)
 

@@ -9,7 +9,7 @@ esac
 : "${CRT_ACTION_PATH:?missing action path}"
 : "${RUNNER_TEMP:?missing runner temp}"
 
-python -m pip install --disable-pip-version-check --no-deps --no-build-isolation "${CRT_ACTION_PATH}"
+export PYTHONPATH="${CRT_ACTION_PATH}${PYTHONPATH:+:${PYTHONPATH}}"
 
 diff_file="${RUNNER_TEMP}/coderisktools-change.diff"
 report_file="${RUNNER_TEMP}/coderisktools-scan.json"
@@ -20,7 +20,7 @@ python "${CRT_ACTION_PATH}/scripts/collect-diff.py" \
   --output "${diff_file}"
 
 set +e
-secret-scanner scan --diff "${diff_file}" --profile "${CRT_PROFILE}" --format json --output "${report_file}"
+python -m src scan --diff "${diff_file}" --profile "${CRT_PROFILE}" --format json --output "${report_file}"
 status=$?
 set -e
 
