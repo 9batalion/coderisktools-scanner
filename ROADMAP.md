@@ -9,8 +9,8 @@ This roadmap covers only the public Secret Scanner Engine. MCPwatch Scanner and 
 - [x] pre-commit hook
 - [x] composite GitHub Action
 - [x] synthetic test corpus
-- [ ] first public tagged release
-- [ ] GitHub Private Vulnerability Reporting
+- [x] first public tagged release
+- [x] GitHub Private Vulnerability Reporting
 - [ ] maintainer identity and verified support links
 - [ ] short public demo that does not execute target code
 
