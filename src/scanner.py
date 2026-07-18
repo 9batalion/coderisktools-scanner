@@ -14,7 +14,7 @@ from typing import Optional
 from .patterns import (
     SecretPattern, ConfigCategory,
     DEFAULT_SECRET_PATTERNS, DEFAULT_DETECTION_RULES, DEFAULT_CONFIG_CATEGORIES,
-    match_secret, match_rules, match_context_rules, classify_config_file, validate_rule_registry,
+    match_secret, match_rules, match_rules_all, match_context_rules, classify_config_file, validate_rule_registry,
     is_explicit_placeholder,
 )
 from .diff_parser import DiffFile, DiffLine, parse_diff, get_target_path
@@ -484,7 +484,7 @@ class SecretScanner:
             return
         # Scan added lines for secrets
         for diff_line in diff_file.added_lines:
-            matches = match_rules(diff_line.content, target, self.patterns)
+            matches = match_rules_all(diff_line.content, target, self.patterns)
             for pattern, match in matches:
                 matched_text = match.group(0)
                 if is_explicit_placeholder(pattern, matched_text):
@@ -548,7 +548,7 @@ class SecretScanner:
         if any(len(line) > MAX_LINE_CHARS for _, line in numbered_lines):
             raise ValueError("Scan input contains a line exceeding the byte limit.")
         for line_num, line in numbered_lines:
-            matches = match_rules(line, policy_path or str(filepath), self.patterns)
+            matches = match_rules_all(line, policy_path or str(filepath), self.patterns)
             for pattern, match in matches:
                 matched_text = match.group(0)
                 if is_explicit_placeholder(pattern, matched_text):

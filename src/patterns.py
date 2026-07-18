@@ -475,6 +475,36 @@ def match_rules(line: str, filepath: str, rules: list[DetectionRule] | None = No
     return results
 
 
+def _provider_specific(rule: DetectionRule) -> bool:
+    return rule.kind == "secret" and not _generic_rule(rule)
+
+
+def _generic_rule(rule: DetectionRule) -> bool:
+    return rule.name in {"PASSWORD_LITERAL", "API_KEY_LITERAL", "TOKEN_LITERAL", "SECRET_LITERAL", "DATABASE_URL", "PRIVATE_KEY", "JWT_TOKEN", "BASE64_SECRET", "GENERIC_CREDENTIAL"}
+
+
+def match_rules_all(line: str, filepath: str, rules: list[DetectionRule] | None = None) -> list[tuple[DetectionRule, re.Match]]:
+    """Return all non-overlapping, span-aware matches for the scanner evaluator."""
+    active = DEFAULT_DETECTION_RULES if rules is None else rules
+    candidates: list[tuple[int, DetectionRule, re.Match, int]] = []
+    for order, rule in enumerate(active):
+        if not _rule_path_matches(filepath, rule.file_globs):
+            continue
+        for match in rule.compiled.finditer(line):
+            candidates.append((order, rule, match, match.end() - match.start()))
+
+    providers = [(rule, match) for _order, rule, match, _length in candidates if _provider_specific(rule)]
+    candidates = [
+        item for item in candidates
+        if not (_generic_rule(item[1]) and any(item[2].start() < provider_match.end() and provider_match.start() < item[2].end() for _provider, provider_match in providers))
+    ]
+    accepted: list[tuple[int, DetectionRule, re.Match, int]] = []
+    for item in sorted(candidates, key=lambda value: (value[2].start(), -(value[3]), value[0])):
+        if any(item[2].start() < other[2].end() and other[2].start() < item[2].end() for other in accepted):
+            continue
+        accepted.append(item)
+    return [(order_rule[1], order_rule[2]) for order_rule in sorted(accepted, key=lambda value: (value[2].start(), value[0]))]
+
 def validate_context_rule_registry(rules: list[ContextDetectionRule]) -> None:
     """Validate bounded context rules and their export metadata."""
     valid_severities = {"low", "medium", "high", "critical"}
