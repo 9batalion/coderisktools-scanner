@@ -15,6 +15,7 @@ sys.path.insert(0, str(REPO_ROOT))
 
 from src.patterns import DEFAULT_DETECTION_RULES
 from src.scanner import SecretScanner
+from src.engine import RuleRegistry
 
 
 def _diff(lines: list[str]) -> str:
@@ -33,6 +34,7 @@ def _scanner(rule_count: int) -> SecretScanner:
             copies.append(rule)
             index += 1
         scanner.patterns.extend(copies[: rule_count - len(source)])
+        scanner.registry = RuleRegistry(scanner.patterns)
     return scanner
 
 

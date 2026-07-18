@@ -483,15 +483,22 @@ def _generic_rule(rule: DetectionRule) -> bool:
     return rule.name in {"PASSWORD_LITERAL", "API_KEY_LITERAL", "TOKEN_LITERAL", "SECRET_LITERAL", "DATABASE_URL", "PRIVATE_KEY", "JWT_TOKEN", "BASE64_SECRET", "GENERIC_CREDENTIAL"}
 
 
-def match_rules_all(line: str, filepath: str, rules: list[DetectionRule] | None = None) -> list[tuple[DetectionRule, re.Match]]:
+def match_rules_all(line: str, filepath: str, rules: list[DetectionRule] | None = None, registry=None) -> list[tuple[DetectionRule, re.Match]]:
     """Return all non-overlapping, span-aware matches for the scanner evaluator."""
-    active = DEFAULT_DETECTION_RULES if rules is None else rules
-    candidates: list[tuple[int, DetectionRule, re.Match, int]] = []
-    for order, rule in enumerate(active):
-        if not _rule_path_matches(filepath, rule.file_globs):
-            continue
-        for match in rule.compiled.finditer(line):
-            candidates.append((order, rule, match, match.end() - match.start()))
+    if registry is not None:
+        active_items = registry.plan(filepath, line).candidates
+        candidates: list[tuple[int, DetectionRule, re.Match, int]] = []
+        for item in active_items:
+            for match in item.compiled.finditer(line):
+                candidates.append((item.order, item.rule, match, match.end() - match.start()))
+    else:
+        active = DEFAULT_DETECTION_RULES if rules is None else rules
+        candidates = []
+        for order, rule in enumerate(active):
+            if not _rule_path_matches(filepath, rule.file_globs):
+                continue
+            for match in rule.compiled.finditer(line):
+                candidates.append((order, rule, match, match.end() - match.start()))
 
     providers = [(rule, match) for _order, rule, match, _length in candidates if _provider_specific(rule)]
     candidates = [

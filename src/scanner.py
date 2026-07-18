@@ -22,6 +22,7 @@ from .allowlist import AllowlistRule, load_allowlist, is_suppressed
 from .config import ScannerConfig, load_config, apply_overrides, resolve_policy
 from .baseline import load_baseline
 from .safeio import read_regular_bounded
+from .engine import RuleRegistry
 
 
 MAX_DIFF_BYTES = 4 * 1024 * 1024
@@ -213,6 +214,8 @@ class SecretScanner:
             if any(rule.rule_id in existing_ids for rule in packed_rules):
                 raise ValueError("Signed rule pack conflicts with an existing rule ID")
             self.patterns.extend(packed_rules)
+
+        self.registry = RuleRegistry(self.patterns)
 
         # Severity order for threshold filtering
         self._severity_order = {"low": 0, "medium": 1, "high": 2, "critical": 3}
@@ -484,7 +487,7 @@ class SecretScanner:
             return
         # Scan added lines for secrets
         for diff_line in diff_file.added_lines:
-            matches = match_rules_all(diff_line.content, target, self.patterns)
+            matches = match_rules_all(diff_line.content, target, self.patterns, self.registry)
             for pattern, match in matches:
                 matched_text = match.group(0)
                 if is_explicit_placeholder(pattern, matched_text):
@@ -548,7 +551,7 @@ class SecretScanner:
         if any(len(line) > MAX_LINE_CHARS for _, line in numbered_lines):
             raise ValueError("Scan input contains a line exceeding the byte limit.")
         for line_num, line in numbered_lines:
-            matches = match_rules_all(line, policy_path or str(filepath), self.patterns)
+            matches = match_rules_all(line, policy_path or str(filepath), self.patterns, self.registry)
             for pattern, match in matches:
                 matched_text = match.group(0)
                 if is_explicit_placeholder(pattern, matched_text):
