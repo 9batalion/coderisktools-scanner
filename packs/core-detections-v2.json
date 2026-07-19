@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 222,
+  "detector_count": 224,
   "rules": [
     {
       "category": "secret",
@@ -4443,6 +4443,42 @@
       "regex": "(?<![A-Za-z0-9])(?:[A-Z0-9]{16,20}\\.[A-Z0-9]{16,20})(?![A-Za-z0-9])",
       "remediation": "Revoke the Confluent Cloud API key and secret and replace them through a managed secret store.",
       "rule_id": "CRT-SEC-175",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Sentry user app auth token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "SENTRY_USER_APP_AUTH_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])sntrya_[A-Za-z0-9_-]{20,300}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the Sentry user app auth token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-176",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Honeycomb environment API key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "HONEYCOMB_ENVIRONMENT_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])hcxik_[A-Za-z0-9]{20,300}(?![A-Za-z0-9])",
+      "remediation": "Revoke the Honeycomb environment API key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-177",
       "severity": "high"
     }
   ],
