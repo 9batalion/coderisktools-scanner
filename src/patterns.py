@@ -414,7 +414,30 @@ for _rule in V3_STAGE13_SECRET_RULES:
         _rule.flags = re.IGNORECASE
 
 
-DEFAULT_DETECTION_RULES: list[DetectionRule] = DEFAULT_SECRET_PATTERNS + V3_STAGE1_RULES + V3_STAGE9_SECRET_RULES + V3_STAGE10_SECRET_RULES + V3_STAGE11_SECRET_RULES + V3_STAGE12_SECRET_RULES + V3_STAGE13_SECRET_RULES
+V3_STAGE14_SECRET_RULES: list[DetectionRule] = [
+    DetectionRule("FIGMA_PERSONAL_ACCESS_TOKEN", r"figd_[A-Za-z0-9_-]{40,200}(?![A-Za-z0-9_-])", "high", "Figma personal access token", "CRT-SEC-135", "secret", "high", "Revoke the Figma personal access token and replace it through a managed secret store."),
+    DetectionRule("FIRECRAWL_API_KEY", r"fc-[A-Za-z0-9_-]{20,100}(?![A-Za-z0-9_-])", "high", "Firecrawl API key", "CRT-SEC-136", "secret", "high", "Revoke the Firecrawl API key and replace it through a managed secret store."),
+    DetectionRule("TRIGGER_SECRET_KEY", r"tr_(?:dev|prod|stg|pat)_[A-Za-z0-9_-]{20,100}(?![A-Za-z0-9_-])", "high", "Trigger.dev secret key", "CRT-SEC-137", "secret", "high", "Revoke the Trigger.dev secret key and replace it through a managed secret store."),
+    DetectionRule("TAVILY_API_KEY", r"tvly-[A-Za-z0-9_-]{20,100}(?![A-Za-z0-9_-])", "high", "Tavily API key", "CRT-SEC-138", "secret", "high", "Revoke the Tavily API key and replace it through a managed secret store."),
+    DetectionRule("INNGEST_SIGNING_KEY", r"signkey-(?:prod|test|dev)-[a-f0-9]{64}(?![a-f0-9])", "high", "Inngest signing key", "CRT-SEC-139", "secret", "high", "Rotate the Inngest signing key and replace it through a managed secret store."),
+    DetectionRule("POSTHOG_PERSONAL_API_KEY", r"phx_[A-Za-z0-9_-]{20,100}(?![A-Za-z0-9_-])", "high", "PostHog personal API key", "CRT-SEC-141", "secret", "high", "Revoke the PostHog personal API key and replace it through a managed secret store."),
+    DetectionRule("SENTRY_AUTH_TOKEN_NONJWT", r"sntrys_(?!eyJ)[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "Sentry auth token", "CRT-SEC-142", "secret", "high", "Revoke the Sentry auth token and replace it through a managed secret store."),
+    DetectionRule("AIVEN_AUTH_HEADER_TOKEN", r"(?:Authorization|authorization):\s*aivenv1\s+[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "Aiven API token in authorization header", "CRT-SEC-143", "secret", "high", "Revoke the Aiven API token and replace it through a managed secret store."),
+    DetectionRule("FLYIO_AUTH_HEADER_TOKEN", r"(?:Authorization|authorization):\s*FlyV1\s+[A-Za-z0-9_+/=-]{20,300}(?![A-Za-z0-9_+/=-])", "high", "Fly.io API token in authorization header", "CRT-SEC-144", "secret", "high", "Revoke the Fly.io API token and replace it through a managed secret store."),
+    DetectionRule("DYNATRACE_API_TOKEN_S01", r"(?<![A-Za-z0-9])dt0s01\.[A-Za-z0-9]{24}\.[A-Za-z0-9]{64}(?![A-Za-z0-9])", "high", "Dynatrace dt0s01 API token", "CRT-SEC-145", "secret", "high", "Revoke the Dynatrace API token and replace it through a managed secret store."),
+    DetectionRule("BITRISE_WORKSPACE_API_TOKEN", r"(?<![A-Za-z0-9_])bitwat_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "Bitrise workspace API token", "CRT-SEC-146", "secret", "high", "Revoke the Bitrise workspace API token and replace it through a managed secret store."),
+    DetectionRule("AWS_BEDROCK_LONG_TERM_API_KEY", r"(?<![A-Za-z0-9])ABSK[A-Za-z0-9+/]{128}(?![A-Za-z0-9+/=])", "high", "AWS Bedrock long-term API key", "CRT-SEC-147", "secret", "high", "Revoke the AWS Bedrock API key and replace it through a managed secret store."),
+    DetectionRule("CARTESIA_API_KEY", r"(?<![A-Za-z0-9_])sk_car_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "Cartesia API key", "CRT-SEC-148", "secret", "high", "Revoke the Cartesia API key and replace it through a managed secret store."),
+    DetectionRule("HUME_API_KEY_HEADER", r"(?i:(?<![A-Za-z0-9-])X-Hume-Api-Key:\s*[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-]))", "high", "Hume API key in header", "CRT-SEC-149", "secret", "high", "Revoke the Hume API key and replace it through a managed secret store."),
+    DetectionRule("RUBYGEMS_OIDC_API_KEY_ROLE", r"(?<![A-Za-z0-9_])rg_oidc_akr_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "RubyGems OIDC API key role token", "CRT-SEC-150", "secret", "high", "Revoke the RubyGems OIDC API key role token and replace it through a managed secret store."),
+    DetectionRule("ONEPASSWORD_SERVICE_ACCOUNT_TOKEN", r"(?<![A-Za-z0-9_])ops_[A-Za-z0-9_-]{20,500}\.[A-Za-z0-9_-]{10,500}\.[A-Za-z0-9_-]{10,500}(?![A-Za-z0-9_.-])", "high", "1Password service account token", "CRT-SEC-151", "secret", "high", "Revoke the 1Password service account token and replace it through a managed secret store."),
+]
+for _rule in V3_STAGE14_SECRET_RULES:
+    _rule.flags = 0
+    _rule.unicode_boundaries = True
+
+
+DEFAULT_DETECTION_RULES: list[DetectionRule] = DEFAULT_SECRET_PATTERNS + V3_STAGE1_RULES + V3_STAGE9_SECRET_RULES + V3_STAGE10_SECRET_RULES + V3_STAGE11_SECRET_RULES + V3_STAGE12_SECRET_RULES + V3_STAGE13_SECRET_RULES + V3_STAGE14_SECRET_RULES
 
 K8S_CONTEXT_GLOBS = ("k8s/*.yml", "k8s/*.yaml", "k8s/**/*.yml", "k8s/**/*.yaml", "kubernetes/**/*.yml", "kubernetes/**/*.yaml", "manifests/*.yml", "manifests/*.yaml", "manifests/**/*.yml", "manifests/**/*.yaml")
 AI_CONTEXT_GLOBS = ("AGENTS.md", "**/AGENTS.md", "CLAUDE.md", "**/CLAUDE.md", ".cursorrules", "**/.cursorrules", ".github/copilot-instructions.md")
@@ -474,6 +497,43 @@ def match_rules(line: str, filepath: str, rules: list[DetectionRule] | None = No
         results = [(rule, match) for rule, match in results if rule.name not in generic_names]
     return results
 
+
+def _provider_specific(rule: DetectionRule) -> bool:
+    return rule.kind == "secret" and not _generic_rule(rule)
+
+
+def _generic_rule(rule: DetectionRule) -> bool:
+    return rule.name in {"PASSWORD_LITERAL", "API_KEY_LITERAL", "TOKEN_LITERAL", "SECRET_LITERAL", "DATABASE_URL", "PRIVATE_KEY", "JWT_TOKEN", "BASE64_SECRET", "GENERIC_CREDENTIAL"}
+
+
+def match_rules_all(line: str, filepath: str, rules: list[DetectionRule] | None = None, registry=None) -> list[tuple[DetectionRule, re.Match]]:
+    """Return all non-overlapping, span-aware matches for the scanner evaluator."""
+    if registry is not None:
+        active_items = registry.plan(filepath, line).candidates
+        candidates: list[tuple[int, DetectionRule, re.Match, int]] = []
+        for item in active_items:
+            for match in item.compiled.finditer(line):
+                candidates.append((item.order, item.rule, match, match.end() - match.start()))
+    else:
+        active = DEFAULT_DETECTION_RULES if rules is None else rules
+        candidates = []
+        for order, rule in enumerate(active):
+            if not _rule_path_matches(filepath, rule.file_globs):
+                continue
+            for match in rule.compiled.finditer(line):
+                candidates.append((order, rule, match, match.end() - match.start()))
+
+    providers = [(rule, match) for _order, rule, match, _length in candidates if _provider_specific(rule)]
+    candidates = [
+        item for item in candidates
+        if not (_generic_rule(item[1]) and any(item[2].start() < provider_match.end() and provider_match.start() < item[2].end() for _provider, provider_match in providers))
+    ]
+    accepted: list[tuple[int, DetectionRule, re.Match, int]] = []
+    for item in sorted(candidates, key=lambda value: (value[2].start(), -(value[3]), value[0])):
+        if any(item[2].start() < other[2].end() and other[2].start() < item[2].end() for other in accepted):
+            continue
+        accepted.append(item)
+    return [(order_rule[1], order_rule[2]) for order_rule in sorted(accepted, key=lambda value: (value[2].start(), value[0]))]
 
 def validate_context_rule_registry(rules: list[ContextDetectionRule]) -> None:
     """Validate bounded context rules and their export metadata."""

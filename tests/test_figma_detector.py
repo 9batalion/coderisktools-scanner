@@ -1,0 +1,44 @@
+import unittest
+
+from src.scanner import SecretScanner
+
+
+class FigmaStableDetectorTests(unittest.TestCase):
+    def test_detects_figma_pat_and_rejects_short_near_miss(self):
+        token = "figd_" + "A" * 40
+        diff = f"""--- a/config.py
++++ b/config.py
+@@ -1,0 +1,2 @@
++FIGMA_TOKEN={token}
++FIGMA_TOKEN=figd_{{'A' * 20}}
+"""
+        result = SecretScanner(config_check=False).scan_diff_text(diff)
+        ids = [finding.rule_id for finding in result.findings]
+        self.assertEqual(ids.count("CRT-SEC-135"), 1)
+    def test_provider_prefix_detectors(self):
+        samples = {
+            "CRT-SEC-136": "fc-" + "A" * 24,
+            "CRT-SEC-137": "tr_prod_" + "A" * 24,
+            "CRT-SEC-138": "tvly-" + "A" * 24,
+            "CRT-SEC-139": "signkey-prod-" + "a" * 64,
+            "CRT-SEC-141": "phx_" + "A" * 24,
+            "CRT-SEC-142": "sntrys_" + "A" * 32,
+            "CRT-SEC-143": "Authorization: aivenv1 " + "A" * 32,
+            "CRT-SEC-144": "Authorization: FlyV1 " + "A" * 32,
+            "CRT-SEC-145": "dt0s01." + "A" * 24 + "." + "A" * 64,
+            "CRT-SEC-146": "bitwat_" + "A" * 32,
+            "CRT-SEC-147": "ABSK" + "A" * 128,
+            "CRT-SEC-148": "sk_car_" + "A" * 32,
+            "CRT-SEC-149": "X-Hume-Api-Key: " + "A" * 32,
+            "CRT-SEC-150": "rg_oidc_akr_" + "A" * 32,
+            "CRT-SEC-151": "ops_" + "A" * 24 + "." + "B" * 16 + "." + "C" * 16,
+        }
+        for expected, token in samples.items():
+            with self.subTest(expected=expected):
+                diff = f"--- a/config.py\n+++ b/config.py\n@@ -1,0 +1 @@\n+TOKEN={token}\n"
+                result = SecretScanner(config_check=False).scan_diff_text(diff)
+                self.assertIn(expected, [finding.rule_id for finding in result.findings])
+
+
+if __name__ == "__main__":
+    unittest.main()

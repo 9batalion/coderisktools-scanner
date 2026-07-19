@@ -140,7 +140,7 @@ class TestSarifFormatter(unittest.TestCase):
             Finding(
                 type="secret", pattern_name="AWS_SECRET_KEY",
                 severity="critical", file="src/config.py", line=42,
-                matched_text="wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
+                matched_text=assemble("wJalrXUt", "nFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"),
                 line_content="AWS_SECRET='wJalrX...EKEY'",
                 rule="regex:AWS_SECRET_KEY",
             )

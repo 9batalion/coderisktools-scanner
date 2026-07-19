@@ -14,7 +14,7 @@ from typing import Optional
 from .patterns import (
     SecretPattern, ConfigCategory,
     DEFAULT_SECRET_PATTERNS, DEFAULT_DETECTION_RULES, DEFAULT_CONFIG_CATEGORIES,
-    match_secret, match_rules, match_context_rules, classify_config_file, validate_rule_registry,
+    match_secret, match_rules, match_rules_all, match_context_rules, classify_config_file, validate_rule_registry,
     is_explicit_placeholder,
 )
 from .diff_parser import DiffFile, DiffLine, parse_diff, get_target_path
@@ -22,6 +22,7 @@ from .allowlist import AllowlistRule, load_allowlist, is_suppressed
 from .config import ScannerConfig, load_config, apply_overrides, resolve_policy
 from .baseline import load_baseline
 from .safeio import read_regular_bounded
+from .engine import RuleRegistry
 
 
 MAX_DIFF_BYTES = 4 * 1024 * 1024
@@ -187,6 +188,7 @@ class SecretScanner:
         profile: Optional[str] = None,
         baseline_path: Optional[str] = None,
         rule_pack_path: Optional[str] = None,
+        rule_pack_paths: Optional[list[str]] = None,
         trusted_rule_keys: Optional[dict[str, bytes]] = None,
     ):
         self.config = load_config(config_path) if config_path else ScannerConfig()
@@ -213,6 +215,19 @@ class SecretScanner:
             if any(rule.rule_id in existing_ids for rule in packed_rules):
                 raise ValueError("Signed rule pack conflicts with an existing rule ID")
             self.patterns.extend(packed_rules)
+        if rule_pack_paths:
+            if rule_pack_path:
+                raise ValueError("Use either rule_pack_path or rule_pack_paths, not both")
+            if not trusted_rule_keys:
+                raise ValueError("A trusted public-key keyring is required for rule packs")
+            from .rulepacks import load_rule_packs
+            packed_rules = load_rule_packs(rule_pack_paths, trusted_rule_keys)
+            existing_ids = {rule.rule_id for rule in self.patterns}
+            if any(rule.rule_id in existing_ids for rule in packed_rules):
+                raise ValueError("Rule packs conflict with an existing rule ID")
+            self.patterns.extend(packed_rules)
+
+        self.registry = RuleRegistry(self.patterns)
 
         # Severity order for threshold filtering
         self._severity_order = {"low": 0, "medium": 1, "high": 2, "critical": 3}
@@ -484,7 +499,7 @@ class SecretScanner:
             return
         # Scan added lines for secrets
         for diff_line in diff_file.added_lines:
-            matches = match_rules(diff_line.content, target, self.patterns)
+            matches = match_rules_all(diff_line.content, target, self.patterns, self.registry)
             for pattern, match in matches:
                 matched_text = match.group(0)
                 if is_explicit_placeholder(pattern, matched_text):
@@ -548,7 +563,7 @@ class SecretScanner:
         if any(len(line) > MAX_LINE_CHARS for _, line in numbered_lines):
             raise ValueError("Scan input contains a line exceeding the byte limit.")
         for line_num, line in numbered_lines:
-            matches = match_rules(line, policy_path or str(filepath), self.patterns)
+            matches = match_rules_all(line, policy_path or str(filepath), self.patterns, self.registry)
             for pattern, match in matches:
                 matched_text = match.group(0)
                 if is_explicit_placeholder(pattern, matched_text):
