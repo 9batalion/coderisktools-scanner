@@ -5,6 +5,8 @@ import hashlib
 import json
 import sys
 import warnings
+import base64
+import zlib
 from pathlib import Path
 from typing import Any
 
@@ -38,6 +40,7 @@ OVERRIDES = {
     "CRT-SUP-003": "pip install git+https://example.invalid/repo.git",
     "CRT-SUP-005": "pip install --trusted-host example.invalid package",
     "CRT-SEC-040": "https://" + "1" * 32 + "@example.invalid/1",
+    "CRT-SEC-184": "cflt" + (lambda payload: payload + base64.b64encode(zlib.crc32(payload.encode("ascii")).to_bytes(4, "little"))[:6].decode("ascii"))(("Ab3+/xY9" * 7)[:54]),
     "CRT-SUP-007": "pip install --extra-index-url http://example.invalid/simple package",
     "CRT-SUP-008": "npm config set registry http://example.invalid/",
     "CRT-SUP-009": "GOINSECURE=\"*\"",

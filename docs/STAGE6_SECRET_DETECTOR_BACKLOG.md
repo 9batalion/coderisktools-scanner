@@ -114,6 +114,7 @@ Source of truth for candidates after merged PR #4. Candidates are classified bef
 | Snyk API token | Snyk | personal/API token | none documented | Token authentication documented; body format not published | High | https://docs.snyk.io/developer-tools/snyk-api/authentication-for-api | REJECTED_NO_OFFICIAL_FORMAT | Generic bearer token with no standalone provider format. |
 | Cloudsmith API key | Cloudsmith | user/service API key | none documented | API key and entitlement-token concepts documented; formats not published | High | https://docs.cloudsmith.com/accounts-and-teams/api-key | REJECTED_NO_OFFICIAL_FORMAT | No standalone source-backed regex. |
 | JFrog access/identity token | JFrog | access/identity token | JWT | Standard JWT without provider marker | High | https://docs.jfrog.com/user-management/docs/identity-tokens | REJECTED_TOO_GENERIC | Standard JWT cannot be attributed to JFrog without broad context. |
+| Confluent Cloud API secret v2 | Confluent Cloud | API secret | `cflt` + 60 Base64 chars + CRC32 suffix | Official exact shape and checksum validation documented | Low | https://docs.confluent.io/cloud/current/security/authenticate/workload-identities/service-accounts/api-keys/overview.html | IMPLEMENTED | Added `CRT-SEC-184`; checksum validator rejects malformed and checksum-invalid candidates. |
 
 ## First implementation ranking
 
