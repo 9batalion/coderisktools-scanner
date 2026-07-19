@@ -5,13 +5,16 @@ import argparse
 import hashlib
 import json
 import subprocess
+import sys
 from pathlib import Path
 from typing import Any, Iterable
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO_ROOT))
 
 from src.patterns import DEFAULT_CONTEXT_RULES, DEFAULT_DETECTION_RULES
 
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
 SOURCE_FILES = ("src/patterns.py", "src/rulepacks.py")
 CONTAINER_KINDS = {"CONTAINER", "DOCKER", "COMPOSE", "K8S", "KUBERNETES"}
 

@@ -1,4 +1,6 @@
 import json
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -27,6 +29,14 @@ class DetectionInventoryTests(unittest.TestCase):
             {item["family_id"] for item in inventory["families"]},
             {"FAM-SECRET", "FAM-CI", "FAM-IAC-CLOUD", "FAM-CONTAINERS-KUBERNETES", "FAM-SUPPLY-CHAIN", "FAM-AI-MCP"},
         )
+
+    def test_cli_uses_canonical_checkout_registry(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / "cli.json"
+            subprocess.run([sys.executable, "tools/detection_inventory.py", "--output", str(output)], check=True)
+            document = json.loads(output.read_text(encoding="utf-8"))
+        self.assertEqual(document["counts"]["native_rule_count"], 198)
+        self.assertEqual(document["counts"]["line_rule_count"], 192)
 
     def test_output_is_deterministic_json(self):
         with tempfile.TemporaryDirectory() as tmp:
