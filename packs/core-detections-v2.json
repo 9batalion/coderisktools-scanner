@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 212,
+  "detector_count": 213,
   "rules": [
     {
       "category": "secret",
@@ -4263,6 +4263,24 @@
       "regex": "(?<![A-Za-z0-9_])dp\\.scim\\.[A-Za-z0-9]{43}(?![A-Za-z0-9_])",
       "remediation": "Revoke the Doppler SCIM token and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-165",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Doppler audit token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "DOPPLER_AUDIT_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])dp\\.audit\\.[A-Za-z0-9]{43}(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Doppler audit token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-166",
       "severity": "high"
     }
   ],

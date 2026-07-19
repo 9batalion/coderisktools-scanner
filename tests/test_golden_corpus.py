@@ -16,8 +16,8 @@ class GoldenParityCorpusTests(unittest.TestCase):
         cls.document = json.loads(MANIFEST.read_text(encoding="utf-8"))
 
     def test_manifest_is_complete_and_secret_safe(self):
-        self.assertEqual(self.document["counts"], {"covered": 212, "expected_detectors": 212, "unreachable": 0})
-        self.assertEqual(len(self.document["cases"]), 212)
+        self.assertEqual(self.document["counts"], {"covered": 213, "expected_detectors": 213, "unreachable": 0})
+        self.assertEqual(len(self.document["cases"]), 213)
         self.assertEqual(self.document["known_unreachable"], [])
         raw_cases = json.dumps(self.document["cases"], ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()
         self.assertEqual(hashlib.sha256(raw_cases).hexdigest(), self.document["fixture_sha256"])
