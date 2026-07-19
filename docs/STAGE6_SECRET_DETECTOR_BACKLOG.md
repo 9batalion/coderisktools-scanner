@@ -205,8 +205,11 @@ Source of truth for candidates after merged PR #4. Candidates are classified bef
 | MapTiler API key | MapTiler | maps/API key | alphanumeric string | Documentation explicitly describes generic letters/numbers only | High | https://docs.maptiler.com/cloud/api/authentication-key/ | REJECTED_NO_OFFICIAL_FORMAT | No fixed length/prefix/alphabet contract beyond generic alphanumeric. |
 | Shopify Admin API access token v2 | Shopify | public/custom/private app access token | `shpat_` / `shpca_` / `shppa_` + 38 hex characters | Official changelog documents the post-2020 38-character payload and three prefixes | Low | https://shopify.dev/changelog/length-of-the-shopify-access-token-is-increasing | IMPLEMENTED | Added as `CRT-SEC-185`–`CRT-SEC-187`; legacy 32-character variants remain covered by existing rules. |
 | Shopify app secret key v2 | Shopify | app secret key | `shpss_` + 38 hex characters | Official changelog documents the post-2020 38-character payload and prefix | Low | https://shopify.dev/changelog/app-secret-key-length-has-increased | IMPLEMENTED | Added as `CRT-SEC-188`; legacy 32-character `shpss_` variant remains covered by `CRT-SEC-129`. |
-
-## First implementation ranking
+| OpenRouter API key | OpenRouter | API key/management key | none officially documented | Bearer API-key authentication documented; plaintext key body format not published | High | https://openrouter.ai/docs/api_reference/authentication | REJECTED_NO_OFFICIAL_FORMAT | Do not infer a regex from unofficial `sk-or-v1-` examples. |
+| Modal token pair | Modal | token ID + token secret | `ak-` / `as-` examples | Two-field credentials documented; exact body lengths and alphabets not published | High | https://modal.com/docs/sdk/py/latest/modal.config | REJECTED_NO_OFFICIAL_FORMAT | Multi-field opaque credential without a complete standalone format. |
+| Baseten API key | Baseten | workspace/inference API key | prefix.secret | Key structure described, but prefix, payload lengths and alphabets are not fully specified | High | https://docs.baseten.co/organization/api-keys | REJECTED_NO_OFFICIAL_FORMAT | Incomplete contract is insufficient for stable detection. |
+ 
+ ## First implementation ranking
 
 The initial ranking was revalidated against the live registry. SendGrid is already covered by `CRT-SEC-033`, so it is not a new batch. The remaining candidates are research-gated:
 
