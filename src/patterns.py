@@ -430,6 +430,7 @@ V3_STAGE14_SECRET_RULES: list[DetectionRule] = [
     DetectionRule("CARTESIA_API_KEY", r"(?<![A-Za-z0-9_])sk_car_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "Cartesia API key", "CRT-SEC-148", "secret", "high", "Revoke the Cartesia API key and replace it through a managed secret store."),
     DetectionRule("HUME_API_KEY_HEADER", r"(?i:(?<![A-Za-z0-9-])X-Hume-Api-Key:\s*[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-]))", "high", "Hume API key in header", "CRT-SEC-149", "secret", "high", "Revoke the Hume API key and replace it through a managed secret store."),
     DetectionRule("RUBYGEMS_OIDC_API_KEY_ROLE", r"(?<![A-Za-z0-9_])rg_oidc_akr_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "RubyGems OIDC API key role token", "CRT-SEC-150", "secret", "high", "Revoke the RubyGems OIDC API key role token and replace it through a managed secret store."),
+    DetectionRule("ONEPASSWORD_SERVICE_ACCOUNT_TOKEN", r"(?<![A-Za-z0-9_])ops_[A-Za-z0-9_-]{20,500}\.[A-Za-z0-9_-]{10,500}\.[A-Za-z0-9_-]{10,500}(?![A-Za-z0-9_.-])", "high", "1Password service account token", "CRT-SEC-151", "secret", "high", "Revoke the 1Password service account token and replace it through a managed secret store."),
 ]
 for _rule in V3_STAGE14_SECRET_RULES:
     _rule.flags = 0

@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 197,
+  "detector_count": 198,
   "rules": [
     {
       "category": "secret",
@@ -3993,6 +3993,24 @@
       "regex": "(?<![A-Za-z0-9_])rg_oidc_akr_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
       "remediation": "Revoke the RubyGems OIDC API key role token and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-150",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "1Password service account token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "ONEPASSWORD_SERVICE_ACCOUNT_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])ops_[A-Za-z0-9_-]{20,500}\\.[A-Za-z0-9_-]{10,500}\\.[A-Za-z0-9_-]{10,500}(?![A-Za-z0-9_.-])",
+      "remediation": "Revoke the 1Password service account token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-151",
       "severity": "high"
     }
   ],
