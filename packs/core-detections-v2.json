@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 226,
+  "detector_count": 227,
   "rules": [
     {
       "category": "secret",
@@ -4516,6 +4516,24 @@
       "remediation": "Revoke the DigitalOcean OAuth token and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-179",
       "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Paddle API key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "PADDLE_API_KEY",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "Paddle Developer Docs \u2014 API key format",
+        "source_lock": "66924ea",
+        "url": "https://developer.paddle.com/api-reference/about/authentication/"
+      },
+      "regex": "(?<![A-Za-z0-9_])pdl_(?:live|sdbx)_apikey_[a-z\\d]{26}_[a-zA-Z\\d]{22}_[a-zA-Z\\d]{3}(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Paddle API key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-180",
+      "severity": "critical"
     }
   ],
   "schema": "coderisktools.rule-source-pack",

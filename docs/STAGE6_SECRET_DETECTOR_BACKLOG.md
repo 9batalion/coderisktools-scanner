@@ -24,6 +24,7 @@ Source of truth for candidates after merged PR #4. Candidates are classified bef
 | Atlassian API token | Atlassian | API token | none | Opaque account token | High | https://developer.atlassian.com/cloud/confluence/basic-auth-for-rest-apis/ | REJECTED_NO_OFFICIAL_FORMAT | No stable provider-specific standalone format. |
 | Azure DevOps PAT | Microsoft Azure DevOps | personal access token | none | Base64-like opaque value | High | https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate | REJECTED_TOO_GENERIC | No safe standalone prefix; would require broad contextual matching. |
 | CircleCI personal API token | CircleCI | personal token | `CCIPAT_` | Fixed provider prefix and bounded body | Low | https://circleci.com/docs/managing-api-tokens/ | ALREADY_COVERED | Existing `CIRCLECI_PERSONAL_TOKEN` covers the documented form. |
+| Paddle API key | Paddle | API key | `pdl_live_apikey_`, `pdl_sdbx_apikey_` | Exact provider regex published; 26 + 22 + 3 payload segments | Low | https://developer.paddle.com/api-reference/about/authentication/ | IMPLEMENTED | Implemented as `CRT-SEC-180`; live and sandbox are environment variants of the same credential family. |
 
 ## First implementation ranking
 

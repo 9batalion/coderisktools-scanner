@@ -38,8 +38,8 @@ class Stage10ModernSecretRulesTests(unittest.TestCase):
 
     def test_registry_has_exact_stage10_ids_names_and_case_sensitive_flags(self):
         rules = self.rules()
-        self.assertEqual(len(DEFAULT_DETECTION_RULES), 220)
-        self.assertEqual(len(rules), 220)
+        self.assertEqual(len(DEFAULT_DETECTION_RULES), 221)
+        self.assertEqual(len(rules), 221)
         for rule_id, name, _ in CASES:
             with self.subTest(rule_id=rule_id):
                 self.assertIn(rule_id, rules)
