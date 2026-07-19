@@ -43,6 +43,7 @@ Source of truth for candidates after merged PR #4. Candidates are classified bef
 | Resend API key | Resend | API key | `re_` | Prefix documented; exact body constraints not published | Medium/high | https://resend.com/docs/api-reference/api-keys/create-api-key | RESEARCH_REQUIRED | Official examples use placeholders after `re_`; no complete provider-owned regex is published. |
 | Paddle API key | Paddle | API key | `pdl_live_apikey_`, `pdl_sdbx_apikey_` | Exact provider regex published; 26 + 22 + 3 payload segments | Low | https://developer.paddle.com/api-reference/about/authentication/ | IMPLEMENTED | Implemented as `CRT-SEC-180`; live and sandbox are environment variants of the same credential family. |
 | Paddle webhook endpoint secret | Paddle | webhook signing secret | `pdl_ntfset_` | Exact provider regex published; 26 + 32 payload segments | Low | https://developer.paddle.com/api-reference/notification-settings/create-notification-setting/ | IMPLEMENTED | Implemented as `CRT-SEC-181`; notification endpoint secret used for webhook signature verification. |
+| Cloudinary API credential URL | Cloudinary | API key + API secret connection URL | `cloudinary://` | Exact documented structure: 15-digit API key, 27-character API secret, cloud name | Low | https://cloudinary.com/documentation/cloudinary_cli | IMPLEMENTED | Implemented as `CRT-SEC-182`; detects the documented `cloudinary://api_key:api_secret@cloud_name` environment URL. |
 
 ## First implementation ranking
 

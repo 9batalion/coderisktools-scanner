@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 228,
+  "detector_count": 229,
   "rules": [
     {
       "category": "secret",
@@ -4551,6 +4551,24 @@
       "regex": "(?<![A-Za-z0-9_])pdl_ntfset_[a-zA-Z0-9]{26}_[a-zA-Z0-9]{32}(?![A-Za-z0-9_])",
       "remediation": "Rotate the Paddle notification endpoint secret and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-181",
+      "severity": "critical"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Cloudinary API credential URL",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "CLOUDINARY_API_CREDENTIAL_URL",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "Cloudinary Documentation \u2014 API environment variable format",
+        "source_lock": "66924ea",
+        "url": "https://cloudinary.com/documentation/cloudinary_cli"
+      },
+      "regex": "(?<![A-Za-z0-9_])cloudinary://[0-9]{15}:[A-Za-z0-9]{27}@[A-Za-z0-9][A-Za-z0-9_-]{0,127}(?![A-Za-z0-9_])",
+      "remediation": "Rotate the Cloudinary API key and secret and replace the credential URL through a managed secret store.",
+      "rule_id": "CRT-SEC-182",
       "severity": "critical"
     }
   ],
