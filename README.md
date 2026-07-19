@@ -20,6 +20,10 @@ CodeRiskTools Secret Scanner Engine is MIT licensed, local-first, offline by def
 - composite GitHub Action;
 - tests and synthetic fixtures.
 
+## Verified detector coverage
+
+The current public registry contains **200 native detectors**, including **152 stable secret-format detectors**, with 194 line detectors and 6 contextual detectors. The stable secret set is source-backed and excludes provisional candidates from the stable count. The golden corpus covers all 200 native detectors with deterministic parity.
+
 ## Product boundary
 
 This public repository contains **only the Scanner flagship**.
