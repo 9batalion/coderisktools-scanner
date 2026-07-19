@@ -233,6 +233,11 @@ Source of truth for candidates after merged PR #4. Candidates are classified bef
 | Turso platform/API token | Turso | platform/database API token | none officially documented | Token creation and scoping documented; body format not published | High | https://docs.turso.tech/sdk/authorization/tokens | REJECTED_NO_OFFICIAL_FORMAT | No stable provider-specific regex. |
 | Convex deploy key | Convex | deployment credential | deployment-specific string; complete format not published | Deploy-key purpose and configuration documented; body format not published | High | https://docs.convex.dev/cli/deploy-key-types | REJECTED_NO_OFFICIAL_FORMAT | Opaque deployment credential without a complete contract. |
 | Code Climate API token | Code Climate | API/coverage token | none officially documented | CLI/API use documented; token body format not published | High | https://docs.codeclimate.com/docs/configuring-test-coverage | REJECTED_NO_OFFICIAL_FORMAT | No source-backed standalone format. |
+| Postmark server token | Postmark | server API token | UUID | Existing structured detector | Low | https://postmarkapp.com/developer/api/overview | ALREADY_COVERED | Existing `CRT-SEC-044` covers UUID server tokens. |
+| Mailgun API key | Mailgun | private API key | `key-` + 32 hex characters | Existing structured detector | Low | https://documentation.mailgun.com/docs/mailgun/api-reference/mg-auth | ALREADY_COVERED | Existing `CRT-SEC-043` covers the documented key family. |
+| Resend API key | Resend | API key | `re_` family | Existing structured detector | Low | https://resend.com/docs/dashboard/api-keys/introduction | ALREADY_COVERED | Existing `CRT-SEC-154` covers the documented family. |
+| Mailjet API credential | Mailjet | API key + secret key pair | none officially documented | API/secret pair documented; body formats not published | High | https://documentation.mailjet.com/hc/en-us/articles/360043225693-What-is-an-API-key | REJECTED_NO_OFFICIAL_FORMAT | Multi-field opaque credential without complete constraints. |
+| Loops API key | Loops | API key | none officially documented | API-key creation/use documented; body format not published | High | https://loops.so/docs/api-reference/api-key | REJECTED_NO_OFFICIAL_FORMAT | No stable provider-specific regex. |
  
  ## First implementation ranking
 
