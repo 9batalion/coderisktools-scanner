@@ -11,7 +11,7 @@ from tests.synthetic_values import assemble
 
 CASES = [
     ("CRT-SEC-063", "ONEPASSWORD_SECRET_KEY", assemble("A3", "-ABC123-", "ABCDEFGHIJK-ABCDE-ABCDE-ABCDE")),
-    ("CRT-SEC-064", "ONEPASSWORD_SERVICE_ACCOUNT_TOKEN", assemble("ops", "_eyJ", "Ab3x" * 62, "Ab")),
+    ("CRT-SEC-064", "ONEPASSWORD_SERVICE_ACCOUNT_TOKEN_JWT", assemble("ops", "_eyJ", "Ab3x" * 62, "Ab")),
     ("CRT-SEC-065", "AGE_SECRET_KEY", assemble("AGE", "-SECRET-KEY-1", ("QPZRY9X8GF2TVDW0S3JN54KHCE6MUA7L" * 2)[:58])),
     ("CRT-SEC-066", "AIRTABLE_PERSONAL_ACCESS_TOKEN", assemble("pat", "Ab3xY7qP9LmN2Z.", "a1b2c3d4" * 8)),
     ("CRT-SEC-067", "CLICKHOUSE_CLOUD_API_SECRET", "4b1d" + "Ab3x" * 9 + "Y7"),
@@ -38,8 +38,8 @@ class Stage10ModernSecretRulesTests(unittest.TestCase):
 
     def test_registry_has_exact_stage10_ids_names_and_case_sensitive_flags(self):
         rules = self.rules()
-        self.assertEqual(len(DEFAULT_DETECTION_RULES), 193)
-        self.assertEqual(len(rules), 193)
+        self.assertEqual(len(DEFAULT_DETECTION_RULES), 220)
+        self.assertEqual(len(rules), 220)
         for rule_id, name, _ in CASES:
             with self.subTest(rule_id=rule_id):
                 self.assertIn(rule_id, rules)

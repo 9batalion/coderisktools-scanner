@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 199,
+  "detector_count": 226,
   "rules": [
     {
       "category": "secret",
@@ -2255,7 +2255,7 @@
       "description": "LangSmith API key",
       "file_globs": [],
       "kind": "secret",
-      "name": "LANGSMITH_API_KEY",
+      "name": "LANGSMITH_API_KEY_LEGACY",
       "provenance": {
         "license": "project-policy",
         "source": "CodeRiskTools legacy detection registry",
@@ -2453,7 +2453,7 @@
       "description": "1Password service-account token",
       "file_globs": [],
       "kind": "secret",
-      "name": "ONEPASSWORD_SERVICE_ACCOUNT_TOKEN",
+      "name": "ONEPASSWORD_SERVICE_ACCOUNT_TOKEN_JWT",
       "provenance": {
         "license": "project-policy",
         "source": "CodeRiskTools legacy detection registry",
@@ -4029,6 +4029,492 @@
       "regex": "(?<![A-Za-z0-9_])lsv2_pt_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
       "remediation": "Revoke the LangSmith API key and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-152",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Cloudflare account API token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "CLOUDFLARE_ACCOUNT_API_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])cfat_[A-Za-z0-9]{40}[0-9a-f]{8}(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Cloudflare account API token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-153",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Resend API key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "RESEND_API_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])re_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the Resend API key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-154",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Fireworks API key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "FIREWORKS_API_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])fw_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the Fireworks API key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-155",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Fireworks Fire Pass key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "FIREWORKS_FIRE_PASS_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])fpk_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the Fireworks Fire Pass key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-156",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Supabase secret key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "SUPABASE_SECRET_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])sb_secret_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the Supabase secret key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-157",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Stripe webhook signing secret",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "STRIPE_WEBHOOK_SIGNING_SECRET",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])whsec_[A-Za-z0-9]{20,200}(?![A-Za-z0-9_])",
+      "remediation": "Rotate the Stripe webhook endpoint secret and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-158",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "PostHog feature flags secure API key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "POSTHOG_FEATURE_FLAGS_SECURE_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])phs_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the PostHog feature flags secure API key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-159",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "PostHog OAuth access token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "POSTHOG_OAUTH_ACCESS_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])pha_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the PostHog OAuth access token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-160",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Okta API token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "OKTA_API_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])SSWS[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the Okta API token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-161",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Doppler service token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "DOPPLER_SERVICE_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])dp\\.st\\.[a-z0-9]{43}(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Doppler service token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-162",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Doppler config token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "DOPPLER_CONFIG_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])dp\\.ct\\.[a-z0-9]{43}(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Doppler config token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-163",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Doppler service account token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "DOPPLER_SERVICE_ACCOUNT_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])dp\\.sa\\.[A-Za-z0-9]{43}(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Doppler service account token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-164",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Doppler SCIM token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "DOPPLER_SCIM_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])dp\\.scim\\.[A-Za-z0-9]{43}(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Doppler SCIM token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-165",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Doppler audit token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "DOPPLER_AUDIT_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])dp\\.audit\\.[A-Za-z0-9]{43}(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Doppler audit token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-166",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Tailscale API, auth, or OAuth key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "TAILSCALE_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])tskey-(?:api|auth|oauth)-[A-Za-z0-9_]{1,50}-[A-Za-z0-9_]{1,50}(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Tailscale key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-167",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Tailscale SCIM key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "TAILSCALE_SCIM_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])tskey-scim-[A-Za-z0-9_]{1,50}-[A-Za-z0-9_]{1,50}(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Tailscale SCIM key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-168",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Tailscale client key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "TAILSCALE_CLIENT_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])tskey-client-[A-Za-z0-9_]{1,50}-[A-Za-z0-9_]{1,50}(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Tailscale client key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-169",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Tailscale webhook key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "TAILSCALE_WEBHOOK_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])tskey-webhook-[A-Za-z0-9_]{1,50}-[A-Za-z0-9_]{1,50}(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Tailscale webhook key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-170",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "HashiCorp Vault recovery token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "VAULT_RECOVERY_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])hvr\\.[A-Za-z0-9_-]{24,300}(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Vault recovery token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-171",
+      "severity": "critical"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Honeycomb ingest API key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "HONEYCOMB_INGEST_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])hcaik_[A-Za-z0-9]{20,300}(?![A-Za-z0-9])",
+      "remediation": "Revoke the Honeycomb ingest API key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-172",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "1Password service account token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "ONE_PASSWORD_SERVICE_ACCOUNT_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])ops_[A-Za-z0-9_-]{20,500}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the 1Password service account token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-173",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Mapbox secret access token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "MAPBOX_SECRET_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])sk\\.[A-Za-z0-9_-]{40,500}\\.[A-Za-z0-9_-]{40,500}\\.[A-Za-z0-9_-]{40,500}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the Mapbox secret token and create a new one with URL restrictions.",
+      "rule_id": "CRT-SEC-174",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "medium",
+      "description": "Confluent Cloud API key (key/secret pair)",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "CONFLUENT_CLOUD_API_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9])(?:[A-Z0-9]{16,20}\\.[A-Z0-9]{16,20})(?![A-Za-z0-9])",
+      "remediation": "Revoke the Confluent Cloud API key and secret and replace them through a managed secret store.",
+      "rule_id": "CRT-SEC-175",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Sentry user app auth token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "SENTRY_USER_APP_AUTH_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])sntrya_[A-Za-z0-9_-]{20,300}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the Sentry user app auth token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-176",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Honeycomb environment API key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "HONEYCOMB_ENVIRONMENT_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])hcxik_[A-Za-z0-9]{20,300}(?![A-Za-z0-9])",
+      "remediation": "Revoke the Honeycomb environment API key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-177",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "DigitalOcean personal access token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "DIGITALOCEAN_PERSONAL_ACCESS_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])dop_v1_[A-Za-z0-9_-]{20,300}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the DigitalOcean personal access token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-178",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "DigitalOcean OAuth token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "DIGITALOCEAN_OAUTH_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])doo_v1_[A-Za-z0-9_-]{20,300}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the DigitalOcean OAuth token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-179",
       "severity": "high"
     }
   ],
