@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 208,
+  "detector_count": 209,
   "rules": [
     {
       "category": "secret",
@@ -4191,6 +4191,24 @@
       "regex": "(?<![A-Za-z0-9_])SSWS[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
       "remediation": "Revoke the Okta API token and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-161",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Doppler service token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "DOPPLER_SERVICE_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])dp\\.st\\.[a-z0-9]{43}(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Doppler service token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-162",
       "severity": "high"
     }
   ],
