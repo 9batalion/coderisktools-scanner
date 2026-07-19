@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from src.patterns import match_context_rules, match_rules
+from tools.golden_corpus import build_corpus
 
 
 MANIFEST = Path(__file__).parent / "corpora" / "golden" / "manifest.json"
@@ -25,15 +26,17 @@ class GoldenParityCorpusTests(unittest.TestCase):
         self.assertNotIn("timestamp", serialized)
 
     def test_legacy_matcher_replays_exact_detector_ids(self):
+        runtime_cases = {case["case_id"]: case for case in build_corpus()["cases"]}
         for case in self.document["cases"]:
             with self.subTest(case=case["case_id"]):
-                if case["type"] == "synthetic-line":
-                    lines = [(number, content) for number, content in case["lines"]]
-                    found = match_rules(lines[0][1], case["filepath"])
+                runtime_case = runtime_cases[case["case_id"]]
+                if runtime_case["type"] == "synthetic-line":
+                    lines = [(number, content) for number, content in runtime_case["lines"]]
+                    found = match_rules(lines[0][1], runtime_case["filepath"])
                     ids = sorted(rule.rule_id for rule, _match in found)
                 else:
-                    lines = [(number, content) for number, content in case["lines"]]
-                    found = match_context_rules(lines, case["filepath"])
+                    lines = [(number, content) for number, content in runtime_case["lines"]]
+                    found = match_context_rules(lines, runtime_case["filepath"])
                     ids = sorted(item.rule.rule_id for item in found)
                 self.assertEqual(ids, case["expected_rule_ids"])
 

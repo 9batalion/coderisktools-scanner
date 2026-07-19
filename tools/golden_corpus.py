@@ -160,8 +160,22 @@ def _git_commit() -> str:
     return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPO_ROOT, text=True).strip()
 
 
+def _redacted_case(case: dict[str, Any]) -> dict[str, Any]:
+    public = dict(case)
+    public["lines"] = [[number, f"<redacted:{case['case_id']}>"] for number, _content in case["lines"]]
+    return public
+
+
+def build_public_corpus() -> dict:
+    document = build_corpus()
+    document["cases"] = [_redacted_case(case) for case in document["cases"]]
+    raw_cases = json.dumps(document["cases"], ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()
+    document["fixture_sha256"] = _sha256(raw_cases)
+    return document
+
+
 def write_corpus(output: str) -> None:
-    payload = json.dumps(build_corpus(), ensure_ascii=False, sort_keys=True, indent=2) + "\n"
+    payload = json.dumps(build_public_corpus(), ensure_ascii=False, sort_keys=True, indent=2) + "\n"
     Path(output).write_text(payload, encoding="utf-8")
 
 
