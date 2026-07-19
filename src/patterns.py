@@ -434,6 +434,7 @@ V3_STAGE14_SECRET_RULES: list[DetectionRule] = [
     DetectionRule("LANGSMITH_API_KEY", r"(?<![A-Za-z0-9_])lsv2_pt_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "LangSmith API key", "CRT-SEC-152", "secret", "high", "Revoke the LangSmith API key and replace it through a managed secret store."),
     DetectionRule("CLOUDFLARE_ACCOUNT_API_TOKEN", r"(?<![A-Za-z0-9_])cfat_[A-Za-z0-9]{40}[0-9a-f]{8}(?![A-Za-z0-9_])", "high", "Cloudflare account API token", "CRT-SEC-153", "secret", "high", "Revoke the Cloudflare account API token and replace it through a managed secret store."),
     DetectionRule("RESEND_API_KEY", r"(?<![A-Za-z0-9_])re_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "Resend API key", "CRT-SEC-154", "secret", "high", "Revoke the Resend API key and replace it through a managed secret store."),
+    DetectionRule("FIREWORKS_API_KEY", r"(?<![A-Za-z0-9_])fw_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "Fireworks API key", "CRT-SEC-155", "secret", "high", "Revoke the Fireworks API key and replace it through a managed secret store."),
 ]
 for _rule in V3_STAGE14_SECRET_RULES:
     _rule.flags = 0
