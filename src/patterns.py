@@ -423,6 +423,7 @@ V3_STAGE14_SECRET_RULES: list[DetectionRule] = [
     DetectionRule("POSTHOG_PERSONAL_API_KEY", r"phx_[A-Za-z0-9_-]{20,100}(?![A-Za-z0-9_-])", "high", "PostHog personal API key", "CRT-SEC-141", "secret", "high", "Revoke the PostHog personal API key and replace it through a managed secret store."),
     DetectionRule("SENTRY_AUTH_TOKEN_NONJWT", r"sntrys_(?!eyJ)[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "Sentry auth token", "CRT-SEC-142", "secret", "high", "Revoke the Sentry auth token and replace it through a managed secret store."),
     DetectionRule("AIVEN_AUTH_HEADER_TOKEN", r"(?:Authorization|authorization):\s*aivenv1\s+[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "Aiven API token in authorization header", "CRT-SEC-143", "secret", "high", "Revoke the Aiven API token and replace it through a managed secret store."),
+    DetectionRule("FLYIO_AUTH_HEADER_TOKEN", r"(?:Authorization|authorization):\s*FlyV1\s+[A-Za-z0-9_+/=-]{20,300}(?![A-Za-z0-9_+/=-])", "high", "Fly.io API token in authorization header", "CRT-SEC-144", "secret", "high", "Revoke the Fly.io API token and replace it through a managed secret store."),
 ]
 for _rule in V3_STAGE14_SECRET_RULES:
     _rule.flags = 0
