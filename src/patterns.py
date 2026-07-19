@@ -453,6 +453,8 @@ V3_STAGE14_SECRET_RULES: list[DetectionRule] = [
     DetectionRule("VAULT_RECOVERY_TOKEN", r"(?<![A-Za-z0-9_])hvr\.[A-Za-z0-9_-]{24,300}(?![A-Za-z0-9_])", "critical", "HashiCorp Vault recovery token", "CRT-SEC-171", "secret", "high", "Revoke the Vault recovery token and replace it through a managed secret store."),
     DetectionRule("HONEYCOMB_INGEST_KEY", r"(?<![A-Za-z0-9_])hcaik_[A-Za-z0-9]{20,300}(?![A-Za-z0-9])", "high", "Honeycomb ingest API key", "CRT-SEC-172", "secret", "high", "Revoke the Honeycomb ingest API key and replace it through a managed secret store."),
     DetectionRule("ONE_PASSWORD_SERVICE_ACCOUNT_TOKEN", r"(?<![A-Za-z0-9_])ops_[A-Za-z0-9_-]{20,500}(?![A-Za-z0-9_-])", "high", "1Password service account token", "CRT-SEC-173", "secret", "high", "Revoke the 1Password service account token and replace it through a managed secret store."),
+    DetectionRule("MAPBOX_SECRET_TOKEN", r"(?<![A-Za-z0-9_])sk\.[A-Za-z0-9_-]{40,500}\.[A-Za-z0-9_-]{40,500}\.[A-Za-z0-9_-]{40,500}(?![A-Za-z0-9_-])", "high", "Mapbox secret access token", "CRT-SEC-174", "secret", "high", "Revoke the Mapbox secret token and create a new one with URL restrictions."),
+    DetectionRule("CONFLUENT_CLOUD_API_KEY", r"(?<![A-Za-z0-9])(?:[A-Z0-9]{16,20}\.[A-Z0-9]{16,20})(?![A-Za-z0-9])", "high", "Confluent Cloud API key (key/secret pair)", "CRT-SEC-175", "secret", "medium", "Revoke the Confluent Cloud API key and secret and replace them through a managed secret store."),
 ]
 for _rule in V3_STAGE14_SECRET_RULES:
     _rule.flags = 0

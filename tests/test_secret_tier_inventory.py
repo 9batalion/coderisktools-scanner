@@ -12,10 +12,10 @@ class SecretTierInventoryTests(unittest.TestCase):
             output = Path(directory) / "tiers.json"
             subprocess.run([sys.executable, "tools/secret_tier_inventory.py", "--output", str(output)], check=True)
             data = json.loads(output.read_text())
-        self.assertEqual(data["tiers"]["stable"], 172)
+        self.assertEqual(data["tiers"]["stable"], 174)
         self.assertEqual(data["tiers"]["provisional"], 6)
         self.assertEqual(data["tiers"]["contextual_external_pack"], 28)
-        self.assertEqual(data["shortfall"]["stable_core"], 128)
+        self.assertEqual(data["shortfall"]["stable_core"], 126)
         self.assertEqual(data["targets"]["stable_core"], 300)
 
 

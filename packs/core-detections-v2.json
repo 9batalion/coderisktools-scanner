@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 220,
+  "detector_count": 222,
   "rules": [
     {
       "category": "secret",
@@ -4407,6 +4407,42 @@
       "regex": "(?<![A-Za-z0-9_])ops_[A-Za-z0-9_-]{20,500}(?![A-Za-z0-9_-])",
       "remediation": "Revoke the 1Password service account token and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-173",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Mapbox secret access token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "MAPBOX_SECRET_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])sk\\.[A-Za-z0-9_-]{40,500}\\.[A-Za-z0-9_-]{40,500}\\.[A-Za-z0-9_-]{40,500}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the Mapbox secret token and create a new one with URL restrictions.",
+      "rule_id": "CRT-SEC-174",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "medium",
+      "description": "Confluent Cloud API key (key/secret pair)",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "CONFLUENT_CLOUD_API_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9])(?:[A-Z0-9]{16,20}\\.[A-Z0-9]{16,20})(?![A-Za-z0-9])",
+      "remediation": "Revoke the Confluent Cloud API key and secret and replace them through a managed secret store.",
+      "rule_id": "CRT-SEC-175",
       "severity": "high"
     }
   ],
