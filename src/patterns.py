@@ -428,6 +428,7 @@ V3_STAGE14_SECRET_RULES: list[DetectionRule] = [
     DetectionRule("BITRISE_WORKSPACE_API_TOKEN", r"(?<![A-Za-z0-9_])bitwat_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "Bitrise workspace API token", "CRT-SEC-146", "secret", "high", "Revoke the Bitrise workspace API token and replace it through a managed secret store."),
     DetectionRule("AWS_BEDROCK_LONG_TERM_API_KEY", r"(?<![A-Za-z0-9])ABSK[A-Za-z0-9+/]{128}(?![A-Za-z0-9+/=])", "high", "AWS Bedrock long-term API key", "CRT-SEC-147", "secret", "high", "Revoke the AWS Bedrock API key and replace it through a managed secret store."),
     DetectionRule("CARTESIA_API_KEY", r"(?<![A-Za-z0-9_])sk_car_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "Cartesia API key", "CRT-SEC-148", "secret", "high", "Revoke the Cartesia API key and replace it through a managed secret store."),
+    DetectionRule("HUME_API_KEY_HEADER", r"(?i:(?<![A-Za-z0-9-])X-Hume-Api-Key:\s*[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-]))", "high", "Hume API key in header", "CRT-SEC-149", "secret", "high", "Revoke the Hume API key and replace it through a managed secret store."),
 ]
 for _rule in V3_STAGE14_SECRET_RULES:
     _rule.flags = 0

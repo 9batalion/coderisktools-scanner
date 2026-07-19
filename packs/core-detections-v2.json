@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 195,
+  "detector_count": 196,
   "rules": [
     {
       "category": "secret",
@@ -3957,6 +3957,24 @@
       "regex": "(?<![A-Za-z0-9_])sk_car_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
       "remediation": "Revoke the Cartesia API key and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-148",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Hume API key in header",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "HUME_API_KEY_HEADER",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?i:(?<![A-Za-z0-9-])X-Hume-Api-Key:\\s*[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-]))",
+      "remediation": "Revoke the Hume API key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-149",
       "severity": "high"
     }
   ],
