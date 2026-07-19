@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 214,
+  "detector_count": 215,
   "rules": [
     {
       "category": "secret",
@@ -4299,6 +4299,24 @@
       "regex": "(?<![A-Za-z0-9_])tskey-(?:api|auth|oauth)-[A-Za-z0-9_]{1,50}-[A-Za-z0-9_]{1,50}(?![A-Za-z0-9_])",
       "remediation": "Revoke the Tailscale key and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-167",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Tailscale SCIM key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "TAILSCALE_SCIM_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])tskey-scim-[A-Za-z0-9_]{1,50}-[A-Za-z0-9_]{1,50}(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Tailscale SCIM key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-168",
       "severity": "high"
     }
   ],
