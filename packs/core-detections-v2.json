@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 182,
+  "detector_count": 183,
   "rules": [
     {
       "category": "secret",
@@ -3724,6 +3724,24 @@
       "remediation": "Revoke and replace the Slack token.",
       "rule_id": "CRT-SEC-134",
       "severity": "critical"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Figma personal access token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "FIGMA_PERSONAL_ACCESS_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "figd_[A-Za-z0-9_-]{40,200}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the Figma personal access token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-135",
+      "severity": "high"
     }
   ],
   "schema": "coderisktools.rule-source-pack",

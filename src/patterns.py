@@ -414,7 +414,15 @@ for _rule in V3_STAGE13_SECRET_RULES:
         _rule.flags = re.IGNORECASE
 
 
-DEFAULT_DETECTION_RULES: list[DetectionRule] = DEFAULT_SECRET_PATTERNS + V3_STAGE1_RULES + V3_STAGE9_SECRET_RULES + V3_STAGE10_SECRET_RULES + V3_STAGE11_SECRET_RULES + V3_STAGE12_SECRET_RULES + V3_STAGE13_SECRET_RULES
+V3_STAGE14_SECRET_RULES: list[DetectionRule] = [
+    DetectionRule("FIGMA_PERSONAL_ACCESS_TOKEN", r"figd_[A-Za-z0-9_-]{40,200}(?![A-Za-z0-9_-])", "high", "Figma personal access token", "CRT-SEC-135", "secret", "high", "Revoke the Figma personal access token and replace it through a managed secret store."),
+]
+for _rule in V3_STAGE14_SECRET_RULES:
+    _rule.flags = 0
+    _rule.unicode_boundaries = True
+
+
+DEFAULT_DETECTION_RULES: list[DetectionRule] = DEFAULT_SECRET_PATTERNS + V3_STAGE1_RULES + V3_STAGE9_SECRET_RULES + V3_STAGE10_SECRET_RULES + V3_STAGE11_SECRET_RULES + V3_STAGE12_SECRET_RULES + V3_STAGE13_SECRET_RULES + V3_STAGE14_SECRET_RULES
 
 K8S_CONTEXT_GLOBS = ("k8s/*.yml", "k8s/*.yaml", "k8s/**/*.yml", "k8s/**/*.yaml", "kubernetes/**/*.yml", "kubernetes/**/*.yaml", "manifests/*.yml", "manifests/*.yaml", "manifests/**/*.yml", "manifests/**/*.yaml")
 AI_CONTEXT_GLOBS = ("AGENTS.md", "**/AGENTS.md", "CLAUDE.md", "**/CLAUDE.md", ".cursorrules", "**/.cursorrules", ".github/copilot-instructions.md")

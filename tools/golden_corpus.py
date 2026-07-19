@@ -3,10 +3,13 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sys
 import warnings
 from pathlib import Path
 from typing import Any
 
+REPO_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO_ROOT))
 with warnings.catch_warnings():
     warnings.simplefilter("ignore", DeprecationWarning)
     import sre_parse
@@ -14,7 +17,6 @@ with warnings.catch_warnings():
 from src.patterns import DEFAULT_CONTEXT_RULES, DEFAULT_DETECTION_RULES, match_context_rules, match_rules
 
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
 CORPUS_DIR = REPO_ROOT / "tests" / "corpora" / "golden"
 
 OVERRIDES = {

@@ -3,8 +3,11 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
+REPO_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO_ROOT))
 from src.patterns import DEFAULT_CONTEXT_RULES, DEFAULT_DETECTION_RULES
 
 
