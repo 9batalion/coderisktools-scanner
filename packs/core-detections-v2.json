@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 202,
+  "detector_count": 203,
   "rules": [
     {
       "category": "secret",
@@ -4083,6 +4083,24 @@
       "regex": "(?<![A-Za-z0-9_])fw_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
       "remediation": "Revoke the Fireworks API key and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-155",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Fireworks Fire Pass key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "FIREWORKS_FIRE_PASS_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])fpk_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the Fireworks Fire Pass key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-156",
       "severity": "high"
     }
   ],
