@@ -421,6 +421,7 @@ V3_STAGE14_SECRET_RULES: list[DetectionRule] = [
     DetectionRule("TAVILY_API_KEY", r"tvly-[A-Za-z0-9_-]{20,100}(?![A-Za-z0-9_-])", "high", "Tavily API key", "CRT-SEC-138", "secret", "high", "Revoke the Tavily API key and replace it through a managed secret store."),
     DetectionRule("INNGEST_SIGNING_KEY", r"signkey-(?:prod|test|dev)-[a-f0-9]{64}(?![a-f0-9])", "high", "Inngest signing key", "CRT-SEC-139", "secret", "high", "Rotate the Inngest signing key and replace it through a managed secret store."),
     DetectionRule("POSTHOG_PERSONAL_API_KEY", r"phx_[A-Za-z0-9_-]{20,100}(?![A-Za-z0-9_-])", "high", "PostHog personal API key", "CRT-SEC-141", "secret", "high", "Revoke the PostHog personal API key and replace it through a managed secret store."),
+    DetectionRule("SENTRY_AUTH_TOKEN_NONJWT", r"sntrys_(?!eyJ)[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "Sentry auth token", "CRT-SEC-142", "secret", "high", "Revoke the Sentry auth token and replace it through a managed secret store."),
 ]
 for _rule in V3_STAGE14_SECRET_RULES:
     _rule.flags = 0
