@@ -7,12 +7,12 @@ from tools.detection_inventory import build_inventory, write_inventory
 
 
 class DetectionInventoryTests(unittest.TestCase):
-    def test_authoritative_registry_reconciles_to_194(self):
+    def test_authoritative_registry_reconciles_to_195(self):
         inventory = build_inventory()
-        self.assertEqual(inventory["counts"]["native_rule_count"], 194)
-        self.assertEqual(inventory["counts"]["line_rule_count"], 188)
+        self.assertEqual(inventory["counts"]["native_rule_count"], 195)
+        self.assertEqual(inventory["counts"]["line_rule_count"], 189)
         self.assertEqual(inventory["counts"]["context_rule_count"], 6)
-        self.assertEqual(sum(inventory["counts"]["category"].values()), 194)
+        self.assertEqual(sum(inventory["counts"]["category"].values()), 195)
         self.assertEqual(inventory["counts"]["infrastructure_partition"], {
             "I0_iac_cloud": 8,
             "C0_containers_kubernetes": 13,
@@ -21,7 +21,7 @@ class DetectionInventoryTests(unittest.TestCase):
     def test_detector_ids_are_unique_and_families_are_seeded(self):
         inventory = build_inventory()
         detectors = inventory["detectors"]
-        self.assertEqual(len({item["detector_id"] for item in detectors}), 194)
+        self.assertEqual(len({item["detector_id"] for item in detectors}), 195)
         self.assertTrue(all(item["family_id"].startswith("FAM-") for item in detectors))
         self.assertEqual(
             {item["family_id"] for item in inventory["families"]},

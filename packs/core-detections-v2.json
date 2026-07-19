@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 194,
+  "detector_count": 195,
   "rules": [
     {
       "category": "secret",
@@ -3939,6 +3939,24 @@
       "regex": "(?<![A-Za-z0-9])ABSK[A-Za-z0-9+/]{128}(?![A-Za-z0-9+/=])",
       "remediation": "Revoke the AWS Bedrock API key and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-147",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Cartesia API key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "CARTESIA_API_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])sk_car_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the Cartesia API key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-148",
       "severity": "high"
     }
   ],
