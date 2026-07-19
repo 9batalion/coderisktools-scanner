@@ -46,6 +46,7 @@ Source of truth for candidates after merged PR #4. Candidates are classified bef
 | Cloudinary API credential URL | Cloudinary | API key + API secret connection URL | `cloudinary://` | Exact documented structure: 15-digit API key, 27-character API secret, cloud name | Low | https://cloudinary.com/documentation/cloudinary_cli | IMPLEMENTED | Implemented as `CRT-SEC-182`; detects the documented `cloudinary://api_key:api_secret@cloud_name` environment URL. |
 | Mux API token secret | Mux | access-token secret | none documented | Token ID/secret pair documented; secret is opaque | High | https://www.mux.com/docs/core/make-api-requests; https://www.mux.com/docs/core/mux-fundamentals | REJECTED_NO_OFFICIAL_FORMAT | Official docs describe the secret as the password portion but publish no provider-specific standalone format. |
 | WooCommerce REST consumer credentials | WooCommerce | consumer key + consumer secret | `ck_`, `cs_` | Prefixes/examples documented; hash length and alphabet not published | High | https://developer.woocommerce.com/docs/apis/rest-api/authentication/ | REJECTED_NO_OFFICIAL_FORMAT | Official docs show placeholders and describe generated hashes without a complete standalone regex. |
+| Rollbar project/account access token | Rollbar | project/account access token | none documented | New token format announced; syntax not published | High | https://docs.rollbar.com/docs/access-tokens | RESEARCH_REQUIRED | Official docs state new tokens use an upgraded format but do not disclose a provider-specific regex. |
 
 ## First implementation ranking
 
