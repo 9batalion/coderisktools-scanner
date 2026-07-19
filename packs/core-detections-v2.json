@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 192,
+  "detector_count": 193,
   "rules": [
     {
       "category": "secret",
@@ -3903,6 +3903,24 @@
       "regex": "(?<![A-Za-z0-9])dt0s01\\.[A-Za-z0-9]{24}\\.[A-Za-z0-9]{64}(?![A-Za-z0-9])",
       "remediation": "Revoke the Dynatrace API token and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-145",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Bitrise workspace API token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "BITRISE_WORKSPACE_API_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])bitwat_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the Bitrise workspace API token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-146",
       "severity": "high"
     }
   ],
