@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 231,
+  "detector_count": 234,
   "rules": [
     {
       "category": "secret",
@@ -1257,6 +1257,60 @@
       "regex": "\\bshpat_[0-9a-fA-F]{32}\\b",
       "remediation": "Revoke the Shopify token and create a least-privilege replacement.",
       "rule_id": "CRT-SEC-035",
+      "severity": "critical"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Shopify access token v2",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "SHOPIFY_ACCESS_TOKEN_V2",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "Shopify Developer Changelog \u2014 access token length and prefix format",
+        "source_lock": "66924ea",
+        "url": "https://shopify.dev/changelog/length-of-the-shopify-access-token-is-increasing"
+      },
+      "regex": "\\bshpat_[0-9a-fA-F]{38}\\b",
+      "remediation": "Revoke the Shopify token and create a least-privilege replacement.",
+      "rule_id": "CRT-SEC-185",
+      "severity": "critical"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Shopify custom app access token v2",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "SHOPIFY_CUSTOM_TOKEN_V2",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "Shopify Developer Changelog \u2014 access token length and prefix format",
+        "source_lock": "66924ea",
+        "url": "https://shopify.dev/changelog/length-of-the-shopify-access-token-is-increasing"
+      },
+      "regex": "\\bshpca_[0-9a-fA-F]{38}\\b",
+      "remediation": "Revoke the Shopify token and create a least-privilege replacement.",
+      "rule_id": "CRT-SEC-186",
+      "severity": "critical"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Shopify legacy private app token v2",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "SHOPIFY_PRIVATE_TOKEN_V2",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "Shopify Developer Changelog \u2014 access token length and prefix format",
+        "source_lock": "66924ea",
+        "url": "https://shopify.dev/changelog/length-of-the-shopify-access-token-is-increasing"
+      },
+      "regex": "\\bshppa_[0-9a-fA-F]{38}\\b",
+      "remediation": "Revoke the Shopify token and create a least-privilege replacement.",
+      "rule_id": "CRT-SEC-187",
       "severity": "critical"
     },
     {

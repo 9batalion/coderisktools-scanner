@@ -38,6 +38,21 @@ RULE_PROVENANCE = {
         "url": "https://docs.confluent.io/cloud/current/security/authenticate/workload-identities/service-accounts/api-keys/overview.html",
         "license": "vendor-documentation",
     },
+    "CRT-SEC-185": {
+        "source": "Shopify Developer Changelog — access token length and prefix format",
+        "url": "https://shopify.dev/changelog/length-of-the-shopify-access-token-is-increasing",
+        "license": "vendor-documentation",
+    },
+    "CRT-SEC-186": {
+        "source": "Shopify Developer Changelog — access token length and prefix format",
+        "url": "https://shopify.dev/changelog/length-of-the-shopify-access-token-is-increasing",
+        "license": "vendor-documentation",
+    },
+    "CRT-SEC-187": {
+        "source": "Shopify Developer Changelog — access token length and prefix format",
+        "url": "https://shopify.dev/changelog/length-of-the-shopify-access-token-is-increasing",
+        "license": "vendor-documentation",
+    },
 }
 
 
