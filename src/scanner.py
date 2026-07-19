@@ -188,6 +188,7 @@ class SecretScanner:
         profile: Optional[str] = None,
         baseline_path: Optional[str] = None,
         rule_pack_path: Optional[str] = None,
+        rule_pack_paths: Optional[list[str]] = None,
         trusted_rule_keys: Optional[dict[str, bytes]] = None,
     ):
         self.config = load_config(config_path) if config_path else ScannerConfig()
@@ -213,6 +214,17 @@ class SecretScanner:
             existing_ids = {rule.rule_id for rule in self.patterns}
             if any(rule.rule_id in existing_ids for rule in packed_rules):
                 raise ValueError("Signed rule pack conflicts with an existing rule ID")
+            self.patterns.extend(packed_rules)
+        if rule_pack_paths:
+            if rule_pack_path:
+                raise ValueError("Use either rule_pack_path or rule_pack_paths, not both")
+            if not trusted_rule_keys:
+                raise ValueError("A trusted public-key keyring is required for rule packs")
+            from .rulepacks import load_rule_packs
+            packed_rules = load_rule_packs(rule_pack_paths, trusted_rule_keys)
+            existing_ids = {rule.rule_id for rule in self.patterns}
+            if any(rule.rule_id in existing_ids for rule in packed_rules):
+                raise ValueError("Rule packs conflict with an existing rule ID")
             self.patterns.extend(packed_rules)
 
         self.registry = RuleRegistry(self.patterns)

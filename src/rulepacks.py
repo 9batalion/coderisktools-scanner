@@ -12,7 +12,9 @@ from pathlib import Path
 from .patterns import DetectionRule
 
 MAX_PACK_BYTES=2*1024*1024
+MAX_TOTAL_PACK_BYTES=8*1024*1024
 MAX_RULES=1000
+MAX_TOTAL_RULES=4000
 _Q=2**255-19
 _L=2**252+27742317777372353535851937790883648493
 _D=(-121665*pow(121666,_Q-2,_Q))%_Q
@@ -153,6 +155,30 @@ def _load_rule_pack(path: str,trusted_keys: dict[str,bytes]) -> tuple[list[Detec
 
 def load_rule_pack(path: str,trusted_keys: dict[str,bytes]) -> list[DetectionRule]:
     return _load_rule_pack(path,trusted_keys)[0]
+
+
+def load_rule_packs(paths: list[str], trusted_keys: dict[str,bytes]) -> list[DetectionRule]:
+    """Load multiple signed packs as one deterministic v2 registry input.
+
+    Each member remains independently signature-verified and schema-validated.
+    The aggregate rejects duplicate IDs and enforces global byte/rule bounds.
+    """
+    if not isinstance(paths, list) or not 1 <= len(paths) <= 64:
+        raise ValueError("Rule pack paths must be a bounded non-empty list")
+    rules: list[DetectionRule] = []
+    seen: set[str] = set()
+    total_bytes = 0
+    for path in paths:
+        loaded, raw = _load_rule_pack(path, trusted_keys)
+        total_bytes += len(raw)
+        if total_bytes > MAX_TOTAL_PACK_BYTES or len(rules) + len(loaded) > MAX_TOTAL_RULES:
+            raise ValueError("Combined rule packs exceed aggregate bounds")
+        for rule in loaded:
+            if rule.rule_id in seen:
+                raise ValueError(f"Combined rule packs contain duplicate rule ID: {rule.rule_id}")
+            seen.add(rule.rule_id)
+            rules.append(rule)
+    return rules
 
 
 def _atomic_write(destination: Path,payload: bytes):
