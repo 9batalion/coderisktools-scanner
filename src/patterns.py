@@ -426,6 +426,7 @@ V3_STAGE14_SECRET_RULES: list[DetectionRule] = [
     DetectionRule("FLYIO_AUTH_HEADER_TOKEN", r"(?:Authorization|authorization):\s*FlyV1\s+[A-Za-z0-9_+/=-]{20,300}(?![A-Za-z0-9_+/=-])", "high", "Fly.io API token in authorization header", "CRT-SEC-144", "secret", "high", "Revoke the Fly.io API token and replace it through a managed secret store."),
     DetectionRule("DYNATRACE_API_TOKEN_S01", r"(?<![A-Za-z0-9])dt0s01\.[A-Za-z0-9]{24}\.[A-Za-z0-9]{64}(?![A-Za-z0-9])", "high", "Dynatrace dt0s01 API token", "CRT-SEC-145", "secret", "high", "Revoke the Dynatrace API token and replace it through a managed secret store."),
     DetectionRule("BITRISE_WORKSPACE_API_TOKEN", r"(?<![A-Za-z0-9_])bitwat_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "Bitrise workspace API token", "CRT-SEC-146", "secret", "high", "Revoke the Bitrise workspace API token and replace it through a managed secret store."),
+    DetectionRule("AWS_BEDROCK_LONG_TERM_API_KEY", r"(?<![A-Za-z0-9])ABSK[A-Za-z0-9+/]{128}(?![A-Za-z0-9+/=])", "high", "AWS Bedrock long-term API key", "CRT-SEC-147", "secret", "high", "Revoke the AWS Bedrock API key and replace it through a managed secret store."),
 ]
 for _rule in V3_STAGE14_SECRET_RULES:
     _rule.flags = 0
