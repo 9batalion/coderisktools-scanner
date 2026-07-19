@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 200,
+  "detector_count": 201,
   "rules": [
     {
       "category": "secret",
@@ -4047,6 +4047,24 @@
       "regex": "(?<![A-Za-z0-9_])cfat_[A-Za-z0-9]{40}[0-9a-f]{8}(?![A-Za-z0-9_])",
       "remediation": "Revoke the Cloudflare account API token and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-153",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Resend API key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "RESEND_API_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])re_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the Resend API key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-154",
       "severity": "high"
     }
   ],
