@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 213,
+  "detector_count": 214,
   "rules": [
     {
       "category": "secret",
@@ -4281,6 +4281,24 @@
       "regex": "(?<![A-Za-z0-9_])dp\\.audit\\.[A-Za-z0-9]{43}(?![A-Za-z0-9_])",
       "remediation": "Revoke the Doppler audit token and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-166",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Tailscale API, auth, or OAuth key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "TAILSCALE_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])tskey-(?:api|auth|oauth)-[A-Za-z0-9_]{1,50}-[A-Za-z0-9_]{1,50}(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Tailscale key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-167",
       "severity": "high"
     }
   ],

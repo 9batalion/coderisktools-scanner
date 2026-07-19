@@ -27,7 +27,7 @@ class Stage13RulesTests(unittest.TestCase):
         "INTRA42_CLIENT_SECRET": (assemble("s-s", "4t2ud-", "a" * 64), "CRT-SEC-130"),
         "SLACK_LEGACY_WORKSPACE_TOKEN": (assemble("xo", "xa-", "A" * 8), "CRT-SEC-131"),
         "SLACK_WEBHOOK_URL": (assemble("https://hooks.slack.com/", "services/", "A" * 43), "CRT-SEC-132"),
-        "SLACK_CONFIG_ACCESS_TOKEN": (assemble("xoxe.", "xoxb-1-", "A" * 165), "CRT-SEC-133"),
+        "SLACK_CONFIG_ACCESS_TOKEN": (assemble("xoxe.", "xoxb-1-", "A" * 166), "CRT-SEC-133"),
         "SLACK_CONFIG_REFRESH_TOKEN": (assemble("xoxe", "-1-", "A" * 146), "CRT-SEC-134"),
     }
 
@@ -36,7 +36,7 @@ class Stage13RulesTests(unittest.TestCase):
         return {rule.name: rule for rule in DEFAULT_DETECTION_RULES}
 
     def test_registry_and_metadata(self):
-        self.assertEqual(len(DEFAULT_DETECTION_RULES), 207)
+        self.assertEqual(len(DEFAULT_DETECTION_RULES), 208)
         rules = self.rules()
         for name, (_, rule_id) in self.CASES.items():
             with self.subTest(name=name):
