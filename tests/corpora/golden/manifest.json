@@ -3348,6 +3348,54 @@
       "type": "synthetic-line"
     },
     {
+      "case_id": "line-CRT-SEC-169",
+      "expected_rule_ids": [
+        "CRT-SEC-169"
+      ],
+      "filepath": "src/synthetic.py",
+      "lines": [
+        [
+          1,
+          "<redacted:line-CRT-SEC-169>"
+        ]
+      ],
+      "provenance": "synthetic-registry-probe",
+      "redacted_evidence": "<redacted:CRT-SEC-169>",
+      "type": "synthetic-line"
+    },
+    {
+      "case_id": "line-CRT-SEC-170",
+      "expected_rule_ids": [
+        "CRT-SEC-170"
+      ],
+      "filepath": "src/synthetic.py",
+      "lines": [
+        [
+          1,
+          "<redacted:line-CRT-SEC-170>"
+        ]
+      ],
+      "provenance": "synthetic-registry-probe",
+      "redacted_evidence": "<redacted:CRT-SEC-170>",
+      "type": "synthetic-line"
+    },
+    {
+      "case_id": "line-CRT-SEC-171",
+      "expected_rule_ids": [
+        "CRT-SEC-171"
+      ],
+      "filepath": "src/synthetic.py",
+      "lines": [
+        [
+          1,
+          "<redacted:line-CRT-SEC-171>"
+        ]
+      ],
+      "provenance": "synthetic-registry-probe",
+      "redacted_evidence": "<redacted:CRT-SEC-171>",
+      "type": "synthetic-line"
+    },
+    {
       "case_id": "line-CRT-SUP-001",
       "expected_rule_ids": [
         "CRT-SUP-001"
@@ -3494,8 +3542,8 @@
     }
   ],
   "counts": {
-    "covered": 215,
-    "expected_detectors": 215,
+    "covered": 218,
+    "expected_detectors": 218,
     "unreachable": 0
   },
   "covered_detector_ids": [
@@ -3705,6 +3753,9 @@
     "CRT-SEC-166",
     "CRT-SEC-167",
     "CRT-SEC-168",
+    "CRT-SEC-169",
+    "CRT-SEC-170",
+    "CRT-SEC-171",
     "CRT-SUP-001",
     "CRT-SUP-002",
     "CRT-SUP-003",
@@ -3715,9 +3766,9 @@
     "CRT-SUP-008",
     "CRT-SUP-009"
   ],
-  "fixture_sha256": "1a6adda4d06c04822cc4de4ed587fb73eda5c9bc80315baf003de09fcf2a59e7",
+  "fixture_sha256": "96352a88fc7fd834cf6d75477d50a51756cdf91d88bad6ac734ee427f04b66be",
   "known_unreachable": [],
   "schema": "coderisktools.golden-parity-corpus",
-  "source_commit": "18359e5b0a3342e396ab6936f869140c4c0f37e3",
+  "source_commit": "ec5411087bec3d974c271e8d48f18ed4e52b9324",
   "version": 1
 }

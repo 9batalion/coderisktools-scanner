@@ -448,6 +448,9 @@ V3_STAGE14_SECRET_RULES: list[DetectionRule] = [
     DetectionRule("DOPPLER_AUDIT_TOKEN", r"(?<![A-Za-z0-9_])dp\.audit\.[A-Za-z0-9]{43}(?![A-Za-z0-9_])", "high", "Doppler audit token", "CRT-SEC-166", "secret", "high", "Revoke the Doppler audit token and replace it through a managed secret store."),
     DetectionRule("TAILSCALE_KEY", r"(?<![A-Za-z0-9_])tskey-(?:api|auth|oauth)-[A-Za-z0-9_]{1,50}-[A-Za-z0-9_]{1,50}(?![A-Za-z0-9_])", "high", "Tailscale API, auth, or OAuth key", "CRT-SEC-167", "secret", "high", "Revoke the Tailscale key and replace it through a managed secret store."),
     DetectionRule("TAILSCALE_SCIM_KEY", r"(?<![A-Za-z0-9_])tskey-scim-[A-Za-z0-9_]{1,50}-[A-Za-z0-9_]{1,50}(?![A-Za-z0-9_])", "high", "Tailscale SCIM key", "CRT-SEC-168", "secret", "high", "Revoke the Tailscale SCIM key and replace it through a managed secret store."),
+    DetectionRule("TAILSCALE_CLIENT_KEY", r"(?<![A-Za-z0-9_])tskey-client-[A-Za-z0-9_]{1,50}-[A-Za-z0-9_]{1,50}(?![A-Za-z0-9_])", "high", "Tailscale client key", "CRT-SEC-169", "secret", "high", "Revoke the Tailscale client key and replace it through a managed secret store."),
+    DetectionRule("TAILSCALE_WEBHOOK_KEY", r"(?<![A-Za-z0-9_])tskey-webhook-[A-Za-z0-9_]{1,50}-[A-Za-z0-9_]{1,50}(?![A-Za-z0-9_])", "high", "Tailscale webhook key", "CRT-SEC-170", "secret", "high", "Revoke the Tailscale webhook key and replace it through a managed secret store."),
+    DetectionRule("VAULT_RECOVERY_TOKEN", r"(?<![A-Za-z0-9_])hvr\.[A-Za-z0-9_-]{24,300}(?![A-Za-z0-9_])", "critical", "HashiCorp Vault recovery token", "CRT-SEC-171", "secret", "high", "Revoke the Vault recovery token and replace it through a managed secret store."),
 ]
 for _rule in V3_STAGE14_SECRET_RULES:
     _rule.flags = 0

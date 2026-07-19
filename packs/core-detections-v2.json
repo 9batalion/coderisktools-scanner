@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 215,
+  "detector_count": 218,
   "rules": [
     {
       "category": "secret",
@@ -4318,6 +4318,60 @@
       "remediation": "Revoke the Tailscale SCIM key and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-168",
       "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Tailscale client key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "TAILSCALE_CLIENT_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])tskey-client-[A-Za-z0-9_]{1,50}-[A-Za-z0-9_]{1,50}(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Tailscale client key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-169",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Tailscale webhook key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "TAILSCALE_WEBHOOK_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])tskey-webhook-[A-Za-z0-9_]{1,50}-[A-Za-z0-9_]{1,50}(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Tailscale webhook key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-170",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "critical",
+      "description": "HashiCorp Vault recovery token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "VAULT_RECOVERY_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])hvr\\.[A-Za-z0-9_-]{24,300}(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Vault recovery token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-171",
+      "severity": "critical"
     }
   ],
   "schema": "coderisktools.rule-source-pack",
