@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 198,
+  "detector_count": 199,
   "rules": [
     {
       "category": "secret",
@@ -4011,6 +4011,24 @@
       "regex": "(?<![A-Za-z0-9_])ops_[A-Za-z0-9_-]{20,500}\\.[A-Za-z0-9_-]{10,500}\\.[A-Za-z0-9_-]{10,500}(?![A-Za-z0-9_.-])",
       "remediation": "Revoke the 1Password service account token and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-151",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "LangSmith API key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "LANGSMITH_API_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])lsv2_pt_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the LangSmith API key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-152",
       "severity": "high"
     }
   ],
