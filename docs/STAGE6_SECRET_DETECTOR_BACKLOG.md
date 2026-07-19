@@ -16,7 +16,7 @@ Source of truth for candidates after merged PR #4. Candidates are classified bef
 | Datadog API key | Datadog | API key | none | Hex-like fixed-length value | High | https://docs.datadoghq.com/account_management/api-app-keys/ | REJECTED_TOO_GENERIC | No unique provider marker; collides with hashes and generic hexadecimal values. |
 | Datadog application key | Datadog | application key | none | Hex-like fixed-length value | High | https://docs.datadoghq.com/account_management/api-app-keys/ | REJECTED_TOO_GENERIC | No provider-specific prefix or safe standalone boundary. |
 | PagerDuty REST API token | PagerDuty | API token | none | Opaque token format | High | https://developer.pagerduty.com/docs/ZG9jOjM0MDI5NTc-rest-api-authentication | REJECTED_NO_OFFICIAL_FORMAT | Credential exists but official format is not sufficiently distinctive. |
-| Linear personal API key | Linear | API key | `lin_api_` | Prefix documented in provider tooling; exact body needs confirmation | Low/medium | https://linear.app/developers/graphql | RESEARCH_REQUIRED | Verify current official token prefix/length and distinguish from public IDs. |
+| Linear personal API key | Linear | API key | `lin_api_` | Existing rule has a bounded 40-character body | Low | https://linear.app/developers/graphql; https://github.com/linear/linear-solutions/blob/main/scripts/migrate-label-based-releases-to-release-pipelines/README.md | ALREADY_COVERED | Existing `CRT-SEC-041 LINEAR_API_KEY` covers the documented prefix and length. |
 | LaunchDarkly access token | LaunchDarkly | API token | `api-` | Prefix is too broad; token body varies | High | https://launchdarkly.com/docs/api | REJECTED_TOO_GENERIC | `api-` is not a safe provider-specific detector without a stronger structure. |
 | Netlify personal access token | Netlify | personal access token | `nfp_` | Prefix documented in CLI/API material; exact body requires confirmation | Low/medium | https://docs.netlify.com/api/get-started/ | RESEARCH_REQUIRED | Candidate is promising but needs current length/alphabet proof and fixture controls. |
 | Vercel access token | Vercel | access token | `vercel_` | Prefix documented; body/version should be confirmed | Low/medium | https://vercel.com/docs/rest-api | RESEARCH_REQUIRED | Provider-specific prefix appears suitable; verify exact current format before implementation. |
@@ -36,3 +36,7 @@ The initial ranking was revalidated against the live registry. SendGrid is alrea
 5. Snyk API token (`snyk_`) — require official token-format proof.
 
 No candidate is implemented from this document alone. Each selected candidate must pass inventory check, source research, format proof, focused RED, negative corpus, golden regeneration, full regression, and the batch report protocol.
+
+## Current research decision
+
+The first five ranked candidates were checked against the live registry and current provider documentation. SendGrid and Linear are already covered. Buildkite, Netlify, Vercel and Snyk remain `RESEARCH_REQUIRED`; no new stable detector is justified until their exact provider-owned body constraints are documented.
