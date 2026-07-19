@@ -442,6 +442,7 @@ V3_STAGE14_SECRET_RULES: list[DetectionRule] = [
     DetectionRule("POSTHOG_OAUTH_ACCESS_TOKEN", r"(?<![A-Za-z0-9_])pha_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "PostHog OAuth access token", "CRT-SEC-160", "secret", "high", "Revoke the PostHog OAuth access token and replace it through a managed secret store."),
     DetectionRule("OKTA_API_TOKEN", r"(?<![A-Za-z0-9_])SSWS[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "Okta API token", "CRT-SEC-161", "secret", "high", "Revoke the Okta API token and replace it through a managed secret store."),
     DetectionRule("DOPPLER_SERVICE_TOKEN", r"(?<![A-Za-z0-9_])dp\.st\.[a-z0-9]{43}(?![A-Za-z0-9_])", "high", "Doppler service token", "CRT-SEC-162", "secret", "high", "Revoke the Doppler service token and replace it through a managed secret store."),
+    DetectionRule("DOPPLER_CONFIG_TOKEN", r"(?<![A-Za-z0-9_])dp\.ct\.[a-z0-9]{43}(?![A-Za-z0-9_])", "high", "Doppler config token", "CRT-SEC-163", "secret", "high", "Revoke the Doppler config token and replace it through a managed secret store."),
 ]
 for _rule in V3_STAGE14_SECRET_RULES:
     _rule.flags = 0
