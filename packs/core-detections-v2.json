@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 204,
+  "detector_count": 205,
   "rules": [
     {
       "category": "secret",
@@ -4119,6 +4119,24 @@
       "regex": "(?<![A-Za-z0-9_])sb_secret_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
       "remediation": "Revoke the Supabase secret key and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-157",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Stripe webhook signing secret",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "STRIPE_WEBHOOK_SIGNING_SECRET",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])whsec_[A-Za-z0-9]{20,200}(?![A-Za-z0-9_])",
+      "remediation": "Rotate the Stripe webhook endpoint secret and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-158",
       "severity": "high"
     }
   ],

@@ -3172,6 +3172,22 @@
       "type": "synthetic-line"
     },
     {
+      "case_id": "line-CRT-SEC-158",
+      "expected_rule_ids": [
+        "CRT-SEC-158"
+      ],
+      "filepath": "src/synthetic.py",
+      "lines": [
+        [
+          1,
+          "<redacted:line-CRT-SEC-158>"
+        ]
+      ],
+      "provenance": "synthetic-registry-probe",
+      "redacted_evidence": "<redacted:CRT-SEC-158>",
+      "type": "synthetic-line"
+    },
+    {
       "case_id": "line-CRT-SUP-001",
       "expected_rule_ids": [
         "CRT-SUP-001"
@@ -3318,8 +3334,8 @@
     }
   ],
   "counts": {
-    "covered": 204,
-    "expected_detectors": 204,
+    "covered": 205,
+    "expected_detectors": 205,
     "unreachable": 0
   },
   "covered_detector_ids": [
@@ -3518,6 +3534,7 @@
     "CRT-SEC-155",
     "CRT-SEC-156",
     "CRT-SEC-157",
+    "CRT-SEC-158",
     "CRT-SUP-001",
     "CRT-SUP-002",
     "CRT-SUP-003",
@@ -3528,9 +3545,9 @@
     "CRT-SUP-008",
     "CRT-SUP-009"
   ],
-  "fixture_sha256": "6ceed62512b026acc0b04e2dff16beefbc7536893fba6c5df31ac2a8f436fbe0",
+  "fixture_sha256": "f05cc3f0a100d9a2f26edd2cf89b66897c6125006272728253f5f140389f7f97",
   "known_unreachable": [],
   "schema": "coderisktools.golden-parity-corpus",
-  "source_commit": "0e94931ba756da10ed464f39b4fff12289b43fca",
+  "source_commit": "717b37c89f33bd878e87c1d170d4cd2be8668e23",
   "version": 1
 }

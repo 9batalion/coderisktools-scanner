@@ -437,6 +437,7 @@ V3_STAGE14_SECRET_RULES: list[DetectionRule] = [
     DetectionRule("FIREWORKS_API_KEY", r"(?<![A-Za-z0-9_])fw_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "Fireworks API key", "CRT-SEC-155", "secret", "high", "Revoke the Fireworks API key and replace it through a managed secret store."),
     DetectionRule("FIREWORKS_FIRE_PASS_KEY", r"(?<![A-Za-z0-9_])fpk_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "Fireworks Fire Pass key", "CRT-SEC-156", "secret", "high", "Revoke the Fireworks Fire Pass key and replace it through a managed secret store."),
     DetectionRule("SUPABASE_SECRET_KEY", r"(?<![A-Za-z0-9_])sb_secret_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "Supabase secret key", "CRT-SEC-157", "secret", "high", "Revoke the Supabase secret key and replace it through a managed secret store."),
+    DetectionRule("STRIPE_WEBHOOK_SIGNING_SECRET", r"(?<![A-Za-z0-9_])whsec_[A-Za-z0-9]{20,200}(?![A-Za-z0-9_])", "high", "Stripe webhook signing secret", "CRT-SEC-158", "secret", "high", "Rotate the Stripe webhook endpoint secret and replace it through a managed secret store."),
 ]
 for _rule in V3_STAGE14_SECRET_RULES:
     _rule.flags = 0
