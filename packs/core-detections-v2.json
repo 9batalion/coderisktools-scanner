@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 189,
+  "detector_count": 190,
   "rules": [
     {
       "category": "secret",
@@ -3849,6 +3849,24 @@
       "regex": "sntrys_(?!eyJ)[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
       "remediation": "Revoke the Sentry auth token and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-142",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Aiven API token in authorization header",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "AIVEN_AUTH_HEADER_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?:Authorization|authorization):\\s*aivenv1\\s+[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the Aiven API token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-143",
       "severity": "high"
     }
   ],
