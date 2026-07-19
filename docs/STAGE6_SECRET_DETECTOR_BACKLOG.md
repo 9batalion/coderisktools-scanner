@@ -213,6 +213,9 @@ Source of truth for candidates after merged PR #4. Candidates are classified bef
 | Perplexity API key | Perplexity | API key | `pplx-` + 48 alphanumeric characters | Existing structured detector | Low | https://docs.perplexity.ai/docs/admin/api-key-management | ALREADY_COVERED | Existing `CRT-SEC-052` covers the documented key family. |
 | Voyage AI API key | Voyage AI | API key | none documented | Secret-key lifecycle documented; body format not published | High | https://docs.voyageai.com/docs/api-key-and-installation | REJECTED_NO_OFFICIAL_FORMAT | Opaque credential with no standalone provider format. |
 | SambaNova API key | SambaNova | API key | none documented | API-key generation/use documented; body format not published | High | https://docs.sambanova.ai/docs/en/get-started/api-keys-urls | REJECTED_NO_OFFICIAL_FORMAT | No stable provider-specific regex. |
+| 1Password service account token | 1Password | service account token | none officially documented | Service-account lifecycle documented; token body contract not published | High | https://developer.1password.com/docs/service-accounts/ | REJECTED_NO_OFFICIAL_FORMAT | Do not infer a stable regex from examples or SDK handling. |
+| Infisical service token | Infisical | service token | `st.` multi-part token | Documentation describes multiple dot-delimited components but not fixed lengths/alphabets | High | https://infisical.com/docs/internals/service-tokens | REJECTED_NO_OFFICIAL_FORMAT | Incomplete multi-part credential contract. |
+| Akeyless API key | Akeyless | access ID + access key | credential pair | API-key authentication requires an Access ID and Access Key; standalone formats are not published | High | https://docs.akeyless.io/docs/auth-with-api-key | REJECTED_NO_OFFICIAL_FORMAT | Multi-field opaque credential without a complete standalone format. |
  
  ## First implementation ranking
 
