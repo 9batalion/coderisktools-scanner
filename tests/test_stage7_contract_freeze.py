@@ -11,8 +11,8 @@ from src.scanner import ConfigChange, Finding, ScanResult
 class Stage7ContractFreezeTests(unittest.TestCase):
     def finding(self, **overrides):
         values = dict(
-            type="secret", pattern_name="TOKEN", severity="high", file="src/app.py", line=7,
-            matched_text="token = super-secret-value", line_content="token = super-secret-value",
+            type="secret", pattern_name="FIXTURE_PATTERN", severity="high", file="src/app.py", line=7,
+            matched_text="fixture-value", line_content="fixture-value",
             rule="secret-pattern", rule_id="CRT-SEC-999", identity_path="src/app.py",
         )
         values.update(overrides)
@@ -23,7 +23,7 @@ class Stage7ContractFreezeTests(unittest.TestCase):
                           findings=findings or [], config_changes=config_changes or [], **kwargs)
 
     def test_known_finding_v1_fingerprint(self):
-        self.assertEqual(self.finding().fingerprint, "sha256:96edaddfd58697a55cee374d5936ffc596a7f0ea6415cad28819bab3b735339e")
+        self.assertEqual(self.finding().fingerprint, "sha256:55673dcac779e8435aa3b561f881137f4b6ab79eadcb2194be7dd62a35938d05")
 
     def test_identity_path_and_windows_normalization(self):
         self.assertEqual(self.finding(file="other.py", identity_path="src/app.py").fingerprint, self.finding().fingerprint)
