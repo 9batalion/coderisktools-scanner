@@ -46,4 +46,4 @@ No candidate is implemented from this document alone. Each selected candidate mu
 
 ## Current research decision
 
-The first five ranked candidates were checked against the live registry and current provider documentation. SendGrid and Linear are already covered. Buildkite, Netlify, Vercel and Snyk remain `RESEARCH_REQUIRED`; no new stable detector is justified until their exact provider-owned body constraints are documented.
+The first five ranked candidates were checked against the live registry and current provider documentation. SendGrid and Linear are already covered. Buildkite and Netlify publish only a prefix or token existence in the reviewed official pages; Snyk documents token usage but not a provider-specific standalone format. Vercel remains research-gated. No new stable detector is justified until exact provider-owned body constraints are documented.
