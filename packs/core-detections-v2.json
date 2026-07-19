@@ -27,6 +27,31 @@
       "severity": "critical"
     },
     {
+      "category": "ci",
+      "confidence": "high",
+      "description": "pull_request workflow executes on a self-hosted runner",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "max_line_span": 50,
+      "name": "GH_PR_SELF_HOSTED_RUNNER",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Self-hosted runners",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/concepts/runners/self-hosted-runners"
+      },
+      "remediation": "Use an isolated ephemeral runner for untrusted pull requests or require an explicit trusted-code boundary before scheduling on self-hosted infrastructure.",
+      "required_regexes": [
+        "^\\s*pull_request\\s*:",
+        "^\\s*runs-on\\s*:\\s*self-hosted\\s*$"
+      ],
+      "rule_id": "CRT-CI-014",
+      "severity": "high"
+    },
+    {
       "category": "iac",
       "confidence": "high",
       "description": "Terraform exposes SSH administration to the public internet",
@@ -177,7 +202,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 235,
+  "detector_count": 240,
   "rules": [
     {
       "category": "secret",
@@ -973,6 +998,90 @@
       "remediation": "Pass only explicitly required secrets to the reusable workflow.",
       "rule_id": "CRT-CI-004",
       "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates untrusted pull-request text directly into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_PR_TITLE",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Script injections",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.pull_request\\.(?:title|body)\\s*\\}\\}.*$",
+      "remediation": "Pass untrusted pull-request fields through a validated environment variable and quote shell inputs.",
+      "rule_id": "CRT-CI-010",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates an attacker-influenced branch name directly into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_REF",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Script injections",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.(?:head_ref|base_ref)\\s*\\}\\}.*$",
+      "remediation": "Pass branch names through a safely quoted environment variable before shell use.",
+      "rule_id": "CRT-CI-011",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates untrusted issue text directly into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_ISSUE_BODY",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Script injections",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.issue\\.(?:title|body)\\s*\\}\\}.*$",
+      "remediation": "Pass untrusted issue fields through a validated environment variable and quote shell inputs.",
+      "rule_id": "CRT-CI-012",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow disables checkout cleanup before a subsequent checkout",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_CHECKOUT_CLEAN_DISABLED",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "actions/checkout \u2014 clean input",
+        "source_lock": "66924ea",
+        "url": "https://github.com/actions/checkout#inputs"
+      },
+      "regex": "^\\s*clean\\s*:\\s*false\\s*(?:#.*)?$",
+      "remediation": "Keep checkout cleanup enabled on persistent runners unless the workspace is isolated and explicitly reviewed.",
+      "rule_id": "CRT-CI-013",
+      "severity": "medium"
     },
     {
       "category": "iac",

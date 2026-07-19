@@ -13,6 +13,31 @@ from src.patterns import DEFAULT_CONTEXT_RULES, DEFAULT_DETECTION_RULES
 SOURCE_LOCK = "66924ea"
 
 RULE_PROVENANCE = {
+    "CRT-CI-010": {
+        "source": "GitHub Docs — Script injections",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-011": {
+        "source": "GitHub Docs — Script injections",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-012": {
+        "source": "GitHub Docs — Script injections",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-013": {
+        "source": "actions/checkout — clean input",
+        "url": "https://github.com/actions/checkout#inputs",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-014": {
+        "source": "GitHub Docs — Self-hosted runners",
+        "url": "https://docs.github.com/en/actions/concepts/runners/self-hosted-runners",
+        "license": "vendor-documentation",
+    },
     "CRT-SEC-180": {
         "source": "Paddle Developer Docs — API key format",
         "url": "https://developer.paddle.com/api-reference/about/authentication/",
