@@ -203,6 +203,7 @@ Source of truth for candidates after merged PR #4. Candidates are classified bef
 | HERE API key | HERE | platform API key | none documented | API key use documented; body format not published | High | https://developer.here.com/ | REJECTED_NO_OFFICIAL_FORMAT | No standalone provider-specific format. |
 | TomTom API key | TomTom | platform API key | none documented | API key use documented; body format not published | High | https://developer.tomtom.com/knowledgebase/platform/articles/how-to-get-an-tomtom-api-key/ | REJECTED_NO_OFFICIAL_FORMAT | Opaque credential. |
 | MapTiler API key | MapTiler | maps/API key | alphanumeric string | Documentation explicitly describes generic letters/numbers only | High | https://docs.maptiler.com/cloud/api/authentication-key/ | REJECTED_NO_OFFICIAL_FORMAT | No fixed length/prefix/alphabet contract beyond generic alphanumeric. |
+| Shopify Admin API access token v2 | Shopify | public/custom/private app access token | `shpat_` / `shpca_` / `shppa_` + 38 hex characters | Official changelog documents the post-2020 38-character payload and three prefixes | Low | https://shopify.dev/changelog/length-of-the-shopify-access-token-is-increasing | IMPLEMENTED | Added as `CRT-SEC-185`–`CRT-SEC-187`; legacy 32-character variants remain covered by existing rules. |
 
 ## First implementation ranking
 
