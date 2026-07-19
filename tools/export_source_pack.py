@@ -12,6 +12,29 @@ from src.patterns import DEFAULT_CONTEXT_RULES, DEFAULT_DETECTION_RULES
 
 SOURCE_LOCK = "66924ea"
 
+RULE_PROVENANCE = {
+    "CRT-SEC-180": {
+        "source": "Paddle Developer Docs — API key format",
+        "url": "https://developer.paddle.com/api-reference/about/authentication/",
+        "license": "vendor-documentation",
+    },
+    "CRT-SEC-181": {
+        "source": "Paddle Developer Docs — webhook endpoint secret format",
+        "url": "https://developer.paddle.com/api-reference/notification-settings/create-notification-setting/",
+        "license": "vendor-documentation",
+    },
+}
+
+
+def provenance_for(rule_id: str) -> dict:
+    provenance = RULE_PROVENANCE.get(rule_id, {
+        "source": "CodeRiskTools legacy detection registry",
+        "url": "https://coderisktools.invalid/source-registry",
+        "license": "project-policy",
+    }).copy()
+    provenance["source_lock"] = SOURCE_LOCK
+    return provenance
+
 
 def build_pack() -> dict:
     rules = []
@@ -27,12 +50,7 @@ def build_pack() -> dict:
             "remediation": rule.remediation,
             "kind": rule.kind,
             "file_globs": list(rule.file_globs),
-            "provenance": {
-                "source": "CodeRiskTools legacy detection registry",
-                "url": "https://coderisktools.invalid/source-registry",
-                "license": "project-policy",
-                "source_lock": SOURCE_LOCK,
-            },
+            "provenance": provenance_for(rule.rule_id),
         })
     context_rules = []
     for rule in DEFAULT_CONTEXT_RULES:
@@ -48,12 +66,7 @@ def build_pack() -> dict:
             "remediation": rule.remediation,
             "kind": rule.kind,
             "file_globs": list(rule.file_globs),
-            "provenance": {
-                "source": "CodeRiskTools legacy detection registry",
-                "url": "https://coderisktools.invalid/source-registry",
-                "license": "project-policy",
-                "source_lock": SOURCE_LOCK,
-            },
+            "provenance": provenance_for(rule.rule_id),
         })
     return {
         "schema": "coderisktools.rule-source-pack",

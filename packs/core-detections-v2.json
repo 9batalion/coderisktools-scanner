@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 226,
+  "detector_count": 228,
   "rules": [
     {
       "category": "secret",
@@ -4516,6 +4516,42 @@
       "remediation": "Revoke the DigitalOcean OAuth token and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-179",
       "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Paddle API key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "PADDLE_API_KEY",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "Paddle Developer Docs \u2014 API key format",
+        "source_lock": "66924ea",
+        "url": "https://developer.paddle.com/api-reference/about/authentication/"
+      },
+      "regex": "(?<![A-Za-z0-9_])pdl_(?:live|sdbx)_apikey_[a-z\\d]{26}_[a-zA-Z\\d]{22}_[a-zA-Z\\d]{3}(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Paddle API key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-180",
+      "severity": "critical"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Paddle webhook endpoint secret",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "PADDLE_WEBHOOK_ENDPOINT_SECRET",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "Paddle Developer Docs \u2014 webhook endpoint secret format",
+        "source_lock": "66924ea",
+        "url": "https://developer.paddle.com/api-reference/notification-settings/create-notification-setting/"
+      },
+      "regex": "(?<![A-Za-z0-9_])pdl_ntfset_[a-zA-Z0-9]{26}_[a-zA-Z0-9]{32}(?![A-Za-z0-9_])",
+      "remediation": "Rotate the Paddle notification endpoint secret and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-181",
+      "severity": "critical"
     }
   ],
   "schema": "coderisktools.rule-source-pack",
