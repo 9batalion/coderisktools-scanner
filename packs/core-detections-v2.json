@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 206,
+  "detector_count": 207,
   "rules": [
     {
       "category": "secret",
@@ -4155,6 +4155,24 @@
       "regex": "(?<![A-Za-z0-9_])phs_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
       "remediation": "Revoke the PostHog feature flags secure API key and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-159",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "PostHog OAuth access token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "POSTHOG_OAUTH_ACCESS_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])pha_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the PostHog OAuth access token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-160",
       "severity": "high"
     }
   ],

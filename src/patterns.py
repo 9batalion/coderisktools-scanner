@@ -439,6 +439,7 @@ V3_STAGE14_SECRET_RULES: list[DetectionRule] = [
     DetectionRule("SUPABASE_SECRET_KEY", r"(?<![A-Za-z0-9_])sb_secret_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "Supabase secret key", "CRT-SEC-157", "secret", "high", "Revoke the Supabase secret key and replace it through a managed secret store."),
     DetectionRule("STRIPE_WEBHOOK_SIGNING_SECRET", r"(?<![A-Za-z0-9_])whsec_[A-Za-z0-9]{20,200}(?![A-Za-z0-9_])", "high", "Stripe webhook signing secret", "CRT-SEC-158", "secret", "high", "Rotate the Stripe webhook endpoint secret and replace it through a managed secret store."),
     DetectionRule("POSTHOG_FEATURE_FLAGS_SECURE_KEY", r"(?<![A-Za-z0-9_])phs_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "PostHog feature flags secure API key", "CRT-SEC-159", "secret", "high", "Revoke the PostHog feature flags secure API key and replace it through a managed secret store."),
+    DetectionRule("POSTHOG_OAUTH_ACCESS_TOKEN", r"(?<![A-Za-z0-9_])pha_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "PostHog OAuth access token", "CRT-SEC-160", "secret", "high", "Revoke the PostHog OAuth access token and replace it through a managed secret store."),
 ]
 for _rule in V3_STAGE14_SECRET_RULES:
     _rule.flags = 0
