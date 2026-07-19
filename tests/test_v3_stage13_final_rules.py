@@ -36,7 +36,7 @@ class Stage13RulesTests(unittest.TestCase):
         return {rule.name: rule for rule in DEFAULT_DETECTION_RULES}
 
     def test_registry_and_metadata(self):
-        self.assertEqual(len(DEFAULT_DETECTION_RULES), 223)
+        self.assertEqual(len(DEFAULT_DETECTION_RULES), 224)
         rules = self.rules()
         for name, (_, rule_id) in self.CASES.items():
             with self.subTest(name=name):

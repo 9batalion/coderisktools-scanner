@@ -28,6 +28,11 @@ RULE_PROVENANCE = {
         "url": "https://cloudinary.com/documentation/cloudinary_cli",
         "license": "vendor-documentation",
     },
+    "CRT-SEC-183": {
+        "source": "Microsoft Learn — Azure DevOps personal access token entity definition",
+        "url": "https://learn.microsoft.com/en-us/purview/sit-defn-azure-devops-personal-access-token",
+        "license": "vendor-documentation",
+    },
 }
 
 

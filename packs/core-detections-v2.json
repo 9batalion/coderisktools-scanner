@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 229,
+  "detector_count": 230,
   "rules": [
     {
       "category": "secret",
@@ -4569,6 +4569,24 @@
       "regex": "(?<![A-Za-z0-9_])cloudinary://[0-9]{15}:[A-Za-z0-9]{27}@[A-Za-z0-9][A-Za-z0-9_-]{0,127}(?![A-Za-z0-9_])",
       "remediation": "Rotate the Cloudinary API key and secret and replace the credential URL through a managed secret store.",
       "rule_id": "CRT-SEC-182",
+      "severity": "critical"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Azure DevOps personal access token (84-character format)",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "AZURE_DEVOPS_PERSONAL_ACCESS_TOKEN_V2",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "Microsoft Learn \u2014 Azure DevOps personal access token entity definition",
+        "source_lock": "66924ea",
+        "url": "https://learn.microsoft.com/en-us/purview/sit-defn-azure-devops-personal-access-token"
+      },
+      "regex": "(?<![A-Za-z0-9_])[A-Za-z0-9]{76}AZDO[A-Za-z0-9]{4}(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Azure DevOps personal access token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-183",
       "severity": "critical"
     }
   ],
