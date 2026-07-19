@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 230,
+  "detector_count": 231,
   "rules": [
     {
       "category": "secret",
@@ -4587,6 +4587,24 @@
       "regex": "(?<![A-Za-z0-9_])[A-Za-z0-9]{76}AZDO[A-Za-z0-9]{4}(?![A-Za-z0-9_])",
       "remediation": "Revoke the Azure DevOps personal access token and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-183",
+      "severity": "critical"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Confluent Cloud API secret (checksum format)",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "CONFLUENT_CLOUD_API_SECRET_V2",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "Confluent Cloud Documentation \u2014 API secret format and checksum",
+        "source_lock": "66924ea",
+        "url": "https://docs.confluent.io/cloud/current/security/authenticate/workload-identities/service-accounts/api-keys/overview.html"
+      },
+      "regex": "(?<![A-Za-z0-9_])cflt([A-Za-z0-9+/]{54})([A-Za-z0-9+/]{6})(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Confluent Cloud API secret and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-184",
       "severity": "critical"
     }
   ],

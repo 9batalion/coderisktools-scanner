@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 import fnmatch
 import re
-from typing import Optional
+from typing import Callable, Optional
 
 
 @dataclass
@@ -21,6 +21,7 @@ class DetectionRule:
     file_globs: tuple[str, ...] = ()
     flags: int = re.IGNORECASE
     unicode_boundaries: bool = False
+    validator: Optional[Callable[[re.Match], bool]] = None
 
     @property
     def compiled(self) -> re.Pattern:
@@ -29,6 +30,18 @@ class DetectionRule:
 
 
 SecretPattern = DetectionRule
+
+
+def _confluent_secret_checksum(match: re.Match) -> bool:
+    import base64
+    import zlib
+    payload, checksum = match.group(1), match.group(2)
+    expected = base64.b64encode(zlib.crc32(payload.encode("ascii")).to_bytes(4, "little"))[:6].decode("ascii")
+    return checksum == expected
+
+
+def _match_is_valid(rule: DetectionRule, match: re.Match) -> bool:
+    return rule.validator is None or rule.validator(match)
 
 
 _GENERIC_ASSIGNMENT_RULES = {
@@ -463,6 +476,7 @@ V3_STAGE14_SECRET_RULES: list[DetectionRule] = [
     DetectionRule("PADDLE_WEBHOOK_ENDPOINT_SECRET", r"(?<![A-Za-z0-9_])pdl_ntfset_[a-zA-Z0-9]{26}_[a-zA-Z0-9]{32}(?![A-Za-z0-9_])", "critical", "Paddle webhook endpoint secret", "CRT-SEC-181", "secret", "high", "Rotate the Paddle notification endpoint secret and replace it through a managed secret store."),
     DetectionRule("CLOUDINARY_API_CREDENTIAL_URL", r"(?<![A-Za-z0-9_])cloudinary://[0-9]{15}:[A-Za-z0-9]{27}@[A-Za-z0-9][A-Za-z0-9_-]{0,127}(?![A-Za-z0-9_])", "critical", "Cloudinary API credential URL", "CRT-SEC-182", "secret", "high", "Rotate the Cloudinary API key and secret and replace the credential URL through a managed secret store."),
     DetectionRule("AZURE_DEVOPS_PERSONAL_ACCESS_TOKEN_V2", r"(?<![A-Za-z0-9_])[A-Za-z0-9]{76}AZDO[A-Za-z0-9]{4}(?![A-Za-z0-9_])", "critical", "Azure DevOps personal access token (84-character format)", "CRT-SEC-183", "secret", "high", "Revoke the Azure DevOps personal access token and replace it through a managed secret store."),
+    DetectionRule("CONFLUENT_CLOUD_API_SECRET_V2", r"(?<![A-Za-z0-9_])cflt([A-Za-z0-9+/]{54})([A-Za-z0-9+/]{6})(?![A-Za-z0-9_])", "critical", "Confluent Cloud API secret (checksum format)", "CRT-SEC-184", "secret", "high", "Revoke the Confluent Cloud API secret and replace it through a managed secret store.", validator=_confluent_secret_checksum),
 ]
 for _rule in V3_STAGE14_SECRET_RULES:
     _rule.flags = 0
@@ -521,7 +535,7 @@ def match_rules(line: str, filepath: str, rules: list[DetectionRule] | None = No
     for rule in active:
         if _rule_path_matches(filepath, rule.file_globs):
             match = rule.compiled.search(line)
-            if match:
+            if match and _match_is_valid(rule, match):
                 results.append((rule, match))
     provider_specific = any(rule.rule_id in {f"CRT-SEC-{index:03d}" for index in range(21, 135)} for rule, _ in results)
     if provider_specific:
@@ -545,7 +559,8 @@ def match_rules_all(line: str, filepath: str, rules: list[DetectionRule] | None 
         candidates: list[tuple[int, DetectionRule, re.Match, int]] = []
         for item in active_items:
             for match in item.compiled.finditer(line):
-                candidates.append((item.order, item.rule, match, match.end() - match.start()))
+                if _match_is_valid(item.rule, match):
+                    candidates.append((item.order, item.rule, match, match.end() - match.start()))
     else:
         active = DEFAULT_DETECTION_RULES if rules is None else rules
         candidates = []
@@ -553,7 +568,8 @@ def match_rules_all(line: str, filepath: str, rules: list[DetectionRule] | None 
             if not _rule_path_matches(filepath, rule.file_globs):
                 continue
             for match in rule.compiled.finditer(line):
-                candidates.append((order, rule, match, match.end() - match.start()))
+                if _match_is_valid(rule, match):
+                    candidates.append((order, rule, match, match.end() - match.start()))
 
     providers = [(rule, match) for _order, rule, match, _length in candidates if _provider_specific(rule)]
     candidates = [
@@ -695,7 +711,7 @@ def match_secret(line: str, patterns: list[SecretPattern] | None = None) -> list
     results = []
     for pattern in patterns:
         m = pattern.compiled.search(line)
-        if m:
+        if m and _match_is_valid(pattern, m):
             results.append((pattern, m))
     return results
 

@@ -33,6 +33,11 @@ RULE_PROVENANCE = {
         "url": "https://learn.microsoft.com/en-us/purview/sit-defn-azure-devops-personal-access-token",
         "license": "vendor-documentation",
     },
+    "CRT-SEC-184": {
+        "source": "Confluent Cloud Documentation — API secret format and checksum",
+        "url": "https://docs.confluent.io/cloud/current/security/authenticate/workload-identities/service-accounts/api-keys/overview.html",
+        "license": "vendor-documentation",
+    },
 }
 
 
