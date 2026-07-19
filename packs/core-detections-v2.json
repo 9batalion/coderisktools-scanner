@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 205,
+  "detector_count": 206,
   "rules": [
     {
       "category": "secret",
@@ -4137,6 +4137,24 @@
       "regex": "(?<![A-Za-z0-9_])whsec_[A-Za-z0-9]{20,200}(?![A-Za-z0-9_])",
       "remediation": "Rotate the Stripe webhook endpoint secret and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-158",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "PostHog feature flags secure API key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "POSTHOG_FEATURE_FLAGS_SECURE_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])phs_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the PostHog feature flags secure API key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-159",
       "severity": "high"
     }
   ],
