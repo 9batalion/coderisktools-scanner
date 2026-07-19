@@ -2255,7 +2255,7 @@
       "description": "LangSmith API key",
       "file_globs": [],
       "kind": "secret",
-      "name": "LANGSMITH_API_KEY",
+      "name": "LANGSMITH_API_KEY_LEGACY",
       "provenance": {
         "license": "project-policy",
         "source": "CodeRiskTools legacy detection registry",
@@ -2453,7 +2453,7 @@
       "description": "1Password service-account token",
       "file_globs": [],
       "kind": "secret",
-      "name": "ONEPASSWORD_SERVICE_ACCOUNT_TOKEN",
+      "name": "ONEPASSWORD_SERVICE_ACCOUNT_TOKEN_JWT",
       "provenance": {
         "license": "project-policy",
         "source": "CodeRiskTools legacy detection registry",

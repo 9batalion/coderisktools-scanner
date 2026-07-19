@@ -18,7 +18,7 @@ CASES = [
     ("CRT-SEC-050", "REPLICATE_API_TOKEN", assemble("r", "8_", "Ab3x" * 9, "Q")),
     ("CRT-SEC-051", "GROQ_API_KEY", assemble("g", "sk_", "Ab3x" * 13)),
     ("CRT-SEC-052", "PERPLEXITY_API_KEY", assemble("ppl", "x-", "A1bZ" * 12)),
-    ("CRT-SEC-053", "LANGSMITH_API_KEY", assemble("lsv2", "_pt_", "Ab3x" * 10, "_a1b2c3d4e5")),
+    ("CRT-SEC-053", "LANGSMITH_API_KEY_LEGACY", assemble("lsv2", "_pt_", "Ab3x" * 10, "_a1b2c3d4e5")),
     ("CRT-SEC-054", "PINECONE_API_KEY", assemble("pc", "sk_", "Ab3x" * 10)),
     ("CRT-SEC-055", "GRAFANA_SERVICE_ACCOUNT_TOKEN", assemble("gl", "sa_", "Ab3x" * 8, "_a1b2c3d4")),
     ("CRT-SEC-056", "SENTRY_ORG_AUTH_TOKEN", assemble("sntrys", "_eyJ", "Ab3x" * 10, "_", "Ab3x" * 10, "Ab3")),

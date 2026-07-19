@@ -11,7 +11,7 @@ from tests.synthetic_values import assemble
 
 CASES = [
     ("CRT-SEC-063", "ONEPASSWORD_SECRET_KEY", assemble("A3", "-ABC123-", "ABCDEFGHIJK-ABCDE-ABCDE-ABCDE")),
-    ("CRT-SEC-064", "ONEPASSWORD_SERVICE_ACCOUNT_TOKEN", assemble("ops", "_eyJ", "Ab3x" * 62, "Ab")),
+    ("CRT-SEC-064", "ONEPASSWORD_SERVICE_ACCOUNT_TOKEN_JWT", assemble("ops", "_eyJ", "Ab3x" * 62, "Ab")),
     ("CRT-SEC-065", "AGE_SECRET_KEY", assemble("AGE", "-SECRET-KEY-1", ("QPZRY9X8GF2TVDW0S3JN54KHCE6MUA7L" * 2)[:58])),
     ("CRT-SEC-066", "AIRTABLE_PERSONAL_ACCESS_TOKEN", assemble("pat", "Ab3xY7qP9LmN2Z.", "a1b2c3d4" * 8)),
     ("CRT-SEC-067", "CLICKHOUSE_CLOUD_API_SECRET", "4b1d" + "Ab3x" * 9 + "Y7"),
