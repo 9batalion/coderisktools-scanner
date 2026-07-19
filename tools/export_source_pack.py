@@ -23,6 +23,11 @@ RULE_PROVENANCE = {
         "url": "https://developer.paddle.com/api-reference/notification-settings/create-notification-setting/",
         "license": "vendor-documentation",
     },
+    "CRT-SEC-182": {
+        "source": "Cloudinary Documentation — API environment variable format",
+        "url": "https://cloudinary.com/documentation/cloudinary_cli",
+        "license": "vendor-documentation",
+    },
 }
 
 
