@@ -222,6 +222,8 @@ Source of truth for candidates after merged PR #4. Candidates are classified bef
 | E2B API key | E2B | API key | none officially documented | API-key setup documented; body format not published | High | https://e2b.dev/docs/api-key | REJECTED_NO_OFFICIAL_FORMAT | No stable provider-specific regex. |
 | Qdrant API key | Qdrant | API key | key body not documented; 128-char hash appears in API schema | Documentation exposes a SHA-512 hash field, not the secret's generation format | High | https://qdrant.tech/documentation/private-cloud/api-reference/ | REJECTED_NO_OFFICIAL_FORMAT | Do not scan hashes as API keys. |
 | Weaviate API key | Weaviate | API key | none officially documented | API-key authentication documented; body format not published | High | https://docs.weaviate.io/deploy/configuration/authentication | REJECTED_NO_OFFICIAL_FORMAT | Opaque credential without a complete format. |
+| Axiom API token | Axiom | edge/personal API token | `xaat-` / `xapt-` prefixes; body length not documented | Official docs distinguish token classes and prefixes but do not publish complete body constraints | High | https://axiom.co/docs/guides/javascript | REJECTED_NO_OFFICIAL_FORMAT | Prefix-only contract is insufficient for stable detection. |
+| Better Stack API token | Better Stack | team-scoped API token | none officially documented | Token creation and scope documented; body format not published | High | https://betterstack.com/docs/logs/api/getting-started/ | REJECTED_NO_OFFICIAL_FORMAT | Opaque credential without a source-backed regex. |
  
  ## First implementation ranking
 
