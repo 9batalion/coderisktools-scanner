@@ -266,16 +266,16 @@ Source of truth for candidates after merged PR #4. Candidates are classified bef
  
  ## First implementation ranking
 
-The initial ranking was revalidated against the live registry. SendGrid is already covered by `CRT-SEC-033`, so it is not a new batch. The remaining candidates are research-gated:
+The original five-item ranking has now been fully revalidated against the live registry and current vendor documentation. It is closed:
 
-1. Buildkite user API token (`bkua_`) — confirm exact body alphabet and length;
-2. Linear personal API key (`lin_api_`) — confirm exact body constraints;
-3. Netlify personal access token (`nfp_`) — require official format proof, not repository examples;
-4. Vercel access token (`vercel_`) — require official prefix/body proof;
-5. Snyk API token (`snyk_`) — require official token-format proof.
+- Buildkite `bkua_`: `REJECTED_NO_OFFICIAL_FORMAT`; official docs confirm the prefix but not body alphabet or length.
+- Linear `lin_api_`: `ALREADY_COVERED` by `CRT-SEC-041`.
+- Netlify `nfp_`: `REJECTED_NO_OFFICIAL_FORMAT`; token lifecycle is documented, but no complete format.
+- Vercel `tok_`/access tokens: `REJECTED_NO_OFFICIAL_FORMAT`; examples and opaque-token documentation do not establish a regex contract.
+- Snyk `snyk_`: `REJECTED_NO_OFFICIAL_FORMAT`; token usage is documented, but no standalone provider format.
 
 No candidate is implemented from this document alone. Each selected candidate must pass inventory check, source research, format proof, focused RED, negative corpus, golden regeneration, full regression, and the batch report protocol.
 
 ## Current research decision
 
-The first five ranked candidates were checked against the live registry and current provider documentation. SendGrid and Linear are already covered. Buildkite and Netlify publish only a prefix or token existence in the reviewed official pages; Snyk documents token usage but not a provider-specific standalone format. Vercel remains research-gated. No new stable detector is justified until exact provider-owned body constraints are documented.
+The initial ranking is exhausted. New stable detectors require a newly discovered provider-owned contract with prefix, body alphabet and length; prefix-only examples, opaque OAuth/macaroons, transport encodings and approximate/version-dependent lengths remain excluded from the stable count.
