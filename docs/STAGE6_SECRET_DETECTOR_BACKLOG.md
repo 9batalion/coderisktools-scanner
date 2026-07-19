@@ -274,6 +274,8 @@ Source of truth for candidates after merged PR #4. Candidates are classified bef
 | Raycast OAuth/access token | Raycast | OAuth access token | none officially documented | OAuth flow and secure token storage documented; body format not published | High | https://developers.raycast.com/api-reference/oauth | REJECTED_NO_OFFICIAL_FORMAT | Opaque OAuth credential without complete constraints. |
 | Adafruit IO key | Adafruit | account API key | none officially documented | Official API docs identify the secret key and header/query transport; body format not published | High | https://io.adafruit.com/api/docs/ | REJECTED_NO_OFFICIAL_FORMAT | Secret transport documentation is not a stable regex contract. |
 | Apify API token | Apify | API token | none officially documented | Official API docs document token transport and lifecycle; body format not published | High | https://docs.apify.com/integrations/api | REJECTED_NO_OFFICIAL_FORMAT | No provider-owned prefix/body/length contract. |
+| Databento API key | Databento | API key | `db-` + total length 32; body alphabet not documented | Official docs specify prefix and total length, but not the alphabet of the remaining characters | High | https://databento.com/docs/api-reference-reference/basics/authentication | REJECTED_NO_OFFICIAL_FORMAT | Do not infer alphanumeric body from examples. |
+| RunPod API key | RunPod | API key | `rpa_` prefix; body length/alphabet not documented | Official docs identify the prefix in environment examples, but do not publish a complete format | High | https://docs.runpod.io/get-started/api-keys | REJECTED_NO_OFFICIAL_FORMAT | Prefix-only contract is insufficient for stable detection. |
  
  ## First implementation ranking
 
