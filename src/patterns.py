@@ -460,6 +460,7 @@ V3_STAGE14_SECRET_RULES: list[DetectionRule] = [
     DetectionRule("DIGITALOCEAN_PERSONAL_ACCESS_TOKEN", r"(?<![A-Za-z0-9_])dop_v1_[A-Za-z0-9_-]{20,300}(?![A-Za-z0-9_-])", "high", "DigitalOcean personal access token", "CRT-SEC-178", "secret", "high", "Revoke the DigitalOcean personal access token and replace it through a managed secret store."),
     DetectionRule("DIGITALOCEAN_OAUTH_TOKEN", r"(?<![A-Za-z0-9_])doo_v1_[A-Za-z0-9_-]{20,300}(?![A-Za-z0-9_-])", "high", "DigitalOcean OAuth token", "CRT-SEC-179", "secret", "high", "Revoke the DigitalOcean OAuth token and replace it through a managed secret store."),
     DetectionRule("PADDLE_API_KEY", r"(?<![A-Za-z0-9_])pdl_(?:live|sdbx)_apikey_[a-z\d]{26}_[a-zA-Z\d]{22}_[a-zA-Z\d]{3}(?![A-Za-z0-9_])", "critical", "Paddle API key", "CRT-SEC-180", "secret", "high", "Revoke the Paddle API key and replace it through a managed secret store."),
+    DetectionRule("PADDLE_WEBHOOK_ENDPOINT_SECRET", r"(?<![A-Za-z0-9_])pdl_ntfset_[a-zA-Z0-9]{26}_[a-zA-Z0-9]{32}(?![A-Za-z0-9_])", "critical", "Paddle webhook endpoint secret", "CRT-SEC-181", "secret", "high", "Rotate the Paddle notification endpoint secret and replace it through a managed secret store."),
 ]
 for _rule in V3_STAGE14_SECRET_RULES:
     _rule.flags = 0

@@ -18,6 +18,11 @@ RULE_PROVENANCE = {
         "url": "https://developer.paddle.com/api-reference/about/authentication/",
         "license": "vendor-documentation",
     },
+    "CRT-SEC-181": {
+        "source": "Paddle Developer Docs — webhook endpoint secret format",
+        "url": "https://developer.paddle.com/api-reference/notification-settings/create-notification-setting/",
+        "license": "vendor-documentation",
+    },
 }
 
 

@@ -22,7 +22,7 @@ CodeRiskTools Secret Scanner Engine is MIT licensed, local-first, offline by def
 
 ## Verified detector coverage
 
-The current public registry contains **227 native detectors**, including **179 stable secret-format detectors**, with 221 line detectors and 6 contextual detectors. The stable secret set is source-backed and excludes provisional candidates from the stable count. The golden corpus covers all 227 native detectors with deterministic parity.
+The current public registry contains **228 native detectors**, including **180 stable secret-format detectors**, with 222 line detectors and 6 contextual detectors. The stable secret set is source-backed and excludes provisional candidates from the stable count. The golden corpus covers all 228 native detectors with deterministic parity.
 
 ## Product boundary
 

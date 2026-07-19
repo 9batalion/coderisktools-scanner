@@ -28,6 +28,28 @@ class PaddleApiKeyDetectorTests(unittest.TestCase):
     def test_environment_in_assignment(self):
         self.assertIsNotNone(self.rule.compiled.search("PADDLE_API_KEY=" + self.token()))
 
+    @staticmethod
+    def webhook_token():
+        return "pdl_ntfset_" + "a1" * 13 + "_" + "Ab3x" * 8
+
+    def test_webhook_secret_positive(self):
+        match = next(rule for rule in DEFAULT_DETECTION_RULES if rule.rule_id == "CRT-SEC-181").compiled.search(self.webhook_token())
+        self.assertIsNotNone(match)
+        if match is not None:
+            self.assertEqual(match.group(0), self.webhook_token())
+
+    def test_webhook_secret_wrong_prefix_and_lengths(self):
+        rule = next(rule for rule in DEFAULT_DETECTION_RULES if rule.rule_id == "CRT-SEC-181").compiled
+        self.assertIsNone(rule.search(self.webhook_token().replace("pdl_ntfset_", "pdl_endpoint_")))
+        self.assertIsNone(rule.search(self.webhook_token().replace("a1" * 13, "a1" * 12 + "a")))
+        self.assertIsNone(rule.search(self.webhook_token() + "_suffix"))
+
+    def test_webhook_secret_placeholder_and_embedded_identifier(self):
+        rule = next(rule for rule in DEFAULT_DETECTION_RULES if rule.rule_id == "CRT-SEC-181").compiled
+        self.assertIsNone(rule.search("pdl_ntfset_<id>_<secret>"))
+        self.assertIsNone(rule.search("X" + self.webhook_token()))
+
+
     def test_embedded_in_json(self):
         self.assertIsNotNone(self.rule.compiled.search('{"key": "' + self.token() + '"}'))
 
