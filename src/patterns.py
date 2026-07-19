@@ -457,6 +457,8 @@ V3_STAGE14_SECRET_RULES: list[DetectionRule] = [
     DetectionRule("CONFLUENT_CLOUD_API_KEY", r"(?<![A-Za-z0-9])(?:[A-Z0-9]{16,20}\.[A-Z0-9]{16,20})(?![A-Za-z0-9])", "high", "Confluent Cloud API key (key/secret pair)", "CRT-SEC-175", "secret", "medium", "Revoke the Confluent Cloud API key and secret and replace them through a managed secret store."),
     DetectionRule("SENTRY_USER_APP_AUTH_TOKEN", r"(?<![A-Za-z0-9_])sntrya_[A-Za-z0-9_-]{20,300}(?![A-Za-z0-9_-])", "high", "Sentry user app auth token", "CRT-SEC-176", "secret", "high", "Revoke the Sentry user app auth token and replace it through a managed secret store."),
     DetectionRule("HONEYCOMB_ENVIRONMENT_KEY", r"(?<![A-Za-z0-9_])hcxik_[A-Za-z0-9]{20,300}(?![A-Za-z0-9])", "high", "Honeycomb environment API key", "CRT-SEC-177", "secret", "high", "Revoke the Honeycomb environment API key and replace it through a managed secret store."),
+    DetectionRule("DIGITALOCEAN_PERSONAL_ACCESS_TOKEN", r"(?<![A-Za-z0-9_])dop_v1_[A-Za-z0-9_-]{20,300}(?![A-Za-z0-9_-])", "high", "DigitalOcean personal access token", "CRT-SEC-178", "secret", "high", "Revoke the DigitalOcean personal access token and replace it through a managed secret store."),
+    DetectionRule("DIGITALOCEAN_OAUTH_TOKEN", r"(?<![A-Za-z0-9_])doo_v1_[A-Za-z0-9_-]{20,300}(?![A-Za-z0-9_-])", "high", "DigitalOcean OAuth token", "CRT-SEC-179", "secret", "high", "Revoke the DigitalOcean OAuth token and replace it through a managed secret store."),
 ]
 for _rule in V3_STAGE14_SECRET_RULES:
     _rule.flags = 0

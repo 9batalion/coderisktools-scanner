@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 224,
+  "detector_count": 226,
   "rules": [
     {
       "category": "secret",
@@ -4479,6 +4479,42 @@
       "regex": "(?<![A-Za-z0-9_])hcxik_[A-Za-z0-9]{20,300}(?![A-Za-z0-9])",
       "remediation": "Revoke the Honeycomb environment API key and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-177",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "DigitalOcean personal access token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "DIGITALOCEAN_PERSONAL_ACCESS_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])dop_v1_[A-Za-z0-9_-]{20,300}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the DigitalOcean personal access token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-178",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "DigitalOcean OAuth token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "DIGITALOCEAN_OAUTH_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])doo_v1_[A-Za-z0-9_-]{20,300}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the DigitalOcean OAuth token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-179",
       "severity": "high"
     }
   ],
