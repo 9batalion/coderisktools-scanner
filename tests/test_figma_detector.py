@@ -15,6 +15,18 @@ class FigmaStableDetectorTests(unittest.TestCase):
         result = SecretScanner(config_check=False).scan_diff_text(diff)
         ids = [finding.rule_id for finding in result.findings]
         self.assertEqual(ids.count("CRT-SEC-135"), 1)
+    def test_provider_prefix_detectors(self):
+        samples = {
+            "CRT-SEC-136": "fc-" + "A" * 24,
+            "CRT-SEC-137": "tr_prod_" + "A" * 24,
+            "CRT-SEC-138": "tvly-" + "A" * 24,
+            "CRT-SEC-139": "signkey-prod-" + "a" * 64,
+        }
+        for expected, token in samples.items():
+            with self.subTest(expected=expected):
+                diff = f"--- a/config.py\n+++ b/config.py\n@@ -1,0 +1 @@\n+TOKEN={token}\n"
+                result = SecretScanner(config_check=False).scan_diff_text(diff)
+                self.assertIn(expected, [finding.rule_id for finding in result.findings])
 
 
 if __name__ == "__main__":

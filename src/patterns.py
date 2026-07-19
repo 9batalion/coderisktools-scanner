@@ -416,6 +416,10 @@ for _rule in V3_STAGE13_SECRET_RULES:
 
 V3_STAGE14_SECRET_RULES: list[DetectionRule] = [
     DetectionRule("FIGMA_PERSONAL_ACCESS_TOKEN", r"figd_[A-Za-z0-9_-]{40,200}(?![A-Za-z0-9_-])", "high", "Figma personal access token", "CRT-SEC-135", "secret", "high", "Revoke the Figma personal access token and replace it through a managed secret store."),
+    DetectionRule("FIRECRAWL_API_KEY", r"fc-[A-Za-z0-9_-]{20,100}(?![A-Za-z0-9_-])", "high", "Firecrawl API key", "CRT-SEC-136", "secret", "high", "Revoke the Firecrawl API key and replace it through a managed secret store."),
+    DetectionRule("TRIGGER_SECRET_KEY", r"tr_(?:dev|prod|stg|pat)_[A-Za-z0-9_-]{20,100}(?![A-Za-z0-9_-])", "high", "Trigger.dev secret key", "CRT-SEC-137", "secret", "high", "Revoke the Trigger.dev secret key and replace it through a managed secret store."),
+    DetectionRule("TAVILY_API_KEY", r"tvly-[A-Za-z0-9_-]{20,100}(?![A-Za-z0-9_-])", "high", "Tavily API key", "CRT-SEC-138", "secret", "high", "Revoke the Tavily API key and replace it through a managed secret store."),
+    DetectionRule("INNGEST_SIGNING_KEY", r"signkey-(?:prod|test|dev)-[a-f0-9]{64}(?![a-f0-9])", "high", "Inngest signing key", "CRT-SEC-139", "secret", "high", "Rotate the Inngest signing key and replace it through a managed secret store."),
 ]
 for _rule in V3_STAGE14_SECRET_RULES:
     _rule.flags = 0

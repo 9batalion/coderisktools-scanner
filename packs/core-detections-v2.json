@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 183,
+  "detector_count": 187,
   "rules": [
     {
       "category": "secret",
@@ -3741,6 +3741,78 @@
       "regex": "figd_[A-Za-z0-9_-]{40,200}(?![A-Za-z0-9_-])",
       "remediation": "Revoke the Figma personal access token and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-135",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Firecrawl API key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "FIRECRAWL_API_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "fc-[A-Za-z0-9_-]{20,100}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the Firecrawl API key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-136",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Trigger.dev secret key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "TRIGGER_SECRET_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "tr_(?:dev|prod|stg|pat)_[A-Za-z0-9_-]{20,100}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the Trigger.dev secret key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-137",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Tavily API key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "TAVILY_API_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "tvly-[A-Za-z0-9_-]{20,100}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the Tavily API key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-138",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Inngest signing key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "INNGEST_SIGNING_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "signkey-(?:prod|test|dev)-[a-f0-9]{64}(?![a-f0-9])",
+      "remediation": "Rotate the Inngest signing key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-139",
       "severity": "high"
     }
   ],

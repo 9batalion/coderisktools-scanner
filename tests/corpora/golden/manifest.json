@@ -2835,6 +2835,70 @@
       "type": "synthetic-line"
     },
     {
+      "case_id": "line-CRT-SEC-136",
+      "expected_rule_ids": [
+        "CRT-SEC-136"
+      ],
+      "filepath": "src/synthetic.py",
+      "lines": [
+        [
+          1,
+          "<redacted:line-CRT-SEC-136>"
+        ]
+      ],
+      "provenance": "synthetic-registry-probe",
+      "redacted_evidence": "<redacted:CRT-SEC-136>",
+      "type": "synthetic-line"
+    },
+    {
+      "case_id": "line-CRT-SEC-137",
+      "expected_rule_ids": [
+        "CRT-SEC-137"
+      ],
+      "filepath": "src/synthetic.py",
+      "lines": [
+        [
+          1,
+          "<redacted:line-CRT-SEC-137>"
+        ]
+      ],
+      "provenance": "synthetic-registry-probe",
+      "redacted_evidence": "<redacted:CRT-SEC-137>",
+      "type": "synthetic-line"
+    },
+    {
+      "case_id": "line-CRT-SEC-138",
+      "expected_rule_ids": [
+        "CRT-SEC-138"
+      ],
+      "filepath": "src/synthetic.py",
+      "lines": [
+        [
+          1,
+          "<redacted:line-CRT-SEC-138>"
+        ]
+      ],
+      "provenance": "synthetic-registry-probe",
+      "redacted_evidence": "<redacted:CRT-SEC-138>",
+      "type": "synthetic-line"
+    },
+    {
+      "case_id": "line-CRT-SEC-139",
+      "expected_rule_ids": [
+        "CRT-SEC-139"
+      ],
+      "filepath": "src/synthetic.py",
+      "lines": [
+        [
+          1,
+          "<redacted:line-CRT-SEC-139>"
+        ]
+      ],
+      "provenance": "synthetic-registry-probe",
+      "redacted_evidence": "<redacted:CRT-SEC-139>",
+      "type": "synthetic-line"
+    },
+    {
       "case_id": "line-CRT-SUP-001",
       "expected_rule_ids": [
         "CRT-SUP-001"
@@ -2981,8 +3045,8 @@
     }
   ],
   "counts": {
-    "covered": 183,
-    "expected_detectors": 183,
+    "covered": 187,
+    "expected_detectors": 187,
     "unreachable": 0
   },
   "covered_detector_ids": [
@@ -3160,6 +3224,10 @@
     "CRT-SEC-133",
     "CRT-SEC-134",
     "CRT-SEC-135",
+    "CRT-SEC-136",
+    "CRT-SEC-137",
+    "CRT-SEC-138",
+    "CRT-SEC-139",
     "CRT-SUP-001",
     "CRT-SUP-002",
     "CRT-SUP-003",
@@ -3170,9 +3238,9 @@
     "CRT-SUP-008",
     "CRT-SUP-009"
   ],
-  "fixture_sha256": "190cc98fe79dc512673c3450bd1b269db84e626a14b2d357fa5ceb3ba94624bd",
+  "fixture_sha256": "58b4211c2a949dbe2c2eb6958d0af9502da11a2f307a55aac48eb35c23205e9d",
   "known_unreachable": [],
   "schema": "coderisktools.golden-parity-corpus",
-  "source_commit": "36d281f31262640fee978e7d84089bf9aff02bf0",
+  "source_commit": "ceeaf3c0778b0ace7a78b61774c24ad64a286e25",
   "version": 1
 }
