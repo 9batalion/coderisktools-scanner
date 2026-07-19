@@ -7,8 +7,8 @@ Source of truth for candidates after merged PR #4. Candidates are classified bef
 | GitHub App installation token | GitHub | installation token | `ghs_` | Partial; format variants are documented | Medium; current GitHub family overlaps | https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-authentication-to-github | ALREADY_COVERED | Existing GitHub token family covers `ghs_` forms; do not add a duplicate yet. |
 | GitLab personal/project/group access token | GitLab | access token | `glpat-` | Prefix documented; token body/version length varies | Medium; one provider family | https://docs.gitlab.com/api/admin/token/ | ALREADY_COVERED | Existing `GITLAB_TOKEN` covers `glpat-`; separate IDs require stronger type-specific evidence. |
 | GitLab runner authentication token | GitLab | runner token | `glrt-` | Prefix and current formats documented | Low/medium | https://docs.gitlab.com/runner/register/ | ALREADY_COVERED | Existing `GITLAB_RUNNER_AUTH_TOKEN` covers current forms. |
-| Buildkite user API token | Buildkite | user API token | `bkua_` | Prefix reported in current provider tooling; exact body rules require confirmation | Low/medium | https://buildkite.com/docs/apis/rest-api/api-tokens | RESEARCH_REQUIRED | Confirm current prefix, alphabet, and length from Buildkite-owned documentation before RED. |
-| SendGrid API key | Twilio SendGrid | API key | `SG.` | Structured prefix and segmented body documented in provider examples | Low/medium | https://docs.sendgrid.com/ui/account-and-settings/api-keys | VERIFIED_READY | Candidate has a provider-specific marker and bounded segmented structure; needs collision tests against generic JWT-like text. |
+| Buildkite user API token | Buildkite | user API token | `bkua_` | Official docs confirm prefix but not exact body rules | Low/medium | https://buildkite.com/docs/platform/security/tokens; https://buildkite.com/docs/apis/mcp-server/local/installing | RESEARCH_REQUIRED | The provider says the token usually begins with `bkua_`; exact alphabet/length still needs a provider-owned format proof. |
+| SendGrid API key | Twilio SendGrid | API key | `SG.` | Existing rule has bounded segmented format | Low/medium | https://docs.sendgrid.com/ui/account-and-settings/api-keys | ALREADY_COVERED | Existing `CRT-SEC-033 SENDGRID_API_KEY` covers the segmented `SG.` format; do not duplicate it. |
 | Mailgun private API key | Mailgun | private API key | `key-` | Provider prefix documented; body length/version needs confirmation | Medium/high | https://documentation.mailgun.com/docs/mailgun/api-reference/ | RESEARCH_REQUIRED | `key-` is not sufficiently unique without exact body proof and assignment/context controls. |
 | Anthropic API key | Anthropic | API key | `sk-ant-api03-` | Prefix documented; body length/version should be pinned from current docs | Low | https://docs.anthropic.com/en/api/getting-started | ALREADY_COVERED | Existing Anthropic provider rule covers the documented family; verify before considering variants. |
 | OpenAI project API key | OpenAI | project API key | `sk-proj-` | Prefix documented; exact current body format varies | Medium | https://platform.openai.com/docs/api-reference/authentication | ALREADY_COVERED | Existing OpenAI family covers current project-key forms. |
@@ -27,12 +27,12 @@ Source of truth for candidates after merged PR #4. Candidates are classified bef
 
 ## First implementation ranking
 
-The first new batch is intentionally limited to candidates with the strongest specificity:
+The initial ranking was revalidated against the live registry. SendGrid is already covered by `CRT-SEC-033`, so it is not a new batch. The remaining candidates are research-gated:
 
-1. SendGrid API key (`SG.`) — `VERIFIED_READY`;
-2. Buildkite user API token (`bkua_`) — after official format confirmation;
-3. Linear personal API key (`lin_api_`) — after official format confirmation;
-4. Netlify personal access token (`nfp_`) — after official format confirmation;
-5. Vercel access token (`vercel_`) — after official format confirmation.
+1. Buildkite user API token (`bkua_`) — confirm exact body alphabet and length;
+2. Linear personal API key (`lin_api_`) — confirm exact body constraints;
+3. Netlify personal access token (`nfp_`) — require official format proof, not repository examples;
+4. Vercel access token (`vercel_`) — require official prefix/body proof;
+5. Snyk API token (`snyk_`) — require official token-format proof.
 
 No candidate is implemented from this document alone. Each selected candidate must pass inventory check, source research, format proof, focused RED, negative corpus, golden regeneration, full regression, and the batch report protocol.
