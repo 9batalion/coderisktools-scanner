@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 196,
+  "detector_count": 197,
   "rules": [
     {
       "category": "secret",
@@ -3975,6 +3975,24 @@
       "regex": "(?i:(?<![A-Za-z0-9-])X-Hume-Api-Key:\\s*[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-]))",
       "remediation": "Revoke the Hume API key and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-149",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "RubyGems OIDC API key role token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "RUBYGEMS_OIDC_API_KEY_ROLE",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])rg_oidc_akr_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the RubyGems OIDC API key role token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-150",
       "severity": "high"
     }
   ],

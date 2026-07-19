@@ -429,6 +429,7 @@ V3_STAGE14_SECRET_RULES: list[DetectionRule] = [
     DetectionRule("AWS_BEDROCK_LONG_TERM_API_KEY", r"(?<![A-Za-z0-9])ABSK[A-Za-z0-9+/]{128}(?![A-Za-z0-9+/=])", "high", "AWS Bedrock long-term API key", "CRT-SEC-147", "secret", "high", "Revoke the AWS Bedrock API key and replace it through a managed secret store."),
     DetectionRule("CARTESIA_API_KEY", r"(?<![A-Za-z0-9_])sk_car_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "Cartesia API key", "CRT-SEC-148", "secret", "high", "Revoke the Cartesia API key and replace it through a managed secret store."),
     DetectionRule("HUME_API_KEY_HEADER", r"(?i:(?<![A-Za-z0-9-])X-Hume-Api-Key:\s*[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-]))", "high", "Hume API key in header", "CRT-SEC-149", "secret", "high", "Revoke the Hume API key and replace it through a managed secret store."),
+    DetectionRule("RUBYGEMS_OIDC_API_KEY_ROLE", r"(?<![A-Za-z0-9_])rg_oidc_akr_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "RubyGems OIDC API key role token", "CRT-SEC-150", "secret", "high", "Revoke the RubyGems OIDC API key role token and replace it through a managed secret store."),
 ]
 for _rule in V3_STAGE14_SECRET_RULES:
     _rule.flags = 0
