@@ -25,6 +25,7 @@ class FigmaStableDetectorTests(unittest.TestCase):
             "CRT-SEC-142": "sntrys_" + "A" * 32,
             "CRT-SEC-143": "Authorization: aivenv1 " + "A" * 32,
             "CRT-SEC-144": "Authorization: FlyV1 " + "A" * 32,
+            "CRT-SEC-145": "dt0s01." + "A" * 24 + "." + "A" * 64,
         }
         for expected, token in samples.items():
             with self.subTest(expected=expected):

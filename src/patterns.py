@@ -424,6 +424,7 @@ V3_STAGE14_SECRET_RULES: list[DetectionRule] = [
     DetectionRule("SENTRY_AUTH_TOKEN_NONJWT", r"sntrys_(?!eyJ)[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "Sentry auth token", "CRT-SEC-142", "secret", "high", "Revoke the Sentry auth token and replace it through a managed secret store."),
     DetectionRule("AIVEN_AUTH_HEADER_TOKEN", r"(?:Authorization|authorization):\s*aivenv1\s+[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "Aiven API token in authorization header", "CRT-SEC-143", "secret", "high", "Revoke the Aiven API token and replace it through a managed secret store."),
     DetectionRule("FLYIO_AUTH_HEADER_TOKEN", r"(?:Authorization|authorization):\s*FlyV1\s+[A-Za-z0-9_+/=-]{20,300}(?![A-Za-z0-9_+/=-])", "high", "Fly.io API token in authorization header", "CRT-SEC-144", "secret", "high", "Revoke the Fly.io API token and replace it through a managed secret store."),
+    DetectionRule("DYNATRACE_API_TOKEN_S01", r"(?<![A-Za-z0-9])dt0s01\.[A-Za-z0-9]{24}\.[A-Za-z0-9]{64}(?![A-Za-z0-9])", "high", "Dynatrace dt0s01 API token", "CRT-SEC-145", "secret", "high", "Revoke the Dynatrace API token and replace it through a managed secret store."),
 ]
 for _rule in V3_STAGE14_SECRET_RULES:
     _rule.flags = 0
