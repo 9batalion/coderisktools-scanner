@@ -13,6 +13,9 @@ class Stage5ContextEngineTests(unittest.TestCase):
             "      - uses: actions/checkout@v4", "        with:",
             "          ref: ${{ github.event.pull_request.head.sha }}",
         ]),
+        ("CRT-CI-014", ".github/workflows/untrusted.yml", [
+            "on:", "  pull_request:", "jobs:", "  build:", "    runs-on: self-hosted",
+        ]),
         ("CRT-IAC-018", "infra/security.tf", [
             'resource "aws_security_group_rule" "remote" {',
             '  cidr_blocks = ["0.0.0.0/0"]', "  from_port = 22", "  to_port = 22", "}",
@@ -39,7 +42,7 @@ class Stage5ContextEngineTests(unittest.TestCase):
 
     def test_matcher_positive_and_line_attribution(self):
         expected_anchor_offset = {
-            "CRT-CI-009": 1, "CRT-IAC-018": 1, "CRT-IAC-021": 1, "CRT-IAC-019": 1,
+            "CRT-CI-009": 1, "CRT-CI-014": 1, "CRT-IAC-018": 1, "CRT-IAC-021": 1, "CRT-IAC-019": 1,
             "CRT-IAC-020": 2, "CRT-AI-009": 0,
         }
         for rule_id, path, lines in self.fixtures:
@@ -89,7 +92,7 @@ class Stage5ContextEngineTests(unittest.TestCase):
                 self.assertEqual(ids.count(rule_id), 1)
 
     def test_diff_mode_and_distant_hunks(self):
-        lines = self.fixtures[1][2]
+        lines = next(item[2] for item in self.fixtures if item[0] == "CRT-IAC-018")
         body = "\n".join("+" + line for line in lines)
         diff = f"diff --git a/infra/security.tf b/infra/security.tf\n--- a/infra/security.tf\n+++ b/infra/security.tf\n@@ -0,0 +1,5 @@\n{body}\n"
         result = SecretScanner(severity_threshold="low").scan_diff_text(diff)
