@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 210,
+  "detector_count": 211,
   "rules": [
     {
       "category": "secret",
@@ -4227,6 +4227,24 @@
       "regex": "(?<![A-Za-z0-9_])dp\\.ct\\.[a-z0-9]{43}(?![A-Za-z0-9_])",
       "remediation": "Revoke the Doppler config token and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-163",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Doppler service account token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "DOPPLER_SERVICE_ACCOUNT_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])dp\\.sa\\.[A-Za-z0-9]{43}(?![A-Za-z0-9_])",
+      "remediation": "Revoke the Doppler service account token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-164",
       "severity": "high"
     }
   ],
