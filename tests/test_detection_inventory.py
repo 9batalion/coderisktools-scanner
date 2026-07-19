@@ -11,10 +11,10 @@ from tools.detection_inventory import build_inventory, write_inventory
 class DetectionInventoryTests(unittest.TestCase):
     def test_authoritative_registry_reconciles_to_198(self):
         inventory = build_inventory()
-        self.assertEqual(inventory["counts"]["native_rule_count"], 229)
-        self.assertEqual(inventory["counts"]["line_rule_count"], 223)
+        self.assertEqual(inventory["counts"]["native_rule_count"], 230)
+        self.assertEqual(inventory["counts"]["line_rule_count"], 224)
         self.assertEqual(inventory["counts"]["context_rule_count"], 6)
-        self.assertEqual(sum(inventory["counts"]["category"].values()), 229)
+        self.assertEqual(sum(inventory["counts"]["category"].values()), 230)
         self.assertEqual(inventory["counts"]["infrastructure_partition"], {
             "I0_iac_cloud": 8,
             "C0_containers_kubernetes": 13,
@@ -23,7 +23,7 @@ class DetectionInventoryTests(unittest.TestCase):
     def test_detector_ids_are_unique_and_families_are_seeded(self):
         inventory = build_inventory()
         detectors = inventory["detectors"]
-        self.assertEqual(len({item["detector_id"] for item in detectors}), 229)
+        self.assertEqual(len({item["detector_id"] for item in detectors}), 230)
         self.assertTrue(all(item["family_id"].startswith("FAM-") for item in detectors))
         self.assertEqual(
             {item["family_id"] for item in inventory["families"]},
@@ -35,8 +35,8 @@ class DetectionInventoryTests(unittest.TestCase):
             output = Path(tmp) / "cli.json"
             subprocess.run([sys.executable, "tools/detection_inventory.py", "--output", str(output)], check=True)
             document = json.loads(output.read_text(encoding="utf-8"))
-        self.assertEqual(document["counts"]["native_rule_count"], 229)
-        self.assertEqual(document["counts"]["line_rule_count"], 223)
+        self.assertEqual(document["counts"]["native_rule_count"], 230)
+        self.assertEqual(document["counts"]["line_rule_count"], 224)
 
     def test_output_is_deterministic_json(self):
         with tempfile.TemporaryDirectory() as tmp:
