@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 234,
+  "detector_count": 235,
   "rules": [
     {
       "category": "secret",
@@ -1311,6 +1311,24 @@
       "regex": "\\bshppa_[0-9a-fA-F]{38}\\b",
       "remediation": "Revoke the Shopify token and create a least-privilege replacement.",
       "rule_id": "CRT-SEC-187",
+      "severity": "critical"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Shopify app secret key v2",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "SHOPIFY_SHARED_SECRET_V2",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "Shopify Developer Changelog \u2014 app secret key length and prefix format",
+        "source_lock": "66924ea",
+        "url": "https://shopify.dev/changelog/app-secret-key-length-has-increased"
+      },
+      "regex": "\\bshpss_[0-9a-fA-F]{38}\\b",
+      "remediation": "Revoke the Shopify app secret and create a least-privilege replacement.",
+      "rule_id": "CRT-SEC-188",
       "severity": "critical"
     },
     {

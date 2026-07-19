@@ -8,7 +8,7 @@ class ShopifyV2DetectorTests(unittest.TestCase):
     def setUpClass(cls):
         cls.rules = [
             next(r for r in DEFAULT_DETECTION_RULES if r.rule_id == rule_id)
-            for rule_id in ("CRT-SEC-185", "CRT-SEC-186", "CRT-SEC-187")
+            for rule_id in ("CRT-SEC-185", "CRT-SEC-186", "CRT-SEC-187", "CRT-SEC-188")
         ]
 
     def test_official_38_character_payload_variants(self):
@@ -16,6 +16,7 @@ class ShopifyV2DetectorTests(unittest.TestCase):
             "shpat_" + "a" * 38,
             "shpca_" + "b" * 38,
             "shppa_" + "c" * 38,
+            "shpss_" + "d" * 38,
         )
         for value, rule in zip(values, self.rules):
             matches = match_secret(value, [rule])

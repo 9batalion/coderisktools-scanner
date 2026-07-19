@@ -53,6 +53,11 @@ RULE_PROVENANCE = {
         "url": "https://shopify.dev/changelog/length-of-the-shopify-access-token-is-increasing",
         "license": "vendor-documentation",
     },
+    "CRT-SEC-188": {
+        "source": "Shopify Developer Changelog — app secret key length and prefix format",
+        "url": "https://shopify.dev/changelog/app-secret-key-length-has-increased",
+        "license": "vendor-documentation",
+    },
 }
 
 
