@@ -451,6 +451,8 @@ V3_STAGE14_SECRET_RULES: list[DetectionRule] = [
     DetectionRule("TAILSCALE_CLIENT_KEY", r"(?<![A-Za-z0-9_])tskey-client-[A-Za-z0-9_]{1,50}-[A-Za-z0-9_]{1,50}(?![A-Za-z0-9_])", "high", "Tailscale client key", "CRT-SEC-169", "secret", "high", "Revoke the Tailscale client key and replace it through a managed secret store."),
     DetectionRule("TAILSCALE_WEBHOOK_KEY", r"(?<![A-Za-z0-9_])tskey-webhook-[A-Za-z0-9_]{1,50}-[A-Za-z0-9_]{1,50}(?![A-Za-z0-9_])", "high", "Tailscale webhook key", "CRT-SEC-170", "secret", "high", "Revoke the Tailscale webhook key and replace it through a managed secret store."),
     DetectionRule("VAULT_RECOVERY_TOKEN", r"(?<![A-Za-z0-9_])hvr\.[A-Za-z0-9_-]{24,300}(?![A-Za-z0-9_])", "critical", "HashiCorp Vault recovery token", "CRT-SEC-171", "secret", "high", "Revoke the Vault recovery token and replace it through a managed secret store."),
+    DetectionRule("HONEYCOMB_INGEST_KEY", r"(?<![A-Za-z0-9_])hcaik_[A-Za-z0-9]{20,300}(?![A-Za-z0-9])", "high", "Honeycomb ingest API key", "CRT-SEC-172", "secret", "high", "Revoke the Honeycomb ingest API key and replace it through a managed secret store."),
+    DetectionRule("ONE_PASSWORD_SERVICE_ACCOUNT_TOKEN", r"(?<![A-Za-z0-9_])ops_[A-Za-z0-9_-]{20,500}(?![A-Za-z0-9_-])", "high", "1Password service account token", "CRT-SEC-173", "secret", "high", "Revoke the 1Password service account token and replace it through a managed secret store."),
 ]
 for _rule in V3_STAGE14_SECRET_RULES:
     _rule.flags = 0

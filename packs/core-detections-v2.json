@@ -177,7 +177,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 218,
+  "detector_count": 220,
   "rules": [
     {
       "category": "secret",
@@ -4357,7 +4357,7 @@
     },
     {
       "category": "secret",
-      "confidence": "critical",
+      "confidence": "high",
       "description": "HashiCorp Vault recovery token",
       "file_globs": [],
       "kind": "secret",
@@ -4372,6 +4372,42 @@
       "remediation": "Revoke the Vault recovery token and replace it through a managed secret store.",
       "rule_id": "CRT-SEC-171",
       "severity": "critical"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "Honeycomb ingest API key",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "HONEYCOMB_INGEST_KEY",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])hcaik_[A-Za-z0-9]{20,300}(?![A-Za-z0-9])",
+      "remediation": "Revoke the Honeycomb ingest API key and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-172",
+      "severity": "high"
+    },
+    {
+      "category": "secret",
+      "confidence": "high",
+      "description": "1Password service account token",
+      "file_globs": [],
+      "kind": "secret",
+      "name": "ONE_PASSWORD_SERVICE_ACCOUNT_TOKEN",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "regex": "(?<![A-Za-z0-9_])ops_[A-Za-z0-9_-]{20,500}(?![A-Za-z0-9_-])",
+      "remediation": "Revoke the 1Password service account token and replace it through a managed secret store.",
+      "rule_id": "CRT-SEC-173",
+      "severity": "high"
     }
   ],
   "schema": "coderisktools.rule-source-pack",

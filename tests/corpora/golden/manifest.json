@@ -1686,7 +1686,8 @@
     {
       "case_id": "line-CRT-SEC-064",
       "expected_rule_ids": [
-        "CRT-SEC-064"
+        "CRT-SEC-064",
+        "CRT-SEC-173"
       ],
       "filepath": "src/synthetic.py",
       "lines": [
@@ -3062,7 +3063,8 @@
     {
       "case_id": "line-CRT-SEC-151",
       "expected_rule_ids": [
-        "CRT-SEC-151"
+        "CRT-SEC-151",
+        "CRT-SEC-173"
       ],
       "filepath": "src/synthetic.py",
       "lines": [
@@ -3396,6 +3398,38 @@
       "type": "synthetic-line"
     },
     {
+      "case_id": "line-CRT-SEC-172",
+      "expected_rule_ids": [
+        "CRT-SEC-172"
+      ],
+      "filepath": "src/synthetic.py",
+      "lines": [
+        [
+          1,
+          "<redacted:line-CRT-SEC-172>"
+        ]
+      ],
+      "provenance": "synthetic-registry-probe",
+      "redacted_evidence": "<redacted:CRT-SEC-172>",
+      "type": "synthetic-line"
+    },
+    {
+      "case_id": "line-CRT-SEC-173",
+      "expected_rule_ids": [
+        "CRT-SEC-173"
+      ],
+      "filepath": "src/synthetic.py",
+      "lines": [
+        [
+          1,
+          "<redacted:line-CRT-SEC-173>"
+        ]
+      ],
+      "provenance": "synthetic-registry-probe",
+      "redacted_evidence": "<redacted:CRT-SEC-173>",
+      "type": "synthetic-line"
+    },
+    {
       "case_id": "line-CRT-SUP-001",
       "expected_rule_ids": [
         "CRT-SUP-001"
@@ -3542,8 +3576,8 @@
     }
   ],
   "counts": {
-    "covered": 218,
-    "expected_detectors": 218,
+    "covered": 220,
+    "expected_detectors": 220,
     "unreachable": 0
   },
   "covered_detector_ids": [
@@ -3756,6 +3790,8 @@
     "CRT-SEC-169",
     "CRT-SEC-170",
     "CRT-SEC-171",
+    "CRT-SEC-172",
+    "CRT-SEC-173",
     "CRT-SUP-001",
     "CRT-SUP-002",
     "CRT-SUP-003",
@@ -3766,9 +3802,9 @@
     "CRT-SUP-008",
     "CRT-SUP-009"
   ],
-  "fixture_sha256": "96352a88fc7fd834cf6d75477d50a51756cdf91d88bad6ac734ee427f04b66be",
+  "fixture_sha256": "2a54e829a07f5b18c7c608b03622d2335ef2ac6477d1fdbdab565ec12ca7d149",
   "known_unreachable": [],
   "schema": "coderisktools.golden-parity-corpus",
-  "source_commit": "ec5411087bec3d974c271e8d48f18ed4e52b9324",
+  "source_commit": "7e59cfd272fb27ed5fabb047b5d3505bcdd0e949",
   "version": 1
 }
