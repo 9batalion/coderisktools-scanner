@@ -432,6 +432,7 @@ V3_STAGE14_SECRET_RULES: list[DetectionRule] = [
     DetectionRule("RUBYGEMS_OIDC_API_KEY_ROLE", r"(?<![A-Za-z0-9_])rg_oidc_akr_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "RubyGems OIDC API key role token", "CRT-SEC-150", "secret", "high", "Revoke the RubyGems OIDC API key role token and replace it through a managed secret store."),
     DetectionRule("ONEPASSWORD_SERVICE_ACCOUNT_TOKEN", r"(?<![A-Za-z0-9_])ops_[A-Za-z0-9_-]{20,500}\.[A-Za-z0-9_-]{10,500}\.[A-Za-z0-9_-]{10,500}(?![A-Za-z0-9_.-])", "high", "1Password service account token", "CRT-SEC-151", "secret", "high", "Revoke the 1Password service account token and replace it through a managed secret store."),
     DetectionRule("LANGSMITH_API_KEY", r"(?<![A-Za-z0-9_])lsv2_pt_[A-Za-z0-9_-]{20,200}(?![A-Za-z0-9_-])", "high", "LangSmith API key", "CRT-SEC-152", "secret", "high", "Revoke the LangSmith API key and replace it through a managed secret store."),
+    DetectionRule("CLOUDFLARE_ACCOUNT_API_TOKEN", r"(?<![A-Za-z0-9_])cfat_[A-Za-z0-9]{40}[0-9a-f]{8}(?![A-Za-z0-9_])", "high", "Cloudflare account API token", "CRT-SEC-153", "secret", "high", "Revoke the Cloudflare account API token and replace it through a managed secret store."),
 ]
 for _rule in V3_STAGE14_SECRET_RULES:
     _rule.flags = 0
