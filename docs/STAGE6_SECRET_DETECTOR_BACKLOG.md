@@ -272,6 +272,8 @@ Source of truth for candidates after merged PR #4. Candidates are classified bef
 | Paddle API/webhook keys | Paddle | API key/webhook secret | structured `pdl_*` families | Existing structured detectors | Low | https://developer.paddle.com/api-reference/about/authentication/ | ALREADY_COVERED | Existing `CRT-SEC-180` and `CRT-SEC-181` cover documented families. |
 | Rainforest Pay API key | Rainforest Pay | production/sandbox API key | `apikey_` / `sbx_apikey_` prefixes; 64-hex example only | Official docs confirm prefixes and show an example, but do not declare body length/alphabet as a token contract | High | https://docs.rainforestpay.com/reference/authentication | REJECTED_NO_OFFICIAL_FORMAT | Example-only body constraints are insufficient for stable detection. |
 | Raycast OAuth/access token | Raycast | OAuth access token | none officially documented | OAuth flow and secure token storage documented; body format not published | High | https://developers.raycast.com/api-reference/oauth | REJECTED_NO_OFFICIAL_FORMAT | Opaque OAuth credential without complete constraints. |
+| Adafruit IO key | Adafruit | account API key | none officially documented | Official API docs identify the secret key and header/query transport; body format not published | High | https://io.adafruit.com/api/docs/ | REJECTED_NO_OFFICIAL_FORMAT | Secret transport documentation is not a stable regex contract. |
+| Apify API token | Apify | API token | none officially documented | Official API docs document token transport and lifecycle; body format not published | High | https://docs.apify.com/integrations/api | REJECTED_NO_OFFICIAL_FORMAT | No provider-owned prefix/body/length contract. |
  
  ## First implementation ranking
 
