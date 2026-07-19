@@ -10,7 +10,7 @@ class ProvisionalSecretPackTests(unittest.TestCase):
         path = Path(__file__).parents[1] / "packs" / "provisional-secret-candidates-v2.json"
         data = json.loads(path.read_text(encoding="utf-8"))
         self.assertEqual(data["tier"], "provisional")
-        self.assertEqual(len(data["rules"]), 4)
+        self.assertEqual(len(data["rules"]), 6)
         stable_ids = {rule.rule_id for rule in DEFAULT_DETECTION_RULES}
         self.assertTrue(stable_ids.isdisjoint({rule["rule_id"] for rule in data["rules"]}))
         for rule in data["rules"]:

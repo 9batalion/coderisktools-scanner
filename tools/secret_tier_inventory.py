@@ -18,7 +18,7 @@ def build_report() -> dict:
         "version": 1,
         "tiers": {
             "stable": stable,
-            "provisional": 4,
+            "provisional": 6,
             "contextual_native": sum(rule.kind == "policy" for rule in DEFAULT_CONTEXT_RULES),
             "contextual_external_pack": 28,
         },
