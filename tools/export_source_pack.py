@@ -63,6 +63,31 @@ RULE_PROVENANCE = {
         "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows",
         "license": "vendor-documentation",
     },
+    "CRT-CI-020": {
+        "source": "GitHub Docs — Using secrets in GitHub Actions",
+        "url": "https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-021": {
+        "source": "GitHub Docs — Securely using pull_request_target",
+        "url": "https://docs.github.com/en/actions/reference/security/securely-using-pull_request_target",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-022": {
+        "source": "GitHub Docs — Securely using pull_request_target",
+        "url": "https://docs.github.com/en/actions/reference/security/securely-using-pull_request_target",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-023": {
+        "source": "GitHub Docs — Events that trigger workflows",
+        "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-024": {
+        "source": "GitHub Docs — Controlling permissions for GITHUB_TOKEN",
+        "url": "https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token",
+        "license": "vendor-documentation",
+    },
     "CRT-SEC-180": {
         "source": "Paddle Developer Docs — API key format",
         "url": "https://developer.paddle.com/api-reference/about/authentication/",

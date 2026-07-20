@@ -31,3 +31,11 @@ These five rules are a bounded first batch of Stage 8. They do not change existi
 - `CRT-CI-017` `CI_MUTABLE_CONTAINER_TAG`: a workflow job/container image uses the mutable `latest` tag. Source: https://docs.github.com/en/actions/how-tos/write-workflows/choose-where-workflows-run/run-jobs-in-a-container
 - `CRT-CI-018` `GH_WORKFLOW_RUN_UNTRUSTED_CHECKOUT`: a `workflow_run` workflow checks out `github.event.workflow_run.head_sha`, combining a privileged trigger with code from the triggering run. Source: https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows
 - `CRT-CI-019` `GH_WORKFLOW_RUN_SELF_HOSTED_RUNNER`: a `workflow_run` workflow runs on a self-hosted runner. GitHub documents that untrusted code/data on this trigger can lead to cache poisoning or unintended write/secrets access. Source: https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows
+
+## Batch 3 contracts
+
+- `CRT-CI-020` `CI_SECRET_INTERPOLATION`: direct `secrets.NAME` interpolation in a workflow `run` command. GitHub warns that secrets printed or passed through command lines can be exposed in logs/process handling; environment passing is the safer boundary. Source: https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets
+- `CRT-CI-021` `GH_PR_TARGET_HEAD_REPOSITORY`: `pull_request_target` plus checkout of `github.event.pull_request.head.repo.full_name`. Source: https://docs.github.com/en/actions/reference/security/securely-using-pull_request_target
+- `CRT-CI-022` `GH_PR_TARGET_HEAD_REF_CHECKOUT`: `pull_request_target` plus checkout of `github.event.pull_request.head.ref`. Source: https://docs.github.com/en/actions/reference/security/securely-using-pull_request_target
+- `CRT-CI-023` `GH_WORKFLOW_RUN_ARTIFACT_EXECUTION`: `workflow_run` downloads an artifact and executes a local path or shell script. Source: https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows
+- `CRT-CI-024` `GH_PR_WRITE_CONTENTS_PERMISSION`: `pull_request` plus `contents: write`. Source: https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token
