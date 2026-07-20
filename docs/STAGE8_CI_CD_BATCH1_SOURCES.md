@@ -232,3 +232,10 @@ The rule is context-only, restricted to top-level workflow permissions, and does
 - Source: https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax
 
 The rule is context-only, restricted to top-level workflow permissions, and does not flag `pages: read`, job-level grants, or unrelated write permissions.
+
+## Batch 35 contracts
+
+- `CRT-CI-071` `GH_PERMISSIONS_TOP_LEVEL_ACTIONS`: top-level `actions: write` is a medium least-privilege policy review for workflow-wide Actions-management capability.
+- Source: https://docs.github.com/actions/using-jobs/assigning-permissions-to-jobs
+
+The rule is context-only, restricted to top-level workflow permissions, and does not flag `actions: read`, job-level grants, or unrelated write permissions.

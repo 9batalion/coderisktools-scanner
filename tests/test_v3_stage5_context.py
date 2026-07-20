@@ -85,6 +85,9 @@ class Stage5ContextEngineTests(unittest.TestCase):
         ("CRT-CI-070", ".github/workflows/pages.yml", [
             "permissions:", "  pages: write",
         ]),
+        ("CRT-CI-071", ".github/workflows/actions.yml", [
+            "permissions:", "  actions: write",
+        ]),
         ("CRT-IAC-018", "infra/security.tf", [
             'resource "aws_security_group_rule" "remote" {',
             '  cidr_blocks = ["0.0.0.0/0"]', "  from_port = 22", "  to_port = 22", "}",
@@ -112,7 +115,7 @@ class Stage5ContextEngineTests(unittest.TestCase):
     def test_matcher_positive_and_line_attribution(self):
         expected_anchor_offset = {
             "CRT-CI-009": 1, "CRT-CI-014": 1, "CRT-CI-018": 1, "CRT-CI-019": 1, "CRT-CI-021": 1, "CRT-CI-022": 1, "CRT-CI-023": 1, "CRT-CI-024": 1, "CRT-IAC-018": 1, "CRT-IAC-021": 1, "CRT-IAC-019": 1,
-            "CRT-IAC-020": 2, "CRT-AI-009": 0, "CRT-CI-055": 0, "CRT-CI-056": 0, "CRT-CI-057": 1, "CRT-CI-058": 0, "CRT-CI-059": 0, "CRT-CI-060": 0, "CRT-CI-061": 0, "CRT-CI-062": 0, "CRT-CI-063": 0, "CRT-CI-064": 0, "CRT-CI-065": 0, "CRT-CI-066": 0, "CRT-CI-067": 0, "CRT-CI-068": 0, "CRT-CI-069": 0, "CRT-CI-070": 0,
+            "CRT-IAC-020": 2, "CRT-AI-009": 0, "CRT-CI-055": 0, "CRT-CI-056": 0, "CRT-CI-057": 1, "CRT-CI-058": 0, "CRT-CI-059": 0, "CRT-CI-060": 0, "CRT-CI-061": 0, "CRT-CI-062": 0, "CRT-CI-063": 0, "CRT-CI-064": 0, "CRT-CI-065": 0, "CRT-CI-066": 0, "CRT-CI-067": 0, "CRT-CI-068": 0, "CRT-CI-069": 0, "CRT-CI-070": 0, "CRT-CI-071": 0,
         }
         for rule_id, path, lines in self.fixtures:
             numbered = list(enumerate(lines, 10))

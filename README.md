@@ -22,7 +22,9 @@ CodeRiskTools Secret Scanner Engine is MIT licensed, local-first, offline by def
 
 ## Verified detector coverage
 
-The current public registry contains **280 native detectors**, including **187 stable secret-format detectors**, with 267 line detectors and 13 contextual detectors. The stable secret set is source-backed and excludes provisional candidates from the stable count. The golden corpus covers all 280 native detectors with deterministic parity.
+The current public registry contains **297 native detectors**, including **187 stable secret-format detectors**, with 267 line detectors and 30 contextual detectors. The registry includes 71 CI/CD policy detectors. The stable secret set is source-backed and excludes provisional candidates from the stable count. The golden corpus covers all 297 native detectors with deterministic parity.
+
+Stage 8 CI/CD permission-scope coverage is tracked in [`docs/STAGE8_CI_CD_BATCH1_SOURCES.md`](docs/STAGE8_CI_CD_BATCH1_SOURCES.md); workflow-wide write permissions are classified as least-privilege policy reviews, not automatic exploitation claims.
 
 Stage 6 research is tracked in [`docs/STAGE6_SECRET_DETECTOR_BACKLOG.md`](docs/STAGE6_SECRET_DETECTOR_BACKLOG.md); the backlog has been revalidated through PR #49, and opaque, generic and incomplete provider formats remain explicitly excluded from stable counts.
 
