@@ -113,6 +113,31 @@ RULE_PROVENANCE = {
         "url": "https://docs.github.com/en/actions/reference/security/secure-use",
         "license": "vendor-documentation",
     },
+    "CRT-CI-030": {
+        "source": "GitHub Security Lab — workflow_run head_branch injection examples",
+        "url": "https://securitylab.github.com/advisories/GHSL-2024-274-GHSL-2024-275_Cilium/",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-031": {
+        "source": "GitHub Docs — Script injections",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-032": {
+        "source": "GitHub Docs — Script injections",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-033": {
+        "source": "GitHub Docs — Script injections",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-034": {
+        "source": "GitHub Docs — Script injections",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections",
+        "license": "vendor-documentation",
+    },
     "CRT-SEC-180": {
         "source": "Paddle Developer Docs — API key format",
         "url": "https://developer.paddle.com/api-reference/about/authentication/",

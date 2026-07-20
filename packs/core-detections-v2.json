@@ -357,7 +357,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 255,
+  "detector_count": 260,
   "rules": [
     {
       "category": "secret",
@@ -1320,6 +1320,111 @@
       "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.pull_request\\.head\\.label\\s*\\}\\}.*$",
       "remediation": "Move untrusted pull request head metadata through an environment variable and quote it before processing.",
       "rule_id": "CRT-CI-029",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates the triggering workflow head branch into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_WORKFLOW_HEAD_BRANCH",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Security Lab \u2014 workflow_run head_branch injection examples",
+        "source_lock": "66924ea",
+        "url": "https://securitylab.github.com/advisories/GHSL-2024-274-GHSL-2024-275_Cilium/"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.workflow_run\\.head_branch\\s*\\}\\}.*$",
+      "remediation": "Move the untrusted workflow branch through an environment variable and quote it before processing.",
+      "rule_id": "CRT-CI-030",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates the triggering workflow display title into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_WORKFLOW_TITLE",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Script injections",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.workflow_run\\.display_title\\s*\\}\\}.*$",
+      "remediation": "Move the untrusted workflow title through an environment variable and quote it before processing.",
+      "rule_id": "CRT-CI-031",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates the triggering commit message into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_WORKFLOW_COMMIT_MESSAGE",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Script injections",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.workflow_run\\.head_commit\\.message\\s*\\}\\}.*$",
+      "remediation": "Move the untrusted commit message through an environment variable and quote it before processing.",
+      "rule_id": "CRT-CI-032",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates a triggering pull request head ref into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_WORKFLOW_PR_HEAD_REF",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Script injections",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.workflow_run\\.pull_requests\\[\\d+\\]\\.head\\.ref\\s*\\}\\}.*$",
+      "remediation": "Move the untrusted pull request ref through an environment variable and quote it before processing.",
+      "rule_id": "CRT-CI-033",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates a pull request head ref into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_EVENT_PR_HEAD_REF",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Script injections",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.pull_request\\.head\\.ref\\s*\\}\\}.*$",
+      "remediation": "Move the untrusted pull request ref through an environment variable and quote it before processing.",
+      "rule_id": "CRT-CI-034",
       "severity": "high"
     },
     {
