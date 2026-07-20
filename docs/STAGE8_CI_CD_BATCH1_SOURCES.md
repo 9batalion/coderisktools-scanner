@@ -59,3 +59,11 @@ All five use the GitHub Actions Script injections/Secure use guidance: untrusted
 - `CRT-CI-034` `CI_SCRIPT_INJECTION_EVENT_PR_HEAD_REF`: direct `github.event.pull_request.head.ref` interpolation into `run`.
 
 The last four use the GitHub Actions Script injections/Secure use guidance for attacker-controlled event context. Sources: https://docs.github.com/en/actions/concepts/security/script-injections and https://docs.github.com/en/actions/reference/security/secure-use
+
+## Batch 6 contracts
+
+- `CRT-CI-035` `CI_SCRIPT_INJECTION_CLIENT_PAYLOAD`: direct `github.event.client_payload.*` interpolation into `run`, covering caller-supplied `repository_dispatch` payload fields. Source: https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows
+- `CRT-CI-036` `CI_SCRIPT_INJECTION_EVENT_INPUT`: direct `github.event.inputs.*` interpolation into `run` for workflow dispatch inputs. Source: https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax
+- `CRT-CI-037` `CI_SCRIPT_INJECTION_WORKFLOW_INPUT`: direct `inputs.*` interpolation into `run` for reusable-workflow or dispatch inputs. Source: https://docs.github.com/en/actions/reference/workflows-and-actions/contexts
+
+All three are restricted to workflow YAML and treat caller-controlled values as untrusted shell input.

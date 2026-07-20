@@ -357,7 +357,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 260,
+  "detector_count": 263,
   "rules": [
     {
       "category": "secret",
@@ -1425,6 +1425,69 @@
       "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.pull_request\\.head\\.ref\\s*\\}\\}.*$",
       "remediation": "Move the untrusted pull request ref through an environment variable and quote it before processing.",
       "rule_id": "CRT-CI-034",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates repository_dispatch client payload into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_CLIENT_PAYLOAD",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Events that trigger workflows / contexts",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.client_payload\\.[A-Za-z0-9_.-]+\\s*\\}\\}.*$",
+      "remediation": "Treat repository_dispatch payload fields as untrusted and pass them through a validated environment variable.",
+      "rule_id": "CRT-CI-035",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates workflow_dispatch input into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_EVENT_INPUT",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Workflow syntax and script injections",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.inputs\\.[A-Za-z0-9_.-]+\\s*\\}\\}.*$",
+      "remediation": "Treat workflow_dispatch input fields as untrusted and pass them through a validated environment variable.",
+      "rule_id": "CRT-CI-036",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates a caller input into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_WORKFLOW_INPUT",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Contexts reference",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/contexts"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*inputs\\.[A-Za-z0-9_.-]+\\s*\\}\\}.*$",
+      "remediation": "Treat reusable-workflow and dispatch inputs as untrusted and pass them through a validated environment variable.",
+      "rule_id": "CRT-CI-037",
       "severity": "high"
     },
     {
