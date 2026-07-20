@@ -673,10 +673,10 @@
         "source_lock": "66924ea",
         "url": "https://coderisktools.invalid/source-registry"
       },
-      "remediation": "Scope metadata: write to the narrowly required artifact-metadata job and keep unrelated workflow jobs on minimum token permissions.",
+      "remediation": "Scope artifact-metadata: write to the narrowly required artifact-metadata job and keep unrelated workflow jobs on minimum token permissions.",
       "required_regexes": [
         "^permissions\\s*:\\s*$",
-        "^\\s*metadata\\s*:\\s*write\\s*$"
+        "^\\s*artifact-metadata\\s*:\\s*write\\s*$"
       ],
       "rule_id": "CRT-CI-075",
       "severity": "medium"

@@ -249,7 +249,11 @@ The rule is context-only, restricted to top-level workflow permissions, and does
 
 ## Batch 40 contracts
 
-- `CRT-CI-075` `GH_PERMISSIONS_TOP_LEVEL_METADATA`: top-level `metadata: write` is a medium least-privilege policy review for artifact-metadata storage-record creation at workflow scope.
+- `CRT-CI-075` `GH_PERMISSIONS_TOP_LEVEL_METADATA`: top-level `artifact-metadata: write` is a medium least-privilege policy review for artifact-metadata storage-record creation at workflow scope.
 - Source: https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#permissions
 
-The rule is context-only, restricted to top-level workflow permissions, and does not flag `metadata: read`, job-level grants, or unrelated write permissions.
+The rule is context-only, restricted to top-level workflow permissions, and does not flag `artifact-metadata: read`, `metadata: write`, job-level grants, or unrelated write permissions.
+
+## Batch 41 correction
+
+Batch 40 originally used `metadata: write`. Direct review of the primary page and search evidence confirmed the actual YAML permission key is `artifact-metadata: write`; batch 41 corrects the regex, fixture, remediation, and source-pack entry in place while preserving detector ID `CRT-CI-075` and the detector count.
