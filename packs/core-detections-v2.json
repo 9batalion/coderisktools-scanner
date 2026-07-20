@@ -357,7 +357,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 263,
+  "detector_count": 267,
   "rules": [
     {
       "category": "secret",
@@ -1488,6 +1488,90 @@
       "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*inputs\\.[A-Za-z0-9_.-]+\\s*\\}\\}.*$",
       "remediation": "Treat reusable-workflow and dispatch inputs as untrusted and pass them through a validated environment variable.",
       "rule_id": "CRT-CI-037",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates release body into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_RELEASE_BODY",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Script injections",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.release\\.body\\s*\\}\\}.*$",
+      "remediation": "Treat release body content as untrusted and pass it through a validated environment variable.",
+      "rule_id": "CRT-CI-038",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates release name into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_RELEASE_NAME",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Script injections",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.release\\.name\\s*\\}\\}.*$",
+      "remediation": "Treat release name content as untrusted and pass it through a validated environment variable.",
+      "rule_id": "CRT-CI-039",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates edited page name into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_PAGE_NAME",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Script injections",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.pages\\[\\d+\\]\\.page_name\\s*\\}\\}.*$",
+      "remediation": "Treat page names as untrusted and pass them through a validated environment variable.",
+      "rule_id": "CRT-CI-040",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates repository default branch into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_DEFAULT_BRANCH",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Script injections",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.repository\\.default_branch\\s*\\}\\}.*$",
+      "remediation": "Treat repository context values as untrusted shell input and pass them through a validated environment variable.",
+      "rule_id": "CRT-CI-041",
       "severity": "high"
     },
     {

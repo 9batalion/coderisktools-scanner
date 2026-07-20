@@ -67,3 +67,12 @@ The last four use the GitHub Actions Script injections/Secure use guidance for a
 - `CRT-CI-037` `CI_SCRIPT_INJECTION_WORKFLOW_INPUT`: direct `inputs.*` interpolation into `run` for reusable-workflow or dispatch inputs. Source: https://docs.github.com/en/actions/reference/workflows-and-actions/contexts
 
 All three are restricted to workflow YAML and treat caller-controlled values as untrusted shell input.
+
+## Batch 7 contracts
+
+- `CRT-CI-038` `CI_SCRIPT_INJECTION_RELEASE_BODY`: direct `github.event.release.body` interpolation into `run`.
+- `CRT-CI-039` `CI_SCRIPT_INJECTION_RELEASE_NAME`: direct `github.event.release.name` interpolation into `run`.
+- `CRT-CI-040` `CI_SCRIPT_INJECTION_PAGE_NAME`: direct `github.event.pages[N].page_name` interpolation into `run`.
+- `CRT-CI-041` `CI_SCRIPT_INJECTION_DEFAULT_BRANCH`: direct `github.event.repository.default_branch` interpolation into `run`.
+
+These fields are documented by GitHub's Script injections guidance as context values that may be attacker-influenced. Source: https://docs.github.com/en/actions/concepts/security/script-injections
