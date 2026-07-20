@@ -357,7 +357,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 250,
+  "detector_count": 255,
   "rules": [
     {
       "category": "secret",
@@ -1215,6 +1215,111 @@
       "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.issue\\.(?:title|body)\\s*\\}\\}.*$",
       "remediation": "Pass untrusted issue fields through a validated environment variable and quote shell inputs.",
       "rule_id": "CRT-CI-012",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates issue or PR comment body into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_COMMENT_BODY",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Script injections",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.comment\\.body\\s*\\}\\}.*$",
+      "remediation": "Move untrusted comment content through an environment variable and quote it before processing.",
+      "rule_id": "CRT-CI-025",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates pull request review body into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_REVIEW_BODY",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Script injections",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.review\\.body\\s*\\}\\}.*$",
+      "remediation": "Move untrusted review content through an environment variable and quote it before processing.",
+      "rule_id": "CRT-CI-026",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates review comment body into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_REVIEW_COMMENT",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Script injections",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.pull_request_review_comment\\.body\\s*\\}\\}.*$",
+      "remediation": "Move untrusted review comment content through an environment variable and quote it before processing.",
+      "rule_id": "CRT-CI-027",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates discussion body into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_DISCUSSION_BODY",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Script injections",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.discussion\\.body\\s*\\}\\}.*$",
+      "remediation": "Move untrusted discussion content through an environment variable and quote it before processing.",
+      "rule_id": "CRT-CI-028",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates pull request head label into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_HEAD_LABEL",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Secure use reference",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/reference/security/secure-use"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.pull_request\\.head\\.label\\s*\\}\\}.*$",
+      "remediation": "Move untrusted pull request head metadata through an environment variable and quote it before processing.",
+      "rule_id": "CRT-CI-029",
       "severity": "high"
     },
     {

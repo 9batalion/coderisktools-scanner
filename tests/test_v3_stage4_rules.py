@@ -31,8 +31,8 @@ class Stage4RuleMatrixTests(unittest.TestCase):
     def test_stage4_registry(self):
         validate_rule_registry(DEFAULT_DETECTION_RULES)
         ids = {rule.rule_id for rule in DEFAULT_DETECTION_RULES}
-        self.assertEqual(len(DEFAULT_DETECTION_RULES), 237)
-        self.assertEqual(len(ids), 237)
+        self.assertEqual(len(DEFAULT_DETECTION_RULES), 242)
+        self.assertEqual(len(ids), 242)
         self.assertTrue({x[0] for x in self.positives}.issubset(ids))
 
     def test_stage4_positives(self):

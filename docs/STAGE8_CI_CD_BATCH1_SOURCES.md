@@ -39,3 +39,13 @@ These five rules are a bounded first batch of Stage 8. They do not change existi
 - `CRT-CI-022` `GH_PR_TARGET_HEAD_REF_CHECKOUT`: `pull_request_target` plus checkout of `github.event.pull_request.head.ref`. Source: https://docs.github.com/en/actions/reference/security/securely-using-pull_request_target
 - `CRT-CI-023` `GH_WORKFLOW_RUN_ARTIFACT_EXECUTION`: `workflow_run` downloads an artifact and executes a local path or shell script. Source: https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows
 - `CRT-CI-024` `GH_PR_WRITE_CONTENTS_PERMISSION`: `pull_request` plus `contents: write`. Source: https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token
+
+## Batch 4 contracts
+
+- `CRT-CI-025` `CI_SCRIPT_INJECTION_COMMENT_BODY`: direct `github.event.comment.body` interpolation into `run`.
+- `CRT-CI-026` `CI_SCRIPT_INJECTION_REVIEW_BODY`: direct `github.event.review.body` interpolation into `run`.
+- `CRT-CI-027` `CI_SCRIPT_INJECTION_REVIEW_COMMENT`: direct `github.event.pull_request_review_comment.body` interpolation into `run`.
+- `CRT-CI-028` `CI_SCRIPT_INJECTION_DISCUSSION_BODY`: direct `github.event.discussion.body` interpolation into `run`.
+- `CRT-CI-029` `CI_SCRIPT_INJECTION_HEAD_LABEL`: direct `github.event.pull_request.head.label` interpolation into `run`.
+
+All five use the GitHub Actions Script injections/Secure use guidance: untrusted event context must be passed through a controlled environment variable rather than interpolated into executable shell text. Sources: https://docs.github.com/en/actions/concepts/security/script-injections and https://docs.github.com/en/actions/reference/security/secure-use
