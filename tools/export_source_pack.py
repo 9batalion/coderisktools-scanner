@@ -138,6 +138,21 @@ RULE_PROVENANCE = {
         "url": "https://docs.github.com/en/actions/concepts/security/script-injections",
         "license": "vendor-documentation",
     },
+    "CRT-CI-035": {
+        "source": "GitHub Docs — Events that trigger workflows / contexts",
+        "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-036": {
+        "source": "GitHub Docs — Workflow syntax and script injections",
+        "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-037": {
+        "source": "GitHub Docs — Contexts reference",
+        "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/contexts",
+        "license": "vendor-documentation",
+    },
     "CRT-SEC-180": {
         "source": "Paddle Developer Docs — API key format",
         "url": "https://developer.paddle.com/api-reference/about/authentication/",
