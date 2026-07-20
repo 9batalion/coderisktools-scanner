@@ -146,3 +146,9 @@ The rule is context-only, limited to GitHub workflow files, and does not flag un
 - `CRT-CI-056` `GH_UPLOAD_ARTIFACT_HIDDEN_FILES`: `actions/upload-artifact` with `include-hidden-files: true` in the same bounded workflow context. The action documentation warns that hidden-file contents should be validated before enabling this option; hidden files can include sensitive material such as `.env` or repository metadata. Source: https://github.com/actions/upload-artifact
 
 The rule is context-only, restricted to workflow YAML, and does not flag unrelated actions or `include-hidden-files: false`.
+
+## Batch 19 contracts
+
+- `CRT-CI-057` `GH_PR_TARGET_CACHE_USE`: `pull_request_target` workflow using `actions/cache`. GitHub documents cache poisoning as a security risk when privileged workflows process low-trust pull request code; isolate cache scope and untrusted execution or avoid shared cache writes. Source: https://docs.github.com/en/actions/concepts/workflows-and-actions/dependency-caching
+
+The rule is context-only, restricted to workflow YAML, and does not flag ordinary `pull_request` workflows or workflows using checkout without cache.
