@@ -98,3 +98,9 @@ The environment rules require an explicit allowlist mapping before deployment; s
 - `CRT-CI-048` `CI_GITHUB_TOKEN_IN_RUN`: direct `${{ github.token }}` interpolation in a workflow `run` command. Source: https://docs.github.com/en/actions/concepts/security/github_token
 
 The rule intentionally does not flag `env: GITHUB_TOKEN:`, `with: token:`, or `secrets.GITHUB_TOKEN`; those are separate reviewed handling patterns.
+
+## Batch 11 contracts
+
+- `CRT-CI-049` `CI_DOCKER_ACTION_MUTABLE_TAG`: `uses: docker://...:latest`, a mutable Docker container action reference. Source: https://docs.github.com/en/actions/reference/security/secure-use
+
+Immutable Docker digests and explicit version tags are not flagged; existing `container:`/`image:` policy remains separate.

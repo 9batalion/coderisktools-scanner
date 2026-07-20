@@ -357,7 +357,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 274,
+  "detector_count": 275,
   "rules": [
     {
       "category": "secret",
@@ -1720,6 +1720,27 @@
       "remediation": "Pass the token through a narrowly scoped environment variable only when required and avoid direct command-line interpolation or logging.",
       "rule_id": "CRT-CI-048",
       "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Docker container action uses the mutable latest tag",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_DOCKER_ACTION_MUTABLE_TAG",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Secure use reference / container actions",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/reference/security/secure-use"
+      },
+      "regex": "^\\s*uses\\s*:\\s*docker://[^\\s@]+:latest\\s*(?:#.*)?$",
+      "remediation": "Pin Docker container actions to an immutable digest or reviewed version rather than latest.",
+      "rule_id": "CRT-CI-049",
+      "severity": "medium"
     },
     {
       "category": "ci",

@@ -208,6 +208,11 @@ RULE_PROVENANCE = {
         "url": "https://docs.github.com/en/actions/concepts/security/github_token",
         "license": "vendor-documentation",
     },
+    "CRT-CI-049": {
+        "source": "GitHub Docs — Secure use reference / container actions",
+        "url": "https://docs.github.com/en/actions/reference/security/secure-use",
+        "license": "vendor-documentation",
+    },
     "CRT-SEC-180": {
         "source": "Paddle Developer Docs — API key format",
         "url": "https://developer.paddle.com/api-reference/about/authentication/",
