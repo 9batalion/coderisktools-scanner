@@ -246,3 +246,10 @@ The rule is context-only, restricted to top-level workflow permissions, and does
 - Source: https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token
 
 The rule is context-only, restricted to top-level workflow permissions, and does not flag `checks: read`, job-level grants, or unrelated write permissions.
+
+## Batch 40 contracts
+
+- `CRT-CI-075` `GH_PERMISSIONS_TOP_LEVEL_METADATA`: top-level `metadata: write` is a medium least-privilege policy review for artifact-metadata storage-record creation at workflow scope.
+- Source: https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#permissions
+
+The rule is context-only, restricted to top-level workflow permissions, and does not flag `metadata: read`, job-level grants, or unrelated write permissions.
