@@ -152,3 +152,9 @@ The rule is context-only, restricted to workflow YAML, and does not flag unrelat
 - `CRT-CI-057` `GH_PR_TARGET_CACHE_USE`: `pull_request_target` workflow using `actions/cache`. GitHub documents cache poisoning as a security risk when privileged workflows process low-trust pull request code; isolate cache scope and untrusted execution or avoid shared cache writes. Source: https://docs.github.com/en/actions/concepts/workflows-and-actions/dependency-caching
 
 The rule is context-only, restricted to workflow YAML, and does not flag ordinary `pull_request` workflows or workflows using checkout without cache.
+
+## Batch 21 contracts
+
+- `CRT-CI-058` `GH_PERMISSIONS_WRITE_ALL`: top-level `permissions: write-all`. GitHub recommends granting `GITHUB_TOKEN` only the minimum required access; `write-all` grants write access across all available scopes. Source: https://docs.github.com/actions/using-jobs/assigning-permissions-to-jobs
+
+The rule is context-only, restricted to top-level workflow permissions, and does not flag `read-all`, individual `contents: write`, or job-level permission blocks.
