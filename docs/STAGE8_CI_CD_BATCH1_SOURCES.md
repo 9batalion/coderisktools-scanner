@@ -128,3 +128,9 @@ The allowlist is intentionally narrow; semver and prerelease tags are covered by
 - `CRT-CI-053` `CI_ACTION_CHANNEL_FLOATING_REF`: channel refs `@canary`, `@nightly`, `@beta`, `@alpha`, `@edge`, or `@experimental`. Source: https://docs.github.com/en/actions/reference/security/secure-use
 
 Channel refs are treated as mutable; full commit SHAs remain the recommended immutable pin.
+
+## Batch 16 contracts
+
+- `CRT-CI-054` `CI_ACTION_DYNAMIC_REF`: third-party action ref resolved dynamically, e.g. `uses: owner/action@${{ github.ref_name }}` or `@${{ inputs.action_ref }}`. Source: https://docs.github.com/en/actions/reference/security/secure-use
+
+Dynamic action refs are high severity and should be replaced by reviewed full commit SHAs.
