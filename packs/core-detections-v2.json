@@ -357,7 +357,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 278,
+  "detector_count": 279,
   "rules": [
     {
       "category": "secret",
@@ -1803,6 +1803,27 @@
       "regex": "^\\s*uses\\s*:\\s*[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+@(stable|release|production|develop|dev|next|vnext)\\s*(?:#.*)?$",
       "remediation": "Prefer a full-length commit SHA for named action refs; use a named tag only after reviewing and trusting its publisher.",
       "rule_id": "CRT-CI-052",
+      "severity": "medium"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Third-party workflow action uses a prerelease channel reference",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_ACTION_CHANNEL_FLOATING_REF",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Secure use reference / pin actions",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/reference/security/secure-use"
+      },
+      "regex": "^\\s*uses\\s*:\\s*[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+@(canary|nightly|beta|alpha|edge|experimental)\\s*(?:#.*)?$",
+      "remediation": "Prefer a full-length commit SHA for channel refs; use a channel tag only after reviewing and trusting its publisher.",
+      "rule_id": "CRT-CI-053",
       "severity": "medium"
     },
     {

@@ -122,3 +122,9 @@ Prerelease tags are treated as mutable references; full commit SHAs remain the r
 - `CRT-CI-052` `CI_ACTION_NAMED_FLOATING_REF`: named floating refs `@stable`, `@release`, `@production`, `@develop`, `@dev`, `@next`, or `@vnext`. Source: https://docs.github.com/en/actions/reference/security/secure-use
 
 The allowlist is intentionally narrow; semver and prerelease tags are covered by separate rules.
+
+## Batch 15 contracts
+
+- `CRT-CI-053` `CI_ACTION_CHANNEL_FLOATING_REF`: channel refs `@canary`, `@nightly`, `@beta`, `@alpha`, `@edge`, or `@experimental`. Source: https://docs.github.com/en/actions/reference/security/secure-use
+
+Channel refs are treated as mutable; full commit SHAs remain the recommended immutable pin.
