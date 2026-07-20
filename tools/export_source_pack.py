@@ -188,6 +188,21 @@ RULE_PROVENANCE = {
         "url": "https://docs.github.com/en/actions/concepts/security/script-injections",
         "license": "vendor-documentation",
     },
+    "CRT-CI-045": {
+        "source": "GitHub Docs — OpenID Connect",
+        "url": "https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-google-cloud-platform",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-046": {
+        "source": "GitHub Docs — Deployments and environments",
+        "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-047": {
+        "source": "GitHub Docs — Deployments and environments",
+        "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments",
+        "license": "vendor-documentation",
+    },
     "CRT-SEC-180": {
         "source": "Paddle Developer Docs — API key format",
         "url": "https://developer.paddle.com/api-reference/about/authentication/",

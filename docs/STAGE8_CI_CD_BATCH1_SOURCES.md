@@ -84,3 +84,11 @@ These fields are documented by GitHub's Script injections guidance as context va
 - `CRT-CI-044` `CI_SCRIPT_INJECTION_WORKFLOW_REPO_BRANCH`: direct `github.event.workflow_run.head_repository.default_branch` interpolation into `run`.
 
 Release and source-workflow context values are treated as untrusted shell input; immutable `head_sha` is intentionally not covered.
+
+## Batch 9 contracts
+
+- `CRT-CI-045` `CI_OIDC_TOKEN_PERMISSION`: `id-token: write`, a medium-severity policy signal requiring reviewed federated deployment trust conditions. Source: https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-google-cloud-platform
+- `CRT-CI-046` `CI_DYNAMIC_ENVIRONMENT_INPUT`: deployment `environment` selected directly from `inputs.*`. Source: https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments
+- `CRT-CI-047` `CI_DYNAMIC_ENVIRONMENT_REF`: deployment `environment` selected directly from `github.head_ref` or `github.ref`. Source: https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments
+
+The environment rules require an explicit allowlist mapping before deployment; static environment names and `vars.*` are not flagged.
