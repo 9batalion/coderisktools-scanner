@@ -239,3 +239,10 @@ The rule is context-only, restricted to top-level workflow permissions, and does
 - Source: https://docs.github.com/actions/using-jobs/assigning-permissions-to-jobs
 
 The rule is context-only, restricted to top-level workflow permissions, and does not flag `actions: read`, job-level grants, or unrelated write permissions.
+
+## Batch 38 contracts
+
+- `CRT-CI-074` `GH_PERMISSIONS_TOP_LEVEL_CHECKS`: top-level `checks: write` is a medium least-privilege policy review for workflow-wide check-run mutation capability.
+- Source: https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token
+
+The rule is context-only, restricted to top-level workflow permissions, and does not flag `checks: read`, job-level grants, or unrelated write permissions.
