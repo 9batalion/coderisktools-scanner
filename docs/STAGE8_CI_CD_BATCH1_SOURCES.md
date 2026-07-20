@@ -206,3 +206,9 @@ The rule is context-only, restricted to top-level workflow permissions, and does
 - `CRT-CI-066` `GH_PERMISSIONS_TOP_LEVEL_STATUSES`: top-level `statuses: write`. GitHub documents the permission as the capability to work with commit statuses; the detector flags workflow-wide status mutation for least-privilege review. Sources: https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax and https://docs.github.com/en/actions/tutorials/authenticate-with-github_token
 
 The rule is context-only, restricted to top-level workflow permissions, and does not flag `statuses: read`, job-level grants, or unrelated write permissions.
+
+## Batch 30 contracts
+
+- `CRT-CI-067` `GH_PERMISSIONS_TOP_LEVEL_WORKFLOWS`: top-level `workflows: write`. GitHub documents least-privilege workflow token configuration and recommends increasing permissions only for the individual job that requires them; the detector flags workflow-wide workflow-file mutation for review. Sources: https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token and https://docs.github.com/en/actions/reference/security/secure-use
+
+The rule is context-only, restricted to top-level workflow permissions, and does not flag `workflows: read`, job-level grants, or unrelated write permissions.
