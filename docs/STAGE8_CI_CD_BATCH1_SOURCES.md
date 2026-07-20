@@ -134,3 +134,9 @@ Channel refs are treated as mutable; full commit SHAs remain the recommended imm
 - `CRT-CI-054` `CI_ACTION_DYNAMIC_REF`: third-party action ref resolved dynamically, e.g. `uses: owner/action@${{ github.ref_name }}` or `@${{ inputs.action_ref }}`. Source: https://docs.github.com/en/actions/reference/security/secure-use
 
 Dynamic action refs are high severity and should be replaced by reviewed full commit SHAs.
+
+## Batch 17 contracts
+
+- `CRT-CI-055` `GH_CHECKOUT_PERSIST_CREDENTIALS`: `actions/checkout` with `persist-credentials: true` within the same bounded workflow context. The checkout action documents that this input persists the token in local Git configuration; disable it unless a reviewed authenticated push is required. Source: https://github.com/actions/checkout#inputs
+
+The rule is context-only, limited to GitHub workflow files, and does not flag unrelated actions or the safe `persist-credentials: false` control.
