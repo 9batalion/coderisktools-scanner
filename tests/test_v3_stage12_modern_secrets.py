@@ -236,7 +236,7 @@ class TestV3Stage12SourceBackedSecrets(unittest.TestCase):
     # ------------------------------------------------------------------
     def test_registry_count(self):
         from src.patterns import DEFAULT_DETECTION_RULES
-        self.assertEqual(len(DEFAULT_DETECTION_RULES), 263)
+        self.assertEqual(len(DEFAULT_DETECTION_RULES), 264)
 
     def test_provider_alphabet_suffixes_are_not_truncated(self):
         rules = self.rules()
