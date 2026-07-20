@@ -164,3 +164,9 @@ The rule is context-only, restricted to top-level workflow permissions, and does
 - `CRT-CI-059` `GH_PERMISSIONS_TOP_LEVEL_OIDC`: top-level `id-token: write`. GitHub documents that this permission allows an Actions job/workflow to request an OIDC JWT; it does not itself grant write access to cloud resources. The policy flags workflow-wide scope so OIDC is narrowed to the deployment job that needs it and the cloud trust policy is constrained. Sources: https://docs.github.com/en/actions/reference/security/oidc and https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-cloud-providers
 
 The rule is context-only, restricted to top-level workflow permissions, and does not flag `id-token: read`, job-level OIDC grants, or unrelated permissions.
+
+## Batch 23 contracts
+
+- `CRT-CI-060` `GH_PERMISSIONS_TOP_LEVEL_PACKAGES`: top-level `packages: write`. GitHub documents that `packages: write` is used when a workflow publishes a package with `GITHUB_TOKEN`; package publication access should be limited to the job and repositories that need it. Sources: https://docs.github.com/en/packages/managing-github-packages-using-github-actions/publishing-and-installing-a-package-with-github-actions and https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token
+
+The rule is context-only, restricted to top-level workflow permissions, and does not flag `packages: read`, job-level package grants, or unrelated write permissions.
