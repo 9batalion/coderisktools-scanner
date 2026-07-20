@@ -13,9 +13,9 @@ class SourcePackMigrationTests(unittest.TestCase):
         data = json.loads(PACK.read_text(encoding="utf-8"))
         self.assertEqual(data["schema"], "coderisktools.rule-source-pack")
         self.assertEqual(data["version"], 2)
-        self.assertEqual(data["detector_count"], 298)
+        self.assertEqual(data["detector_count"], 299)
         self.assertEqual(len(data["rules"]), 267)
-        self.assertEqual(len(data["context_rules"]), 31)
+        self.assertEqual(len(data["context_rules"]), 32)
         source_rules = {rule["rule_id"]: rule for rule in data["rules"]}
         current_rules = {rule.rule_id: rule for rule in DEFAULT_DETECTION_RULES}
         self.assertEqual(set(source_rules), set(current_rules))
