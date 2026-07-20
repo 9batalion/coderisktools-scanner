@@ -88,6 +88,31 @@ RULE_PROVENANCE = {
         "url": "https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token",
         "license": "vendor-documentation",
     },
+    "CRT-CI-025": {
+        "source": "GitHub Docs — Script injections",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-026": {
+        "source": "GitHub Docs — Script injections",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-027": {
+        "source": "GitHub Docs — Script injections",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-028": {
+        "source": "GitHub Docs — Script injections",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-029": {
+        "source": "GitHub Docs — Secure use reference",
+        "url": "https://docs.github.com/en/actions/reference/security/secure-use",
+        "license": "vendor-documentation",
+    },
     "CRT-SEC-180": {
         "source": "Paddle Developer Docs — API key format",
         "url": "https://developer.paddle.com/api-reference/about/authentication/",

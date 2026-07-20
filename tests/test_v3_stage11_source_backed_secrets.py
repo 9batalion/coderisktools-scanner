@@ -39,8 +39,8 @@ class Stage11SourceBackedRulesTests(unittest.TestCase):
 
     def test_registry_has_exact_stage11_metadata(self):
         rules = self.rules()
-        self.assertEqual(len(DEFAULT_DETECTION_RULES), 237)
-        self.assertEqual(len(rules), 237)
+        self.assertEqual(len(DEFAULT_DETECTION_RULES), 242)
+        self.assertEqual(len(rules), 242)
         for rule_id, name, _ in CASES:
             with self.subTest(rule_id=rule_id):
                 rule = rules[rule_id]
