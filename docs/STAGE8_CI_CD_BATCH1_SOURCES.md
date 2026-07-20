@@ -116,3 +116,9 @@ The rule does not flag local actions, Docker URIs, or 40-character hexadecimal c
 - `CRT-CI-051` `CI_ACTION_PRERELEASE_TAG`: prerelease third-party action tag such as `uses: owner/action@v4.0.0-beta` or `@v2-rc1`. Source: https://docs.github.com/en/actions/reference/security/secure-use
 
 Prerelease tags are treated as mutable references; full commit SHAs remain the recommended immutable pin.
+
+## Batch 14 contracts
+
+- `CRT-CI-052` `CI_ACTION_NAMED_FLOATING_REF`: named floating refs `@stable`, `@release`, `@production`, `@develop`, `@dev`, `@next`, or `@vnext`. Source: https://docs.github.com/en/actions/reference/security/secure-use
+
+The allowlist is intentionally narrow; semver and prerelease tags are covered by separate rules.
