@@ -170,3 +170,9 @@ The rule is context-only, restricted to top-level workflow permissions, and does
 - `CRT-CI-060` `GH_PERMISSIONS_TOP_LEVEL_PACKAGES`: top-level `packages: write`. GitHub documents that `packages: write` is used when a workflow publishes a package with `GITHUB_TOKEN`; package publication access should be limited to the job and repositories that need it. Sources: https://docs.github.com/en/packages/managing-github-packages-using-github-actions/publishing-and-installing-a-package-with-github-actions and https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token
 
 The rule is context-only, restricted to top-level workflow permissions, and does not flag `packages: read`, job-level package grants, or unrelated write permissions.
+
+## Batch 24 contracts
+
+- `CRT-CI-061` `GH_PERMISSIONS_TOP_LEVEL_SECURITY_EVENTS`: top-level `security-events: write`. GitHub documents this scope for workflows that upload code-scanning/SARIF results. The policy flags workflow-wide scope so only the scan/upload job receives the permission. Source: https://docs.github.com/en/code-security/code-scanning/integrating-with-code-scanning/using-code-scanning-with-your-existing-ci-system
+
+The rule is context-only, restricted to top-level workflow permissions, and does not flag `security-events: read`, job-level grants, or unrelated write permissions.
