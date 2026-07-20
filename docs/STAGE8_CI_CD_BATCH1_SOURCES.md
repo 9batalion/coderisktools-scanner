@@ -49,3 +49,13 @@ These five rules are a bounded first batch of Stage 8. They do not change existi
 - `CRT-CI-029` `CI_SCRIPT_INJECTION_HEAD_LABEL`: direct `github.event.pull_request.head.label` interpolation into `run`.
 
 All five use the GitHub Actions Script injections/Secure use guidance: untrusted event context must be passed through a controlled environment variable rather than interpolated into executable shell text. Sources: https://docs.github.com/en/actions/concepts/security/script-injections and https://docs.github.com/en/actions/reference/security/secure-use
+
+## Batch 5 contracts
+
+- `CRT-CI-030` `CI_SCRIPT_INJECTION_WORKFLOW_HEAD_BRANCH`: direct `github.event.workflow_run.head_branch` interpolation into `run`. Source: https://securitylab.github.com/advisories/GHSL-2024-274-GHSL-2024-275_Cilium/
+- `CRT-CI-031` `CI_SCRIPT_INJECTION_WORKFLOW_TITLE`: direct `github.event.workflow_run.display_title` interpolation into `run`.
+- `CRT-CI-032` `CI_SCRIPT_INJECTION_WORKFLOW_COMMIT_MESSAGE`: direct `github.event.workflow_run.head_commit.message` interpolation into `run`.
+- `CRT-CI-033` `CI_SCRIPT_INJECTION_WORKFLOW_PR_HEAD_REF`: direct `github.event.workflow_run.pull_requests[N].head.ref` interpolation into `run`.
+- `CRT-CI-034` `CI_SCRIPT_INJECTION_EVENT_PR_HEAD_REF`: direct `github.event.pull_request.head.ref` interpolation into `run`.
+
+The last four use the GitHub Actions Script injections/Secure use guidance for attacker-controlled event context. Sources: https://docs.github.com/en/actions/concepts/security/script-injections and https://docs.github.com/en/actions/reference/security/secure-use
