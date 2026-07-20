@@ -194,3 +194,9 @@ The rule is context-only, restricted to top-level workflow permissions, and does
 - `CRT-CI-064` `GH_PERMISSIONS_TOP_LEVEL_PULL_REQUESTS`: top-level `pull-requests: write`. GitHub documents workflow token permissions and the risk of sending write tokens to fork-triggered workflows; the detector flags workflow-wide pull-request mutation for least-privilege review. Sources: https://docs.github.com/en/actions/tutorials/authenticate-with-github_token and https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository
 
 The rule is context-only, restricted to top-level workflow permissions, and does not flag `pull-requests: read`, job-level grants, or unrelated write permissions.
+
+## Batch 28 contracts
+
+- `CRT-CI-065` `GH_PERMISSIONS_TOP_LEVEL_REPOSITORY_PROJECTS`: top-level `repository-projects: write`. GitHub documents repository project automation as requiring project read/write capability; the detector flags workflow-wide project mutation for least-privilege review. Source: https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/automating-projects-using-actions
+
+The rule is context-only, restricted to top-level workflow permissions, and does not flag `repository-projects: read`, job-level grants, or unrelated write permissions.
