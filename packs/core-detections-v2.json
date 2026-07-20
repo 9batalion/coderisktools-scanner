@@ -52,6 +52,57 @@
       "severity": "high"
     },
     {
+      "category": "ci",
+      "confidence": "high",
+      "description": "workflow_run workflow checks out code from the untrusted triggering run",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "max_line_span": 50,
+      "name": "GH_WORKFLOW_RUN_UNTRUSTED_CHECKOUT",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Events that trigger workflows",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows"
+      },
+      "remediation": "Do not check out untrusted workflow_run code in a privileged workflow; separate validation from privileged publication steps.",
+      "required_regexes": [
+        "^\\s*workflow_run\\s*:",
+        "uses\\s*:\\s*actions/checkout@",
+        "ref\\s*:\\s*\\$\\{\\{\\s*github\\.event\\.workflow_run\\.head_sha\\s*\\}\\}"
+      ],
+      "rule_id": "CRT-CI-018",
+      "severity": "critical"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "workflow_run workflow executes on a self-hosted runner",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "max_line_span": 50,
+      "name": "GH_WORKFLOW_RUN_SELF_HOSTED_RUNNER",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Events that trigger workflows",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows"
+      },
+      "remediation": "Use an isolated ephemeral runner and keep untrusted workflow_run data out of privileged self-hosted infrastructure.",
+      "required_regexes": [
+        "^\\s*workflow_run\\s*:",
+        "^\\s*runs-on\\s*:\\s*self-hosted\\s*$"
+      ],
+      "rule_id": "CRT-CI-019",
+      "severity": "high"
+    },
+    {
       "category": "iac",
       "confidence": "high",
       "description": "Terraform exposes SSH administration to the public internet",
@@ -202,7 +253,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 240,
+  "detector_count": 245,
   "rules": [
     {
       "category": "secret",
@@ -1081,6 +1132,69 @@
       "regex": "^\\s*clean\\s*:\\s*false\\s*(?:#.*)?$",
       "remediation": "Keep checkout cleanup enabled on persistent runners unless the workspace is isolated and explicitly reviewed.",
       "rule_id": "CRT-CI-013",
+      "severity": "medium"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow downloads and immediately pipes a remote script to a shell",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_REMOTE_SCRIPT_PIPE",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Secure use reference",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/reference/security/secure-use"
+      },
+      "regex": "^\\s*run\\s*:.*\\b(?:curl|wget)\\b[^|\\n]*\\|\\s*(?:ba)?sh\\b.*$",
+      "remediation": "Download, verify and review a pinned artifact before execution; do not pipe remote content directly to a shell.",
+      "rule_id": "CRT-CI-015",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow exposes the host Docker socket to a job or container",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_DOCKER_SOCKET_MOUNT",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Self-hosted runners",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/concepts/runners/self-hosted-runners"
+      },
+      "regex": "^\\s*-?\\s*/var/run/docker\\.sock\\s*:\\s*/var/run/docker\\.sock\\s*(?:#.*)?$",
+      "remediation": "Avoid mounting the host Docker socket; use an isolated builder or narrowly scoped rootless service.",
+      "rule_id": "CRT-CI-016",
+      "severity": "critical"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow container uses the mutable latest tag",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_MUTABLE_CONTAINER_TAG",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Running jobs in a container",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/how-tos/write-workflows/choose-where-workflows-run/run-jobs-in-a-container"
+      },
+      "regex": "^\\s*(?:container|image)\\s*:\\s*(?:[^\\s:#]+/)?[^\\s:#]+:latest\\s*(?:#.*)?$",
+      "remediation": "Pin the workflow container to an immutable version or digest and review updates explicitly.",
+      "rule_id": "CRT-CI-017",
       "severity": "medium"
     },
     {
