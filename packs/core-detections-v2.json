@@ -357,7 +357,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 270,
+  "detector_count": 273,
   "rules": [
     {
       "category": "secret",
@@ -1635,6 +1635,69 @@
       "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.workflow_run\\.head_repository\\.default_branch\\s*\\}\\}.*$",
       "remediation": "Treat source workflow repository context as untrusted shell input and pass it through a validated environment variable.",
       "rule_id": "CRT-CI-044",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow grants permission to request an OIDC token",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_OIDC_TOKEN_PERMISSION",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 OpenID Connect",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-google-cloud-platform"
+      },
+      "regex": "^\\s*id-token\\s*:\\s*write\\s*(?:#.*)?$",
+      "remediation": "Use id-token write only for reviewed federated deployments and constrain the cloud trust policy to the intended workflow.",
+      "rule_id": "CRT-CI-045",
+      "severity": "medium"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Deployment environment is selected from a caller-controlled workflow input",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_DYNAMIC_ENVIRONMENT_INPUT",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Deployments and environments",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments"
+      },
+      "regex": "^\\s*environment\\s*:\\s*\\$\\{\\{\\s*inputs\\.[A-Za-z0-9_.-]+\\s*\\}\\}\\s*$",
+      "remediation": "Map inputs to an explicit allowlist of protected environments instead of selecting an environment directly from caller input.",
+      "rule_id": "CRT-CI-046",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Deployment environment is selected from a branch or ref context",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_DYNAMIC_ENVIRONMENT_REF",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Deployments and environments",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments"
+      },
+      "regex": "^\\s*environment\\s*:\\s*\\$\\{\\{\\s*github\\.(?:head_ref|ref)\\s*\\}\\}\\s*$",
+      "remediation": "Map branch/ref values to an explicit allowlist of protected environments before deployment.",
+      "rule_id": "CRT-CI-047",
       "severity": "high"
     },
     {
