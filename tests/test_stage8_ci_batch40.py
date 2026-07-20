@@ -6,10 +6,10 @@ class Stage8CICDBatch40Tests(unittest.TestCase):
         validate_rule_registry(DEFAULT_DETECTION_RULES); validate_context_rule_registry(DEFAULT_CONTEXT_RULES)
         self.assertIn("CRT-CI-075", {r.rule_id for r in DEFAULT_CONTEXT_RULES})
     def test_top_level_metadata_write(self):
-        found={m.rule.rule_id for m in match_context_rules(list(enumerate("permissions:\n  metadata: write".splitlines(),1)),self.workflow)}
+        found={m.rule.rule_id for m in match_context_rules(list(enumerate("permissions:\n  artifact-metadata: write".splitlines(),1)),self.workflow)}
         self.assertIn("CRT-CI-075",found)
     def test_safe_scopes_do_not_match(self):
-        for content in ("permissions:\n  metadata: read", "jobs:\n  build:\n    permissions:\n      metadata: write", "permissions:\n  checks: write"):
+        for content in ("permissions:\n  artifact-metadata: read", "permissions:\n  metadata: write", "jobs:\n  build:\n    permissions:\n      artifact-metadata: write", "permissions:\n  checks: write"):
             found={m.rule.rule_id for m in match_context_rules(list(enumerate(content.splitlines(),1)),self.workflow)}
             self.assertNotIn("CRT-CI-075",found)
     def test_metadata(self):

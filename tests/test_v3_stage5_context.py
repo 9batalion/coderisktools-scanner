@@ -92,7 +92,7 @@ class Stage5ContextEngineTests(unittest.TestCase):
             "permissions:", "  checks: write",
         ]),
         ("CRT-CI-075", ".github/workflows/artifact-metadata.yml", [
-            "permissions:", "  metadata: write",
+            "permissions:", "  artifact-metadata: write",
         ]),
         ("CRT-IAC-018", "infra/security.tf", [
             'resource "aws_security_group_rule" "remote" {',
