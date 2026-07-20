@@ -257,6 +257,31 @@
       "severity": "high"
     },
     {
+      "category": "ci",
+      "confidence": "high",
+      "description": "pull_request_target workflow uses a shared dependency cache",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "max_line_span": 50,
+      "name": "GH_PR_TARGET_CACHE_USE",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "remediation": "Avoid shared cache writes in privileged pull_request_target workflows or isolate cache scope and untrusted code explicitly.",
+      "required_regexes": [
+        "^\\s*(?:on\\s*:\\s*)?pull_request_target\\s*:",
+        "^\\s*-?\\s*uses\\s*:\\s*actions/cache@"
+      ],
+      "rule_id": "CRT-CI-057",
+      "severity": "high"
+    },
+    {
       "category": "iac",
       "confidence": "high",
       "description": "Terraform exposes SSH administration to the public internet",
@@ -407,7 +432,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 282,
+  "detector_count": 283,
   "rules": [
     {
       "category": "secret",
