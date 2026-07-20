@@ -92,3 +92,9 @@ Release and source-workflow context values are treated as untrusted shell input;
 - `CRT-CI-047` `CI_DYNAMIC_ENVIRONMENT_REF`: deployment `environment` selected directly from `github.head_ref` or `github.ref`. Source: https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments
 
 The environment rules require an explicit allowlist mapping before deployment; static environment names and `vars.*` are not flagged.
+
+## Batch 10 contracts
+
+- `CRT-CI-048` `CI_GITHUB_TOKEN_IN_RUN`: direct `${{ github.token }}` interpolation in a workflow `run` command. Source: https://docs.github.com/en/actions/concepts/security/github_token
+
+The rule intentionally does not flag `env: GITHUB_TOKEN:`, `with: token:`, or `secrets.GITHUB_TOKEN`; those are separate reviewed handling patterns.
