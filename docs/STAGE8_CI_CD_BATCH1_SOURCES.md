@@ -212,3 +212,9 @@ The rule is context-only, restricted to top-level workflow permissions, and does
 - `CRT-CI-067` `GH_PERMISSIONS_TOP_LEVEL_WORKFLOWS`: top-level `workflows: write`. GitHub documents least-privilege workflow token configuration and recommends increasing permissions only for the individual job that requires them; the detector flags workflow-wide workflow-file mutation for review. Sources: https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token and https://docs.github.com/en/actions/reference/security/secure-use
 
 The rule is context-only, restricted to top-level workflow permissions, and does not flag `workflows: read`, job-level grants, or unrelated write permissions.
+
+## Batch 32 contracts
+
+- `CRT-CI-068` `GH_PERMISSIONS_TOP_LEVEL_ATTESTATIONS`: top-level `attestations: write`. GitHub documents this permission as required for artifact attestation generation; the detector flags workflow-wide attestation mutation for least-privilege review, not as automatic cloud-resource access. Sources: https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations and https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/increase-security-rating
+
+The rule is context-only, restricted to top-level workflow permissions, and does not flag `attestations: read`, job-level grants, or unrelated write permissions.
