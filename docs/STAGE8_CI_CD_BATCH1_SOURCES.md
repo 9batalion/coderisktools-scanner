@@ -188,3 +188,9 @@ The rule is context-only, restricted to top-level workflow permissions, and does
 - `CRT-CI-063` `GH_PERMISSIONS_TOP_LEVEL_ISSUES`: top-level `issues: write`. GitHub documents workflow token permissions as capability controls; the detector flags workflow-wide issue mutation for least-privilege review and recommends scoping it to the issue-management job. Source: https://docs.github.com/en/actions/tutorials/authenticate-with-github_token
 
 The rule is context-only, restricted to top-level workflow permissions, and does not flag `issues: read`, job-level grants, or unrelated write permissions.
+
+## Batch 27 contracts
+
+- `CRT-CI-064` `GH_PERMISSIONS_TOP_LEVEL_PULL_REQUESTS`: top-level `pull-requests: write`. GitHub documents workflow token permissions and the risk of sending write tokens to fork-triggered workflows; the detector flags workflow-wide pull-request mutation for least-privilege review. Sources: https://docs.github.com/en/actions/tutorials/authenticate-with-github_token and https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository
+
+The rule is context-only, restricted to top-level workflow permissions, and does not flag `pull-requests: read`, job-level grants, or unrelated write permissions.
