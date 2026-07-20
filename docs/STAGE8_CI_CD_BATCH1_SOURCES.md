@@ -176,3 +176,9 @@ The rule is context-only, restricted to top-level workflow permissions, and does
 - `CRT-CI-061` `GH_PERMISSIONS_TOP_LEVEL_SECURITY_EVENTS`: top-level `security-events: write`. GitHub documents this scope for workflows that upload code-scanning/SARIF results. The policy flags workflow-wide scope so only the scan/upload job receives the permission. Source: https://docs.github.com/en/code-security/code-scanning/integrating-with-code-scanning/using-code-scanning-with-your-existing-ci-system
 
 The rule is context-only, restricted to top-level workflow permissions, and does not flag `security-events: read`, job-level grants, or unrelated write permissions.
+
+## Batch 25 contracts
+
+- `CRT-CI-062` `GH_PERMISSIONS_TOP_LEVEL_DEPLOYMENTS`: top-level `deployments: write`. GitHub documents workflow token permissions as capability controls; the rule treats workflow-wide deployment write access as a least-privilege review and recommends scoping it to the deployment job. Source: https://docs.github.com/en/actions/tutorials/authenticate-with-github_token
+
+The rule is context-only, restricted to top-level workflow permissions, and does not flag `deployments: read`, job-level grants, or unrelated write permissions.
