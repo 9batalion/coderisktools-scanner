@@ -104,3 +104,9 @@ The rule intentionally does not flag `env: GITHUB_TOKEN:`, `with: token:`, or `s
 - `CRT-CI-049` `CI_DOCKER_ACTION_MUTABLE_TAG`: `uses: docker://...:latest`, a mutable Docker container action reference. Source: https://docs.github.com/en/actions/reference/security/secure-use
 
 Immutable Docker digests and explicit version tags are not flagged; existing `container:`/`image:` policy remains separate.
+
+## Batch 12 contracts
+
+- `CRT-CI-050` `CI_ACTION_VERSION_TAG`: third-party action referenced as `uses: owner/action@vN[.N]` instead of a full-length commit SHA. Source: https://docs.github.com/en/actions/reference/security/secure-use
+
+The rule does not flag local actions, Docker URIs, or 40-character hexadecimal commit pins.

@@ -357,7 +357,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 275,
+  "detector_count": 276,
   "rules": [
     {
       "category": "secret",
@@ -1740,6 +1740,27 @@
       "regex": "^\\s*uses\\s*:\\s*docker://[^\\s@]+:latest\\s*(?:#.*)?$",
       "remediation": "Pin Docker container actions to an immutable digest or reviewed version rather than latest.",
       "rule_id": "CRT-CI-049",
+      "severity": "medium"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Third-party workflow action is pinned to a mutable version tag",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_ACTION_VERSION_TAG",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Secure use reference / pin actions",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/reference/security/secure-use"
+      },
+      "regex": "^\\s*uses\\s*:\\s*[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+@v\\d+(?:\\.\\d+){0,2}\\s*(?:#.*)?$",
+      "remediation": "Prefer a full-length commit SHA for third-party actions; use a tag only after reviewing and trusting its publisher.",
+      "rule_id": "CRT-CI-050",
       "severity": "medium"
     },
     {
