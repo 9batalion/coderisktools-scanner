@@ -357,7 +357,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 276,
+  "detector_count": 277,
   "rules": [
     {
       "category": "secret",
@@ -1761,6 +1761,27 @@
       "regex": "^\\s*uses\\s*:\\s*[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+@v\\d+(?:\\.\\d+){0,2}\\s*(?:#.*)?$",
       "remediation": "Prefer a full-length commit SHA for third-party actions; use a tag only after reviewing and trusting its publisher.",
       "rule_id": "CRT-CI-050",
+      "severity": "medium"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Third-party workflow action uses a mutable prerelease tag",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_ACTION_PRERELEASE_TAG",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Secure use reference / pin actions",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/reference/security/secure-use"
+      },
+      "regex": "^\\s*uses\\s*:\\s*[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+@v\\d+(?:\\.\\d+){0,2}[-_.][A-Za-z0-9.-]+\\s*(?:#.*)?$",
+      "remediation": "Prefer a full-length commit SHA for prerelease actions; use a tag only after reviewing and trusting its publisher.",
+      "rule_id": "CRT-CI-051",
       "severity": "medium"
     },
     {

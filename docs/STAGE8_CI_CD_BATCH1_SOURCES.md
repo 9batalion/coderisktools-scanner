@@ -110,3 +110,9 @@ Immutable Docker digests and explicit version tags are not flagged; existing `co
 - `CRT-CI-050` `CI_ACTION_VERSION_TAG`: third-party action referenced as `uses: owner/action@vN[.N]` instead of a full-length commit SHA. Source: https://docs.github.com/en/actions/reference/security/secure-use
 
 The rule does not flag local actions, Docker URIs, or 40-character hexadecimal commit pins.
+
+## Batch 13 contracts
+
+- `CRT-CI-051` `CI_ACTION_PRERELEASE_TAG`: prerelease third-party action tag such as `uses: owner/action@v4.0.0-beta` or `@v2-rc1`. Source: https://docs.github.com/en/actions/reference/security/secure-use
+
+Prerelease tags are treated as mutable references; full commit SHAs remain the recommended immutable pin.
