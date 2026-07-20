@@ -23,3 +23,11 @@ All rules are restricted to `.github/workflows/*.yml` and `.github/workflows/*.y
 ## Scope boundary
 
 These five rules are a bounded first batch of Stage 8. They do not change existing CI rule IDs, baseline v1, public formatter schemas or exit-code semantics. Further CI/CD batches require separate RED/GREEN evidence and source review.
+
+## Batch 2 contracts
+
+- `CRT-CI-015` `CI_REMOTE_SCRIPT_PIPE`: `curl` or `wget` output is piped directly to `sh`/`bash` in a workflow `run` line. Source: https://docs.github.com/en/actions/reference/security/secure-use
+- `CRT-CI-016` `CI_DOCKER_SOCKET_MOUNT`: a workflow mounts `/var/run/docker.sock` to the same path, exposing the host Docker control socket. Source: https://docs.github.com/en/actions/concepts/runners/self-hosted-runners
+- `CRT-CI-017` `CI_MUTABLE_CONTAINER_TAG`: a workflow job/container image uses the mutable `latest` tag. Source: https://docs.github.com/en/actions/how-tos/write-workflows/choose-where-workflows-run/run-jobs-in-a-container
+- `CRT-CI-018` `GH_WORKFLOW_RUN_UNTRUSTED_CHECKOUT`: a `workflow_run` workflow checks out `github.event.workflow_run.head_sha`, combining a privileged trigger with code from the triggering run. Source: https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows
+- `CRT-CI-019` `GH_WORKFLOW_RUN_SELF_HOSTED_RUNNER`: a `workflow_run` workflow runs on a self-hosted runner. GitHub documents that untrusted code/data on this trigger can lead to cache poisoning or unintended write/secrets access. Source: https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows

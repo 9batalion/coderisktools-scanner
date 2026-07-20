@@ -16,6 +16,13 @@ class Stage5ContextEngineTests(unittest.TestCase):
         ("CRT-CI-014", ".github/workflows/untrusted.yml", [
             "on:", "  pull_request:", "jobs:", "  build:", "    runs-on: self-hosted",
         ]),
+        ("CRT-CI-018", ".github/workflows/workflow-run.yml", [
+            "on:", "  workflow_run:", "jobs:", "  build:",
+            "    - uses: actions/checkout@v4", "      ref: ${{ github.event.workflow_run.head_sha }}",
+        ]),
+        ("CRT-CI-019", ".github/workflows/workflow-run-runner.yml", [
+            "on:", "  workflow_run:", "jobs:", "  build:", "    runs-on: self-hosted",
+        ]),
         ("CRT-IAC-018", "infra/security.tf", [
             'resource "aws_security_group_rule" "remote" {',
             '  cidr_blocks = ["0.0.0.0/0"]', "  from_port = 22", "  to_port = 22", "}",
@@ -42,7 +49,7 @@ class Stage5ContextEngineTests(unittest.TestCase):
 
     def test_matcher_positive_and_line_attribution(self):
         expected_anchor_offset = {
-            "CRT-CI-009": 1, "CRT-CI-014": 1, "CRT-IAC-018": 1, "CRT-IAC-021": 1, "CRT-IAC-019": 1,
+            "CRT-CI-009": 1, "CRT-CI-014": 1, "CRT-CI-018": 1, "CRT-CI-019": 1, "CRT-IAC-018": 1, "CRT-IAC-021": 1, "CRT-IAC-019": 1,
             "CRT-IAC-020": 2, "CRT-AI-009": 0,
         }
         for rule_id, path, lines in self.fixtures:

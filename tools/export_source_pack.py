@@ -38,6 +38,31 @@ RULE_PROVENANCE = {
         "url": "https://docs.github.com/en/actions/concepts/runners/self-hosted-runners",
         "license": "vendor-documentation",
     },
+    "CRT-CI-015": {
+        "source": "GitHub Docs — Secure use reference",
+        "url": "https://docs.github.com/en/actions/reference/security/secure-use",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-016": {
+        "source": "GitHub Docs — Self-hosted runners",
+        "url": "https://docs.github.com/en/actions/concepts/runners/self-hosted-runners",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-017": {
+        "source": "GitHub Docs — Running jobs in a container",
+        "url": "https://docs.github.com/en/actions/how-tos/write-workflows/choose-where-workflows-run/run-jobs-in-a-container",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-018": {
+        "source": "GitHub Docs — Events that trigger workflows",
+        "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows",
+        "license": "vendor-documentation",
+    },
+    "CRT-CI-019": {
+        "source": "GitHub Docs — Events that trigger workflows",
+        "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows",
+        "license": "vendor-documentation",
+    },
     "CRT-SEC-180": {
         "source": "Paddle Developer Docs — API key format",
         "url": "https://developer.paddle.com/api-reference/about/authentication/",
