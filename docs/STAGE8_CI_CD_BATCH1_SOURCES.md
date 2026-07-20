@@ -140,3 +140,9 @@ Dynamic action refs are high severity and should be replaced by reviewed full co
 - `CRT-CI-055` `GH_CHECKOUT_PERSIST_CREDENTIALS`: `actions/checkout` with `persist-credentials: true` within the same bounded workflow context. The checkout action documents that this input persists the token in local Git configuration; disable it unless a reviewed authenticated push is required. Source: https://github.com/actions/checkout#inputs
 
 The rule is context-only, limited to GitHub workflow files, and does not flag unrelated actions or the safe `persist-credentials: false` control.
+
+## Batch 18 contracts
+
+- `CRT-CI-056` `GH_UPLOAD_ARTIFACT_HIDDEN_FILES`: `actions/upload-artifact` with `include-hidden-files: true` in the same bounded workflow context. The action documentation warns that hidden-file contents should be validated before enabling this option; hidden files can include sensitive material such as `.env` or repository metadata. Source: https://github.com/actions/upload-artifact
+
+The rule is context-only, restricted to workflow YAML, and does not flag unrelated actions or `include-hidden-files: false`.
