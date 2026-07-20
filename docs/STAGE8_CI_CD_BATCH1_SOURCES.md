@@ -225,3 +225,10 @@ The rule is context-only, restricted to top-level workflow permissions, and does
 - Source: https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax
 
 The rule is context-only, restricted to top-level workflow permissions, and does not flag `discussions: read`, job-level grants, or unrelated write permissions.
+
+## Batch 34 contracts
+
+- `CRT-CI-070` `GH_PERMISSIONS_TOP_LEVEL_PAGES`: top-level `pages: write` is a medium least-privilege policy review for workflow-wide Pages deployment capability.
+- Source: https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax
+
+The rule is context-only, restricted to top-level workflow permissions, and does not flag `pages: read`, job-level grants, or unrelated write permissions.
