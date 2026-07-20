@@ -4,7 +4,7 @@ This roadmap covers only the public Secret Scanner Engine. MCPwatch Scanner and 
 
 ## Now — Scanner flagship launch
 
-- [x] MIT Secret Scanner Engine 3.0.0
+- [x] MIT Secret Scanner Engine 3.0.1
 - [x] strict bounded diff parser
 - [x] pre-commit hook
 - [x] composite GitHub Action

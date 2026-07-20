@@ -8,7 +8,7 @@ CodeRiskTools Secret Scanner Engine is MIT licensed, local-first, offline by def
 
 ## What is public here
 
-- Secret Scanner Engine `3.0.0`;
+- Secret Scanner Engine `3.0.1`;
 - strict, bounded and fail-closed unified-diff parsing;
 - staged-change scanning;
 - redacted JSON, Markdown, HTML, SARIF and GitHub output;
@@ -22,7 +22,7 @@ CodeRiskTools Secret Scanner Engine is MIT licensed, local-first, offline by def
 
 ## Verified detector coverage
 
-The current public registry contains **297 native detectors**, including **187 stable secret-format detectors**, with 267 line detectors and 30 contextual detectors. The registry includes 71 CI/CD policy detectors. The stable secret set is source-backed and excludes provisional candidates from the stable count. The golden corpus covers all 297 native detectors with deterministic parity.
+The current public registry contains **299 native detectors**, including **187 stable secret-format detectors**, with 267 line detectors and 32 contextual detectors. The registry includes 73 CI/CD policy detectors. The stable secret set is source-backed and excludes provisional candidates from the stable count. The golden corpus covers all 299 native detectors with deterministic parity.
 
 Stage 8 CI/CD permission-scope coverage is tracked in [`docs/STAGE8_CI_CD_BATCH1_SOURCES.md`](docs/STAGE8_CI_CD_BATCH1_SOURCES.md); workflow-wide write permissions are classified as least-privilege policy reviews, not automatic exploitation claims.
 
@@ -89,7 +89,7 @@ Directory mode skips repository metadata, common dependency/build directories, b
 ```yaml
 repos:
   - repo: https://github.com/9batalion/coderisktools-scanner
-    rev: v3.0.0
+    rev: v3.0.1
     hooks:
       - id: coderisktools-secret-scan
 ```
@@ -111,7 +111,7 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           fetch-depth: 0
-      - uses: 9batalion/coderisktools-scanner@v3.0.0
+      - uses: 9batalion/coderisktools-scanner@v3.0.1
         with:
           profile: balanced
 ```

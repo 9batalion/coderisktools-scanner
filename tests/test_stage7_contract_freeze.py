@@ -19,7 +19,7 @@ class Stage7ContractFreezeTests(unittest.TestCase):
         return Finding(**values)
 
     def result(self, findings=None, config_changes=None, **kwargs):
-        return ScanResult("secret-config-diff-scanner", "3.0.0", "2026-07-19T00:00:00+00:00", "diff", "test.diff",
+        return ScanResult("secret-config-diff-scanner", "3.0.1", "2026-07-19T00:00:00+00:00", "diff", "test.diff",
                           findings=findings or [], config_changes=config_changes or [], **kwargs)
 
     def test_known_finding_v1_fingerprint(self):
