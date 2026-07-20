@@ -207,6 +207,31 @@
       "severity": "high"
     },
     {
+      "category": "ci",
+      "confidence": "high",
+      "description": "actions/checkout persists repository credentials in the local checkout",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "max_line_span": 12,
+      "name": "GH_CHECKOUT_PERSIST_CREDENTIALS",
+      "provenance": {
+        "license": "project-policy",
+        "source": "CodeRiskTools legacy detection registry",
+        "source_lock": "66924ea",
+        "url": "https://coderisktools.invalid/source-registry"
+      },
+      "remediation": "Set persist-credentials to false unless the workflow explicitly requires a reviewed authenticated git push.",
+      "required_regexes": [
+        "^\\s*-?\\s*uses\\s*:\\s*actions/checkout@",
+        "^\\s*persist-credentials\\s*:\\s*true\\s*$"
+      ],
+      "rule_id": "CRT-CI-055",
+      "severity": "high"
+    },
+    {
       "category": "iac",
       "confidence": "high",
       "description": "Terraform exposes SSH administration to the public internet",
@@ -357,7 +382,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 280,
+  "detector_count": 281,
   "rules": [
     {
       "category": "secret",
