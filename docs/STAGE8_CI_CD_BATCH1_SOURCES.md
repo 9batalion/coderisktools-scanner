@@ -76,3 +76,11 @@ All three are restricted to workflow YAML and treat caller-controlled values as 
 - `CRT-CI-041` `CI_SCRIPT_INJECTION_DEFAULT_BRANCH`: direct `github.event.repository.default_branch` interpolation into `run`.
 
 These fields are documented by GitHub's Script injections guidance as context values that may be attacker-influenced. Source: https://docs.github.com/en/actions/concepts/security/script-injections
+
+## Batch 8 contracts
+
+- `CRT-CI-042` `CI_SCRIPT_INJECTION_RELEASE_TAG`: direct `github.event.release.tag_name` interpolation into `run`.
+- `CRT-CI-043` `CI_SCRIPT_INJECTION_RELEASE_TARGET`: direct `github.event.release.target_commitish` interpolation into `run`.
+- `CRT-CI-044` `CI_SCRIPT_INJECTION_WORKFLOW_REPO_BRANCH`: direct `github.event.workflow_run.head_repository.default_branch` interpolation into `run`.
+
+Release and source-workflow context values are treated as untrusted shell input; immutable `head_sha` is intentionally not covered.

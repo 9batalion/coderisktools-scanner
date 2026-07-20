@@ -357,7 +357,7 @@
       "severity": "critical"
     }
   ],
-  "detector_count": 267,
+  "detector_count": 270,
   "rules": [
     {
       "category": "secret",
@@ -1572,6 +1572,69 @@
       "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.repository\\.default_branch\\s*\\}\\}.*$",
       "remediation": "Treat repository context values as untrusted shell input and pass them through a validated environment variable.",
       "rule_id": "CRT-CI-041",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates release tag name into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_RELEASE_TAG",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Script injections",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.release\\.tag_name\\s*\\}\\}.*$",
+      "remediation": "Treat release tag names as untrusted and pass them through a validated environment variable.",
+      "rule_id": "CRT-CI-042",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates release target commitish into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_RELEASE_TARGET",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Script injections",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.release\\.target_commitish\\s*\\}\\}.*$",
+      "remediation": "Treat release target commitish as untrusted and pass it through a validated environment variable.",
+      "rule_id": "CRT-CI-043",
+      "severity": "high"
+    },
+    {
+      "category": "ci",
+      "confidence": "high",
+      "description": "Workflow interpolates source workflow repository default branch into a shell command",
+      "file_globs": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "kind": "policy",
+      "name": "CI_SCRIPT_INJECTION_WORKFLOW_REPO_BRANCH",
+      "provenance": {
+        "license": "vendor-documentation",
+        "source": "GitHub Docs \u2014 Script injections / workflow_run context",
+        "source_lock": "66924ea",
+        "url": "https://docs.github.com/en/actions/concepts/security/script-injections"
+      },
+      "regex": "^\\s*run\\s*:.*\\$\\{\\{\\s*github\\.event\\.workflow_run\\.head_repository\\.default_branch\\s*\\}\\}.*$",
+      "remediation": "Treat source workflow repository context as untrusted shell input and pass it through a validated environment variable.",
+      "rule_id": "CRT-CI-044",
       "severity": "high"
     },
     {
