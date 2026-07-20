@@ -158,3 +158,9 @@ The rule is context-only, restricted to workflow YAML, and does not flag ordinar
 - `CRT-CI-058` `GH_PERMISSIONS_WRITE_ALL`: top-level `permissions: write-all`. GitHub recommends granting `GITHUB_TOKEN` only the minimum required access; `write-all` grants write access across all available scopes. Source: https://docs.github.com/actions/using-jobs/assigning-permissions-to-jobs
 
 The rule is context-only, restricted to top-level workflow permissions, and does not flag `read-all`, individual `contents: write`, or job-level permission blocks.
+
+## Batch 22 contracts
+
+- `CRT-CI-059` `GH_PERMISSIONS_TOP_LEVEL_OIDC`: top-level `id-token: write`. GitHub documents that this permission allows an Actions job/workflow to request an OIDC JWT; it does not itself grant write access to cloud resources. The policy flags workflow-wide scope so OIDC is narrowed to the deployment job that needs it and the cloud trust policy is constrained. Sources: https://docs.github.com/en/actions/reference/security/oidc and https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-cloud-providers
+
+The rule is context-only, restricted to top-level workflow permissions, and does not flag `id-token: read`, job-level OIDC grants, or unrelated permissions.

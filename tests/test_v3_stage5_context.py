@@ -49,6 +49,9 @@ class Stage5ContextEngineTests(unittest.TestCase):
         ("CRT-CI-058", ".github/workflows/permissions.yml", [
             "permissions:", "  write-all:",
         ]),
+        ("CRT-CI-059", ".github/workflows/oidc.yml", [
+            "permissions:", "  id-token: write",
+        ]),
         ("CRT-IAC-018", "infra/security.tf", [
             'resource "aws_security_group_rule" "remote" {',
             '  cidr_blocks = ["0.0.0.0/0"]', "  from_port = 22", "  to_port = 22", "}",
@@ -76,7 +79,7 @@ class Stage5ContextEngineTests(unittest.TestCase):
     def test_matcher_positive_and_line_attribution(self):
         expected_anchor_offset = {
             "CRT-CI-009": 1, "CRT-CI-014": 1, "CRT-CI-018": 1, "CRT-CI-019": 1, "CRT-CI-021": 1, "CRT-CI-022": 1, "CRT-CI-023": 1, "CRT-CI-024": 1, "CRT-IAC-018": 1, "CRT-IAC-021": 1, "CRT-IAC-019": 1,
-            "CRT-IAC-020": 2, "CRT-AI-009": 0, "CRT-CI-055": 0, "CRT-CI-056": 0, "CRT-CI-057": 1, "CRT-CI-058": 0,
+            "CRT-IAC-020": 2, "CRT-AI-009": 0, "CRT-CI-055": 0, "CRT-CI-056": 0, "CRT-CI-057": 1, "CRT-CI-058": 0, "CRT-CI-059": 0,
         }
         for rule_id, path, lines in self.fixtures:
             numbered = list(enumerate(lines, 10))
