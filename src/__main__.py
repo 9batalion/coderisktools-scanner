@@ -70,6 +70,13 @@ def main():
     scan_parser.add_argument("--quiet", action="store_true",
                             help="Only output findings, no summary")
 
+    osv_parser = subparsers.add_parser("osv-import", help="Import one explicitly supplied local OSV feed")
+    osv_parser.add_argument("--input", required=True, metavar="FILE", help="Local OSV JSON file; no URLs are accepted")
+    osv_parser.add_argument("--db", required=True, metavar="FILE", help="Target local SQLite vulnerability database")
+    osv_parser.add_argument("--snapshot-id", required=True, metavar="ID")
+    osv_parser.add_argument("--source-id", required=True, metavar="ID")
+    osv_parser.add_argument("--activate", action="store_true", help="Activate the staged snapshot after successful import")
+
     verify_parser = subparsers.add_parser("verify", help="Optionally verify one credential with explicit network consent")
     verify_parser.add_argument("--provider", required=True, choices=["github", "stripe"])
     verify_parser.add_argument("--credential-env", required=True, metavar="NAME", help="Environment variable holding the credential")
@@ -92,6 +99,21 @@ def main():
     if args.command is None:
         parser.print_help()
         sys.exit(3)
+
+    if args.command == "osv-import":
+        from .vulnerability.database import VulnerabilityDatabase
+        from .vulnerability.ingestion import ingest_osv_file
+        try:
+            database = VulnerabilityDatabase(args.db)
+            try:
+                report = ingest_osv_file(args.input, database, args.snapshot_id, args.source_id, activate=args.activate)
+            finally:
+                database.close()
+        except (OSError, ValueError, RuntimeError) as exc:
+            print(json.dumps({"state": "rejected", "errors": [str(exc)]}, indent=2))
+            sys.exit(3)
+        print(json.dumps(report.to_dict(), indent=2))
+        sys.exit(0 if report.state in {"staged", "active"} else 3)
 
     if args.command == "verify":
         if not re.fullmatch(r"[A-Z_][A-Z0-9_]{0,127}", args.credential_env):
