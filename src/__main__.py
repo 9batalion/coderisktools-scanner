@@ -76,6 +76,7 @@ def main():
     osv_parser.add_argument("--snapshot-id", required=True, metavar="ID")
     osv_parser.add_argument("--source-id", required=True, metavar="ID")
     osv_parser.add_argument("--activate", action="store_true", help="Activate the staged snapshot after successful import")
+    osv_parser.add_argument("--keyring", metavar="FILE", help="Trusted offline Ed25519 keyring; requires a signed feed envelope")
 
     verify_parser = subparsers.add_parser("verify", help="Optionally verify one credential with explicit network consent")
     verify_parser.add_argument("--provider", required=True, choices=["github", "stripe"])
@@ -106,7 +107,7 @@ def main():
         try:
             database = VulnerabilityDatabase(args.db)
             try:
-                report = ingest_osv_file(args.input, database, args.snapshot_id, args.source_id, activate=args.activate)
+                report = ingest_osv_file(args.input, database, args.snapshot_id, args.source_id, activate=args.activate, keyring_path=args.keyring)
             finally:
                 database.close()
         except (OSError, ValueError, RuntimeError) as exc:
