@@ -89,6 +89,8 @@ class ScanResult:
     vulnerability_baseline_matched: int = 0
     vulnerability_baseline_suppressed: int = 0
     vulnerability_baseline_stale: int = 0
+    vulnerability_policy_evaluated: bool = False
+    vulnerability_policy_failed: int = 0
 
     _severity_order = {"low": 0, "medium": 1, "high": 2, "critical": 3}
 
@@ -131,6 +133,8 @@ class ScanResult:
             "vulnerability_baseline_matched": self.vulnerability_baseline_matched,
             "vulnerability_baseline_suppressed": self.vulnerability_baseline_suppressed,
             "vulnerability_baseline_stale": self.vulnerability_baseline_stale,
+            "vulnerability_policy_evaluated": self.vulnerability_policy_evaluated,
+            "vulnerability_policy_failed": self.vulnerability_policy_failed,
             "failing_findings": failing_count,
             "warning_findings": warning_count,
             "baseline_suppressed": self.baseline_suppressed,
@@ -184,7 +188,7 @@ class ScanResult:
             return 2
         if any(self._severity_order.get(c.severity, 0) >= fail_rank for c in self.config_changes):
             return 2
-        if self.vulnerability_findings:
+        if self.vulnerability_findings and (not self.vulnerability_policy_evaluated or self.vulnerability_policy_failed):
             return 2
         return 0
 
@@ -452,6 +456,7 @@ class SecretScanner:
         vulnerability_baseline_path: Optional[str] = None,
         write_vulnerability_baseline_path: Optional[str] = None,
         force_vulnerability_baseline: bool = False,
+        vulnerability_policy_path: Optional[str] = None,
     ) -> ScanResult:
         """Scan directory files for secrets (not diffs, actual file content)."""
         dirpath = Path(directory)
@@ -525,6 +530,13 @@ class SecretScanner:
                 result.vulnerability_baseline_matched = vulnerability_result.matched
                 result.vulnerability_baseline_suppressed = vulnerability_result.suppressed
                 result.vulnerability_baseline_stale = vulnerability_result.stale
+                if vulnerability_policy_path:
+                    from .vulnerability.policy import load_vulnerability_policy, policy_fails
+                    policy = load_vulnerability_policy(vulnerability_policy_path)
+                    result.vulnerability_policy_evaluated = True
+                    result.vulnerability_policy_failed = sum(
+                        policy_fails(item["severity"], policy) for item in result.vulnerability_findings
+                    )
                 if write_vulnerability_baseline_path:
                     from .vulnerability.pipeline import scan_inventory
                     all_findings = scan_inventory(directory, database)

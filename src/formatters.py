@@ -344,7 +344,7 @@ def format_sarif(result: "ScanResult") -> str:
                 "shortDescription": {"text": f"Vulnerability {finding['advisory_id']}"},
                 "fullDescription": {"text": finding["explanation"]},
                 "help": {"text": "Review the affected dependency and upgrade to a fixed version when available."},
-                "properties": {"category": "vulnerability", "confidence": finding["confidence"]},
+                "properties": {"category": "vulnerability", "confidence": finding["confidence"], "severity": finding["severity"]},
             })
         results_list.append({
             "ruleId": rule_id,
@@ -360,6 +360,7 @@ def format_sarif(result: "ScanResult") -> str:
             "properties": {
                 "category": "vulnerability",
                 "confidence": finding["confidence"],
+                "severity": finding["severity"],
                 "fingerprint": finding["fingerprint"],
                 "snapshot_id": finding["snapshot_id"],
             },

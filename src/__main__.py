@@ -65,6 +65,8 @@ def main():
                             help="Write current vulnerability fingerprints to a local baseline file (with --vulnerability-db)")
     scan_parser.add_argument("--force-vulnerability-baseline", action="store_true",
                             help="Allow overwriting an existing vulnerability baseline")
+    scan_parser.add_argument("--vulnerability-policy", metavar="FILE",
+                            help="Apply explicit local vulnerability severity policy (with --vulnerability-db)")
     scan_parser.add_argument("--quiet", action="store_true",
                             help="Only output findings, no summary")
 
@@ -137,6 +139,9 @@ def main():
         if args.force_baseline and not args.write_baseline:
             print("Error: --force-baseline requires --write-baseline", file=sys.stderr)
             sys.exit(3)
+        if args.vulnerability_policy and not args.vulnerability_db:
+            print("Error: --vulnerability-policy requires --vulnerability-db", file=sys.stderr)
+            sys.exit(3)
         if (args.vulnerability_baseline or args.write_vulnerability_baseline or args.force_vulnerability_baseline) and not args.vulnerability_db:
             print("Error: vulnerability baseline options require --vulnerability-db", file=sys.stderr)
             sys.exit(3)
@@ -188,6 +193,7 @@ def main():
                     vulnerability_baseline_path=args.vulnerability_baseline,
                     write_vulnerability_baseline_path=args.write_vulnerability_baseline,
                     force_vulnerability_baseline=args.force_vulnerability_baseline,
+                    vulnerability_policy_path=args.vulnerability_policy,
                 )
             elif args.git_history:
                 result = scanner.scan_git_history(".", since_ref=args.since_ref, max_commits=args.max_commits)
