@@ -85,6 +85,10 @@ class ScanResult:
     baseline_matched: int = 0
     baseline_stale: int = 0
     vulnerability_findings: list[dict] = field(default_factory=list)
+    vulnerability_baseline_total: int = 0
+    vulnerability_baseline_matched: int = 0
+    vulnerability_baseline_suppressed: int = 0
+    vulnerability_baseline_stale: int = 0
 
     _severity_order = {"low": 0, "medium": 1, "high": 2, "critical": 3}
 
@@ -123,6 +127,10 @@ class ScanResult:
             "policy_findings": policy_count,
             "config_findings": config_count,
             "vulnerability_findings": vulnerability_count,
+            "vulnerability_baseline_total": self.vulnerability_baseline_total,
+            "vulnerability_baseline_matched": self.vulnerability_baseline_matched,
+            "vulnerability_baseline_suppressed": self.vulnerability_baseline_suppressed,
+            "vulnerability_baseline_stale": self.vulnerability_baseline_stale,
             "failing_findings": failing_count,
             "warning_findings": warning_count,
             "baseline_suppressed": self.baseline_suppressed,
@@ -436,7 +444,15 @@ class SecretScanner:
 
         return self._apply_baseline(result)
 
-    def scan_directory(self, directory: str, recursive: bool = False, vulnerability_db_path: Optional[str] = None) -> ScanResult:
+    def scan_directory(
+        self,
+        directory: str,
+        recursive: bool = False,
+        vulnerability_db_path: Optional[str] = None,
+        vulnerability_baseline_path: Optional[str] = None,
+        write_vulnerability_baseline_path: Optional[str] = None,
+        force_vulnerability_baseline: bool = False,
+    ) -> ScanResult:
         """Scan directory files for secrets (not diffs, actual file content)."""
         dirpath = Path(directory)
         if dirpath.is_symlink():
@@ -497,11 +513,26 @@ class SecretScanner:
                 self._classify_config(filepath, "modified", result, relative_path)
 
         if vulnerability_db_path:
+            from .vulnerability.baseline import load_vulnerability_baseline, write_vulnerability_baseline
             from .vulnerability.database import VulnerabilityDatabase
-            from .vulnerability.pipeline import scan_inventory
+            from .vulnerability.pipeline import scan_inventory_with_baseline
+            baseline = load_vulnerability_baseline(vulnerability_baseline_path) if vulnerability_baseline_path else set()
             database = VulnerabilityDatabase(vulnerability_db_path)
             try:
-                result.vulnerability_findings = scan_inventory(directory, database)
+                vulnerability_result = scan_inventory_with_baseline(directory, database, baseline)
+                result.vulnerability_findings = vulnerability_result.findings
+                result.vulnerability_baseline_total = vulnerability_result.total
+                result.vulnerability_baseline_matched = vulnerability_result.matched
+                result.vulnerability_baseline_suppressed = vulnerability_result.suppressed
+                result.vulnerability_baseline_stale = vulnerability_result.stale
+                if write_vulnerability_baseline_path:
+                    from .vulnerability.pipeline import scan_inventory
+                    all_findings = scan_inventory(directory, database)
+                    write_vulnerability_baseline(
+                        write_vulnerability_baseline_path,
+                        [item["fingerprint"] for item in all_findings],
+                        overwrite=force_vulnerability_baseline,
+                    )
             finally:
                 database.close()
         return self._apply_baseline(result)
