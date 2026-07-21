@@ -333,6 +333,38 @@ def format_sarif(result: "ScanResult") -> str:
             "properties": {"category": f.category, "severity": f.severity, "confidence": f.confidence, "fingerprint": f.fingerprint},
         })
 
+    # Process vulnerability findings
+    for finding in result.vulnerability_findings:
+        rule_id = "CRT-VULN-" + re.sub(r"[^A-Za-z0-9._-]+", "_", finding["advisory_id"]).strip("_")
+        if rule_id not in rule_indices:
+            rule_indices[rule_id] = len(rules)
+            rules.append({
+                "id": rule_id,
+                "name": finding["advisory_id"],
+                "shortDescription": {"text": f"Vulnerability {finding['advisory_id']}"},
+                "fullDescription": {"text": finding["explanation"]},
+                "help": {"text": "Review the affected dependency and upgrade to a fixed version when available."},
+                "properties": {"category": "vulnerability", "confidence": finding["confidence"]},
+            })
+        results_list.append({
+            "ruleId": rule_id,
+            "ruleIndex": rule_indices[rule_id],
+            "level": "warning",
+            "message": {"text": f"Vulnerability {finding['advisory_id']} affects {finding['component_purl']}"},
+            "locations": [{
+                "physicalLocation": {
+                    "artifactLocation": {"uri": finding["manifest_path"]},
+                    "region": {"startLine": 1},
+                },
+            }],
+            "properties": {
+                "category": "vulnerability",
+                "confidence": finding["confidence"],
+                "fingerprint": finding["fingerprint"],
+                "snapshot_id": finding["snapshot_id"],
+            },
+        })
+
     # Process config changes
     for c in result.config_changes:
         rule_id = _sarif_rule_id("SCDS", f"CONFIG_{c.change_type.upper()}")
