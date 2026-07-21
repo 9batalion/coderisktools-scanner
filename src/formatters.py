@@ -54,6 +54,8 @@ def format_json(result: "ScanResult") -> str:
             for c in result.config_changes
         ],
     }
+    if result.vulnerability_findings:
+        data["vulnerability_findings"] = result.vulnerability_findings
     return json.dumps(data, indent=2)
 
 

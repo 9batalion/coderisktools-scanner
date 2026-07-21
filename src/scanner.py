@@ -84,6 +84,7 @@ class ScanResult:
     baseline_total: int = 0
     baseline_matched: int = 0
     baseline_stale: int = 0
+    vulnerability_findings: list[dict] = field(default_factory=list)
 
     _severity_order = {"low": 0, "medium": 1, "high": 2, "critical": 3}
 
@@ -94,6 +95,7 @@ class ScanResult:
         secret_count = 0
         policy_count = 0
         config_count = 0
+        vulnerability_count = len(self.vulnerability_findings)
 
         for f in self.findings:
             severity_counts[f.severity] = severity_counts.get(f.severity, 0) + 1
@@ -120,6 +122,7 @@ class ScanResult:
             "secret_findings": secret_count,
             "policy_findings": policy_count,
             "config_findings": config_count,
+            "vulnerability_findings": vulnerability_count,
             "failing_findings": failing_count,
             "warning_findings": warning_count,
             "baseline_suppressed": self.baseline_suppressed,
@@ -172,6 +175,8 @@ class ScanResult:
         if any(self._severity_order.get(f.severity, 0) >= fail_rank for f in self.findings if f.type == "policy"):
             return 2
         if any(self._severity_order.get(c.severity, 0) >= fail_rank for c in self.config_changes):
+            return 2
+        if self.vulnerability_findings:
             return 2
         return 0
 
@@ -431,7 +436,7 @@ class SecretScanner:
 
         return self._apply_baseline(result)
 
-    def scan_directory(self, directory: str, recursive: bool = False) -> ScanResult:
+    def scan_directory(self, directory: str, recursive: bool = False, vulnerability_db_path: Optional[str] = None) -> ScanResult:
         """Scan directory files for secrets (not diffs, actual file content)."""
         dirpath = Path(directory)
         if dirpath.is_symlink():
@@ -491,6 +496,14 @@ class SecretScanner:
             if self.config_check:
                 self._classify_config(filepath, "modified", result, relative_path)
 
+        if vulnerability_db_path:
+            from .vulnerability.database import VulnerabilityDatabase
+            from .vulnerability.pipeline import scan_inventory
+            database = VulnerabilityDatabase(vulnerability_db_path)
+            try:
+                result.vulnerability_findings = scan_inventory(directory, database)
+            finally:
+                database.close()
         return self._apply_baseline(result)
 
     def _scan_diff_file(self, diff_file: DiffFile, target: str, result: ScanResult) -> None:

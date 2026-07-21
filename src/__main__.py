@@ -57,6 +57,8 @@ def main():
                               help="Disable config detection; explicit CLI overrides config/profile")
     scan_parser.add_argument("--recursive", action="store_true",
                             help="Recursively scan subdirectories (with --dir)")
+    scan_parser.add_argument("--vulnerability-db", metavar="FILE",
+                            help="Use an explicitly supplied local SQLite vulnerability database (with --dir)")
     scan_parser.add_argument("--quiet", action="store_true",
                             help="Only output findings, no summary")
 
@@ -129,6 +131,9 @@ def main():
         if args.force_baseline and not args.write_baseline:
             print("Error: --force-baseline requires --write-baseline", file=sys.stderr)
             sys.exit(3)
+        if args.vulnerability_db and not args.dir:
+            print("Error: --vulnerability-db requires --dir", file=sys.stderr)
+            sys.exit(3)
         if (args.since_ref or args.max_commits != 100) and not args.git_history:
             print("Error: --since-ref and --max-commits require --git-history", file=sys.stderr)
             sys.exit(3)
@@ -167,7 +172,7 @@ def main():
             elif args.staged:
                 result = scanner.scan_staged()
             elif args.dir:
-                result = scanner.scan_directory(args.dir, recursive=args.recursive)
+                result = scanner.scan_directory(args.dir, recursive=args.recursive, vulnerability_db_path=args.vulnerability_db)
             elif args.git_history:
                 result = scanner.scan_git_history(".", since_ref=args.since_ref, max_commits=args.max_commits)
             elif args.gitleaks_report:
