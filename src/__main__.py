@@ -78,6 +78,11 @@ def main():
     osv_parser.add_argument("--activate", action="store_true", help="Activate the staged snapshot after successful import")
     osv_parser.add_argument("--keyring", metavar="FILE", help="Trusted offline Ed25519 keyring; requires a signed feed envelope")
 
+    vuln_parser = subparsers.add_parser("vuln", help="Offline vulnerability inventory and scan operations")
+    vuln_actions = vuln_parser.add_subparsers(dest="vuln_action", required=True)
+    inventory_parser = vuln_actions.add_parser("inventory", help="Build a read-only local dependency inventory")
+    inventory_parser.add_argument("--root", required=True, metavar="DIR")
+
     vuln_db_parser = subparsers.add_parser("vuln-db", help="Inspect the local vulnerability snapshot store")
     vuln_db_actions = vuln_db_parser.add_subparsers(dest="vuln_db_action", required=True)
     reconcile_parser = vuln_db_actions.add_parser("reconcile", help="Emit a read-only snapshot reconciliation report")
@@ -164,6 +169,16 @@ def main():
             sys.exit(3)
         print(json.dumps(report.to_dict(), indent=2))
         sys.exit(0 if report.state in {"staged", "active"} else 3)
+
+    if args.command == "vuln":
+        from .vulnerability.inventory import build_inventory_report
+        try:
+            result = build_inventory_report(args.root)
+        except (OSError, UnicodeError, ValueError, RuntimeError) as exc:
+            print(json.dumps({"state": "rejected", "errors": [str(exc)]}), file=sys.stderr)
+            sys.exit(3)
+        print(json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2))
+        sys.exit(0)
 
     if args.command == "vuln-db":
         from .vulnerability.updater import (
