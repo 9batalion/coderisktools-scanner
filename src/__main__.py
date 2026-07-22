@@ -78,6 +78,13 @@ def main():
     osv_parser.add_argument("--activate", action="store_true", help="Activate the staged snapshot after successful import")
     osv_parser.add_argument("--keyring", metavar="FILE", help="Trusted offline Ed25519 keyring; requires a signed feed envelope")
 
+    vuln_db_parser = subparsers.add_parser("vuln-db", help="Inspect the local vulnerability snapshot store")
+    vuln_db_actions = vuln_db_parser.add_subparsers(dest="vuln_db_action", required=True)
+    reconcile_parser = vuln_db_actions.add_parser("reconcile", help="Emit a read-only snapshot reconciliation report")
+    reconcile_parser.add_argument("--root", required=True, metavar="DIR")
+    reconcile_parser.add_argument("--active", required=True, metavar="PATH")
+    reconcile_parser.add_argument("--output", metavar="FILE", help="Write the report atomically instead of stdout")
+
     verify_parser = subparsers.add_parser("verify", help="Optionally verify one credential with explicit network consent")
     verify_parser.add_argument("--provider", required=True, choices=["github", "stripe"])
     verify_parser.add_argument("--credential-env", required=True, metavar="NAME", help="Environment variable holding the credential")
@@ -115,6 +122,20 @@ def main():
             sys.exit(3)
         print(json.dumps(report.to_dict(), indent=2))
         sys.exit(0 if report.state in {"staged", "active"} else 3)
+
+    if args.command == "vuln-db":
+        from .vulnerability.updater import build_reconciliation_report
+        try:
+            reconciliation = build_reconciliation_report(args.root, args.active)
+            rendered = json.dumps(reconciliation, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+            if args.output:
+                write_private_atomic(args.output, rendered.encode("utf-8"), "reconciliation report")
+            else:
+                print(rendered, end="")
+        except (OSError, ValueError, RuntimeError) as exc:
+            print(json.dumps({"state": "reconciliation_failed", "errors": [str(exc)]}), file=sys.stderr)
+            sys.exit(3)
+        sys.exit(0 if reconciliation["state"] == "ok" else 3)
 
     if args.command == "verify":
         if not re.fullmatch(r"[A-Z_][A-Z0-9_]{0,127}", args.credential_env):
