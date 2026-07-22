@@ -59,19 +59,16 @@ git diff --check
 PASS
 ```
 
-Pełny self-scan `src/` nie był GREEN:
+Pełny self-scan `src/` po V0 follow-up jest GREEN:
 
 ```text
 secret-scanner scan --dir src --recursive --format json --profile balanced
-exit: 1
-findings: 1
-severity: medium
-file: src/__main__.py
-line: 352
-rule: CRT-SEC-020 / GENERIC_CREDENTIAL
+exit: 0
+findings: 0
+post-fix: src/__main__.py credential variable rename
 ```
 
-To wygląda na detekcję nazwy zmiennej `credential` użytej przy odczycie zmiennej środowiskowej, a nie ujawnioną wartość sekretu. Mimo to gate nie może być opisany jako GREEN bez jawnej decyzji: poprawka reguły, korekta kodu albo zatwierdzona baseline/false-positive evidence.
+Pierwszy audyt wykazał false positive na nazwie lokalnej zmiennej przy odczycie środowiskowej wartości credential. Po korekcie nazwy self-scan `src/` jest GREEN.
 
 ---
 
@@ -89,15 +86,18 @@ Master TODO: linie 2532–2546.
 - dodano testy ochrony istniejących kontraktów;
 - nie rozpoczęto implementacji bazy przed kontraktami.
 
-### Brak
+### Status po V0 follow-up
 
-- osobny ADR o oddzieleniu podatności od sekretów — Master TODO linia 2545 pozostaje niezaznaczona;
-- w repo nie znaleziono osobnego pliku ADR; separacja jest obecnie chroniona kodem/testami/dokumentacją;
-- pełny self-scan całego `src/` wymaga rozstrzygnięcia false positive z linii `src/__main__.py:352`.
+- ADR istnieje: `docs/ADR-0001-vulnerability-secret-contract-separation.md`;
+- Master TODO linia 2545 jest zaznaczona;
+- self-scan całego `src/` po korekcie: 0 findings;
+- V0 jest zamknięty w follow-up batchu.
 
-### Warunek zamknięcia
+### Evidence zamknięcia
 
-Utworzyć ADR albo jawnie zmienić TODO na kontrakt dokumentacyjny oraz zamknąć/udokumentować self-scan finding.
+- `tests/test_v0_contract_freeze.py` i `tests/test_v1_vulnerability_contracts.py`: 16 passed;
+- `python3 -m compileall -q src tests`: PASS;
+- self-scan: 0 findings.
 
 ## Stage V1 — kontrakty domenowe
 
