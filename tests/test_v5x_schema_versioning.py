@@ -11,9 +11,9 @@ from src.vulnerability.database import VulnerabilityDatabase
 class TestV5xSchemaVersioning(unittest.TestCase):
     def test_new_database_reports_initialized_current_schema(self):
         report = VulnerabilityDatabase().schema_status_report()
-        self.assertEqual(report["schema_version"], 3)
+        self.assertEqual(report["schema_version"], 4)
         self.assertEqual(report["status"], "initialized")
-        self.assertEqual(report["supported_versions"], [3])
+        self.assertEqual(report["supported_versions"], [4])
 
     def test_existing_legacy_schema_reports_migration_source(self):
         database = VulnerabilityDatabase()
@@ -21,7 +21,7 @@ class TestV5xSchemaVersioning(unittest.TestCase):
         database.connection.commit()
         database._create_schema()
         report = database.schema_status_report()
-        self.assertEqual(report["schema_version"], 3)
+        self.assertEqual(report["schema_version"], 4)
         self.assertEqual(report["status"], "migrated")
         self.assertEqual(report["migrated_from"], 1)
 
