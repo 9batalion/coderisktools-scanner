@@ -87,6 +87,7 @@ def main():
     scan_parser.add_argument("--database", required=True, metavar="FILE")
     scan_parser.add_argument("--format", choices=["json", "sarif", "markdown", "html", "csv"], default="json")
     scan_parser.add_argument("--output", metavar="FILE")
+    scan_parser.add_argument("--baseline", metavar="FILE", help="Strict local vulnerability baseline; JSON format emits new/existing/resolved delta")
 
     vuln_db_parser = subparsers.add_parser("vuln-db", help="Inspect the local vulnerability snapshot store")
     vuln_db_actions = vuln_db_parser.add_subparsers(dest="vuln_db_action", required=True)
@@ -188,6 +189,7 @@ def main():
                 build_csv_vulnerability_report,
                 build_html_vulnerability_report,
                 build_json_vulnerability_report,
+                build_json_vulnerability_delta_report,
                 build_markdown_vulnerability_report,
                 build_sarif_vulnerability_report,
             )
@@ -208,7 +210,15 @@ def main():
                 if active is None:
                     raise ValueError("vulnerability database has no active snapshot")
                 snapshot_id = active["snapshot_id"]
-                result = builders[args.format](findings, snapshot_id)
+                if args.baseline:
+                    if args.format != "json":
+                        raise ValueError("--baseline currently requires --format json")
+                    from .vulnerability.baseline import load_vulnerability_baseline
+                    result = build_json_vulnerability_delta_report(
+                        findings, snapshot_id, load_vulnerability_baseline(args.baseline)
+                    )
+                else:
+                    result = builders[args.format](findings, snapshot_id)
             finally:
                 database.close()
             if args.output:
