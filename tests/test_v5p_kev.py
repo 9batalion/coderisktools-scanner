@@ -24,12 +24,30 @@ class TestV5pKev(unittest.TestCase):
         self.assertEqual(record["advisory_id"], "OSV-KEV-1")
         self.assertEqual(record["source"], "cisa-kev")
 
+    def test_parser_rejects_invalid_kev_dates(self):
+        for field, value in (("dateAdded", "2025-02-30"), ("dueDate", "2025/01/24")):
+            record = dict(KEV)
+            record[field] = value
+            with self.assertRaises(ValueError):
+                parse_kev_record(record)
+
+    def test_parser_rejects_invalid_ransomware_flag_type(self):
+        record: dict[str, object] = dict(KEV)
+        record["knownRansomwareCampaignUse"] = 1
+        with self.assertRaises(ValueError):
+            parse_kev_record(record)
+
     def test_unknown_cve_is_rejected_without_record(self):
         database = VulnerabilityDatabase()
         stats = database.import_kev_json({"vulnerabilities": [KEV]})
         self.assertEqual(stats.advisories_imported, 0)
         with self.assertRaises(KeyError):
             database.kev_record("CVE-2025-9601")
+    def test_import_reports_malformed_json(self):
+        stats = VulnerabilityDatabase().import_kev_json("{not-json")
+        self.assertEqual(stats.records_seen, 0)
+        self.assertTrue(stats.errors)
+
 
 
 if __name__ == "__main__":
