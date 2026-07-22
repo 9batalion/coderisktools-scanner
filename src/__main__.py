@@ -84,6 +84,11 @@ def main():
     reconcile_parser.add_argument("--root", required=True, metavar="DIR")
     reconcile_parser.add_argument("--active", required=True, metavar="PATH")
     reconcile_parser.add_argument("--output", metavar="FILE", help="Write the report atomically instead of stdout")
+    status_parser = vuln_db_actions.add_parser("status", help="Show read-only snapshot-store status")
+    status_parser.add_argument("--root", required=True, metavar="DIR")
+    status_parser.add_argument("--active", required=True, metavar="PATH")
+    verify_snapshot_parser = vuln_db_actions.add_parser("verify", help="Verify one staged or active snapshot")
+    verify_snapshot_parser.add_argument("--snapshot", required=True, metavar="DIR")
 
     verify_parser = subparsers.add_parser("verify", help="Optionally verify one credential with explicit network consent")
     verify_parser.add_argument("--provider", required=True, choices=["github", "stripe"])
@@ -124,18 +129,25 @@ def main():
         sys.exit(0 if report.state in {"staged", "active"} else 3)
 
     if args.command == "vuln-db":
-        from .vulnerability.updater import build_reconciliation_report
+        from .vulnerability.updater import build_reconciliation_report, verify_versioned_snapshot
         try:
-            reconciliation = build_reconciliation_report(args.root, args.active)
-            rendered = json.dumps(reconciliation, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
-            if args.output:
-                write_private_atomic(args.output, rendered.encode("utf-8"), "reconciliation report")
+            emit = True
+            if args.vuln_db_action == "verify":
+                result = verify_versioned_snapshot(args.snapshot)
             else:
-                print(rendered, end="")
-        except (OSError, ValueError, RuntimeError) as exc:
-            print(json.dumps({"state": "reconciliation_failed", "errors": [str(exc)]}), file=sys.stderr)
+                result = build_reconciliation_report(args.root, args.active)
+                if args.vuln_db_action == "reconcile" and args.output:
+                    rendered = json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+                    write_private_atomic(args.output, rendered.encode("utf-8"), "reconciliation report")
+                    emit = False
+            if emit:
+                print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
+        except (OSError, ValueError, RuntimeError, KeyError) as exc:
+            print(json.dumps({"state": "rejected", "errors": [str(exc)]}), file=sys.stderr)
             sys.exit(3)
-        sys.exit(0 if reconciliation["state"] == "ok" else 3)
+        if args.vuln_db_action == "verify":
+            sys.exit(0)
+        sys.exit(0 if result["state"] == "ok" else 3)
 
     if args.command == "verify":
         if not re.fullmatch(r"[A-Z_][A-Z0-9_]{0,127}", args.credential_env):
