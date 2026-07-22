@@ -128,6 +128,9 @@ def main():
     source_status_parser.add_argument("--active", required=True, metavar="PATH")
     database_info_parser = vuln_db_actions.add_parser("database-info", help="Show verified active database metadata")
     database_info_parser.add_argument("--active", required=True, metavar="PATH")
+    explain_parser = vuln_db_actions.add_parser("explain", help="Explain one persisted vulnerability match")
+    explain_parser.add_argument("--database", required=True, metavar="FILE")
+    explain_parser.add_argument("--fingerprint", required=True, metavar="FINGERPRINT")
     fetch_parser = vuln_db_actions.add_parser("fetch", help="Explicitly fetch one allowlisted HTTPS JSON artifact")
     fetch_parser.add_argument("--url", required=True, metavar="URL")
     fetch_parser.add_argument("--allowed-host", action="append", required=True, metavar="HOST")
@@ -286,6 +289,10 @@ def main():
                 result = build_source_status_report(args.root, args.active)
             elif args.vuln_db_action == "database-info":
                 result = build_database_info(args.active)
+            elif args.vuln_db_action == "explain":
+                from .vulnerability.database import VulnerabilityDatabase
+                with VulnerabilityDatabase(args.database) as database:
+                    result = database.explain_match(args.fingerprint)
             elif args.vuln_db_action == "fetch":
                 if args.conditions and (args.etag is not None or args.last_modified is not None):
                     raise ValueError("--conditions cannot be combined with --etag or --last-modified")
