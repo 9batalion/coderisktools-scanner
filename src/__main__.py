@@ -349,13 +349,13 @@ def main():
         if not re.fullmatch(r"[A-Z_][A-Z0-9_]{0,127}", args.credential_env):
             print("Error: --credential-env must be a bounded uppercase environment name", file=sys.stderr)
             sys.exit(3)
-        credential = os.environ.get(args.credential_env)
-        if not credential:
+        credential_value = os.environ.get(args.credential_env)
+        if not credential_value:
             print("Error: credential environment variable is missing or empty", file=sys.stderr)
             sys.exit(3)
         from .verification import CredentialVerifier
         try:
-            outcome = CredentialVerifier(enabled=True).verify(args.provider, credential, consent=args.consent_network)
+            outcome = CredentialVerifier(enabled=True).verify(args.provider, credential_value, consent=args.consent_network)
         except (ValueError, RuntimeError) as exc:
             print(f"Error: {exc}", file=sys.stderr)
             sys.exit(3)
