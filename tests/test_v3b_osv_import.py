@@ -58,7 +58,7 @@ class TestV3bImport(unittest.TestCase):
         self.assertEqual(metrics["advisories"], 1)
         self.assertEqual(metrics["affected_packages"], 1)
         self.assertEqual(metrics["withdrawn_advisories"], 0)
-        self.assertEqual(metrics["schema_version"], "3")
+        self.assertEqual(metrics["schema_version"], "4")
         self.assertEqual(metrics["snapshot_id"], "osv-2025-01-02")
         self.assertEqual(metrics["source_digest"], "sha256:fixture")
 
