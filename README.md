@@ -11,7 +11,7 @@ CodeRiskTools Secret Scanner Engine is MIT licensed, local-first, offline by def
 - Secret Scanner Engine `3.0.1`;
 - strict, bounded and fail-closed unified-diff parsing;
 - staged-change scanning;
-- redacted JSON, Markdown, HTML, SARIF and GitHub output;
+- JSON, Markdown, HTML, SARIF and GitHub output;
 - baselines and allowlists;
 - signed rule-pack verification support;
 - bounded Git-history mode;
@@ -22,11 +22,30 @@ CodeRiskTools Secret Scanner Engine is MIT licensed, local-first, offline by def
 
 ## Verified detector coverage
 
-The current public registry contains **299 native detectors**, including **187 stable secret-format detectors**, with 267 line detectors and 32 contextual detectors. The registry includes 73 CI/CD policy detectors. The stable secret set is source-backed and excludes provisional candidates from the stable count. The golden corpus covers all 299 native detectors with deterministic parity.
+The current public registry contains **297 native detectors**, including **187 stable secret-format detectors**, with 267 line detectors and 32 contextual detectors. The registry includes 73 CI/CD policy detectors. The stable secret set is source-backed and excludes provisional candidates from the stable count. The golden corpus covers all 297 native detectors with deterministic parity.
 
 Stage 8 CI/CD permission-scope coverage is tracked in [`docs/STAGE8_CI_CD_BATCH1_SOURCES.md`](docs/STAGE8_CI_CD_BATCH1_SOURCES.md); workflow-wide write permissions are classified as least-privilege policy reviews, not automatic exploitation claims.
 
 Stage 6 research is tracked in [`docs/STAGE6_SECRET_DETECTOR_BACKLOG.md`](docs/STAGE6_SECRET_DETECTOR_BACKLOG.md); the backlog has been revalidated through PR #49, and opaque, generic and incomplete provider formats remain explicitly excluded from stable counts.
+
+## Local vulnerability enrichment
+
+The scanner also has an explicit, offline vulnerability path backed by a supplied SQLite database. It is opt-in and does not change legacy secret/config scan behavior when `--vulnerability-db` is absent.
+
+```bash
+secret-scanner scan --dir . --vulnerability-db vulnerability.sqlite --format json
+```
+
+The current enrichment track includes:
+
+- active-snapshot-only matching and a separate vulnerability baseline;
+- OSV, NVD, KEV, CVE v5 and GHSA import boundaries;
+- deterministic provenance, coverage and quality reports;
+- versioned database schema status and fail-closed future-version handling;
+- NVD configuration semantics (`AND`, `OR`, `negate`, nested children);
+- NVD references, source tags and change-history readback.
+
+These features are local enrichment capabilities, not a complete or automatically updated vulnerability feed. See [Vulnerability pipeline](docs/V4A-VULNERABILITY-PIPELINE.md), [Vulnerability baseline and SARIF](docs/V4B-VULNERABILITY-BASELINE-SARIF.md), [V5x schema versioning](docs/V5X-SCHEMA-VERSIONING.md), [V5y NVD configuration semantics](docs/V5Y-NVD-CONFIGURATION-SEMANTICS.md), and [V5z NVD references/tags/history](docs/V5Z-NVD-REFERENCES-TAGS-HISTORY.md).
 
 ## Product boundary
 
@@ -127,7 +146,8 @@ The Scanner can accept strict offline envelopes for generic, Codex-labelled and 
 - offline by default;
 - no telemetry;
 - no runtime dependencies;
-- redacted findings by default;
+- runtime evidence preservation is a required remediation contract; the current formatter migration is tracked as an open audit finding;
+- publication-safe redaction must be a separate explicit boundary, not an implicit runtime contract;
 - strict malformed-diff rejection;
 - absolute/traversal path rejection;
 - bounded diff, file and line inputs;
