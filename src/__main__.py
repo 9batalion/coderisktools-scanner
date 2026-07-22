@@ -82,6 +82,11 @@ def main():
     vuln_actions = vuln_parser.add_subparsers(dest="vuln_action", required=True)
     inventory_parser = vuln_actions.add_parser("inventory", help="Build a read-only local dependency inventory")
     inventory_parser.add_argument("--root", required=True, metavar="DIR")
+    scan_parser = vuln_actions.add_parser("scan", help="Scan a local repository against an active local vulnerability database")
+    scan_parser.add_argument("--root", required=True, metavar="DIR")
+    scan_parser.add_argument("--database", required=True, metavar="FILE")
+    scan_parser.add_argument("--format", choices=["json", "sarif", "markdown", "html", "csv"], default="json")
+    scan_parser.add_argument("--output", metavar="FILE")
 
     vuln_db_parser = subparsers.add_parser("vuln-db", help="Inspect the local vulnerability snapshot store")
     vuln_db_actions = vuln_db_parser.add_subparsers(dest="vuln_db_action", required=True)
@@ -171,14 +176,52 @@ def main():
         sys.exit(0 if report.state in {"staged", "active"} else 3)
 
     if args.command == "vuln":
-        from .vulnerability.inventory import build_inventory_report
         try:
-            result = build_inventory_report(args.root)
+            if args.vuln_action == "inventory":
+                from .vulnerability.inventory import build_inventory_report
+                result = json.dumps(build_inventory_report(args.root), ensure_ascii=False, sort_keys=True, indent=2).encode("utf-8")
+                sys.stdout.buffer.write(result + b"\n")
+                sys.exit(0)
+            from .vulnerability.database import VulnerabilityDatabase
+            from .vulnerability.pipeline import scan_inventory
+            from .vulnerability.reporting import (
+                build_csv_vulnerability_report,
+                build_html_vulnerability_report,
+                build_json_vulnerability_report,
+                build_markdown_vulnerability_report,
+                build_sarif_vulnerability_report,
+            )
+            database_path = Path(args.database)
+            if database_path.is_symlink() or not database_path.is_file() or "\n" in args.database or "://" in args.database:
+                raise ValueError("scan requires a local regular SQLite database path")
+            database = VulnerabilityDatabase.read_only(args.database)
+            try:
+                findings = scan_inventory(args.root, database)
+                builders = {
+                    "json": build_json_vulnerability_report,
+                    "sarif": build_sarif_vulnerability_report,
+                    "markdown": build_markdown_vulnerability_report,
+                    "html": build_html_vulnerability_report,
+                    "csv": build_csv_vulnerability_report,
+                }
+                active = database.active_snapshot()
+                if active is None:
+                    raise ValueError("vulnerability database has no active snapshot")
+                snapshot_id = active["snapshot_id"]
+                result = builders[args.format](findings, snapshot_id)
+            finally:
+                database.close()
+            if args.output:
+                output_path = Path(args.output)
+                if output_path.is_symlink():
+                    raise ValueError("scan output must not be a symlink")
+                output_path.write_bytes(result)
+            else:
+                sys.stdout.buffer.write(result)
+            sys.exit(1 if findings else 0)
         except (OSError, UnicodeError, ValueError, RuntimeError) as exc:
             print(json.dumps({"state": "rejected", "errors": [str(exc)]}), file=sys.stderr)
             sys.exit(3)
-        print(json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2))
-        sys.exit(0)
 
     if args.command == "vuln-db":
         from .vulnerability.updater import (
