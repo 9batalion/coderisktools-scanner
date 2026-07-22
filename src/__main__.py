@@ -117,6 +117,7 @@ def main():
     fetch_parser.add_argument("--source-id", required=True, metavar="ID")
     fetch_parser.add_argument("--output", required=True, metavar="FILE")
     fetch_parser.add_argument("--provenance", metavar="FILE")
+    fetch_parser.add_argument("--conditions", metavar="FILE", help="Verified provenance sidecar for conditional request headers")
     fetch_parser.add_argument("--etag", metavar="VALUE")
     fetch_parser.add_argument("--last-modified", metavar="VALUE")
     fetch_parser.add_argument("--max-bytes", type=int, default=64 * 1024 * 1024, metavar="N")
@@ -168,6 +169,7 @@ def main():
             FetchConditions,
             FetchPolicy,
             fetch_json_artifact,
+            load_fetch_conditions,
             persist_downloaded_artifact,
             prune_versioned_snapshots,
             stage_offline_update,
@@ -194,10 +196,13 @@ def main():
             elif args.vuln_db_action == "source-status":
                 result = build_source_status_report(args.root, args.active)
             elif args.vuln_db_action == "fetch":
+                if args.conditions and (args.etag is not None or args.last_modified is not None):
+                    raise ValueError("--conditions cannot be combined with --etag or --last-modified")
+                conditions = load_fetch_conditions(args.conditions) if args.conditions else FetchConditions(etag=args.etag, last_modified=args.last_modified)
                 artifact = fetch_json_artifact(
                     args.url,
                     FetchPolicy(frozenset(args.allowed_host), max_bytes=args.max_bytes, timeout=args.timeout),
-                    conditions=FetchConditions(etag=args.etag, last_modified=args.last_modified),
+                    conditions=conditions,
                 )
                 if artifact.not_modified:
                     result = {**build_source_provenance(args.source_id, artifact), "state": "not_modified"}
