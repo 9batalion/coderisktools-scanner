@@ -184,8 +184,8 @@ def main():
         try:
             if args.vuln_action == "inventory":
                 if args.sbom:
-                    from .vulnerability.sbom import build_cyclonedx_inventory_report
-                    result = build_cyclonedx_inventory_report(args.sbom)
+                    from .vulnerability.sbom import build_sbom_inventory_report
+                    result = build_sbom_inventory_report(args.sbom)
                 else:
                     from .vulnerability.inventory import build_inventory_report
                     result = build_inventory_report(args.root)
