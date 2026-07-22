@@ -2,6 +2,20 @@
 
 All notable changes to `coderisktools-scanner` are documented here.
 
+## [Unreleased]
+
+### Vulnerability enrichment
+
+- versioned the local vulnerability database schema with explicit initialization, migration, current-state reporting and fail-closed future-version handling;
+- preserved NVD configuration logic instead of flattening it: node `AND`/`OR`, `negate`, nested children and a legacy flat CPE projection are all available;
+- preserved NVD references, source tags and CVE change history through parser, SQLite enrichment and normalized reports;
+- added deterministic readback tests and documentation for the V5x–V5z contracts.
+
+### Scanner evidence boundary
+
+- documented the required distinction between runtime remediation evidence and publication-safe redaction;
+- runtime evidence preservation remains an open formatter/pipeline audit finding; checked-in/public artifacts remain synthetic or explicitly redacted.
+
 ## [3.0.1] — 2026-07-20
 
 ### Changed

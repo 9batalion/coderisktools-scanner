@@ -11,6 +11,8 @@ This roadmap covers only the public Secret Scanner Engine. MCPwatch Scanner and 
 - [x] synthetic test corpus
 - [x] first public tagged release
 - [x] GitHub Private Vulnerability Reporting
+- [x] opt-in offline vulnerability enrichment with separate baseline and active-snapshot boundary
+- [x] versioned vulnerability schema status and NVD metadata readback (V5x–V5z)
 - [ ] maintainer identity and verified support links
 - [ ] short public demo that does not execute target code
 
