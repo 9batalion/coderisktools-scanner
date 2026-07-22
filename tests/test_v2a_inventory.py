@@ -84,6 +84,18 @@ class TestV2aPackageLock(unittest.TestCase):
         self.assertEqual(warnings, [])
         self.assertEqual(components[0].purl, "pkg:npm/left-pad@1.3.0")
 
+    def test_scoped_package_uses_canonical_npm_purl(self):
+        payload = {"lockfileVersion": 3, "packages": {"node_modules/@scope/pkg": {"version": "1.0.0"}}}
+        components, unresolved, warnings = parse_package_lock(json.dumps(payload))
+        self.assertEqual(unresolved, [])
+        self.assertEqual(warnings, [])
+        self.assertEqual(components[0].purl, "pkg:npm/%40scope/pkg@1.0.0")
+
+    def test_package_lock_rejects_excessive_package_count(self):
+        payload = {"lockfileVersion": 3, "packages": {f"node_modules/pkg-{i}": {"version": "1.0.0"} for i in range(200_001)}}
+        with self.assertRaisesRegex(ValueError, "bounded"):
+            parse_package_lock(json.dumps(payload))
+
     def test_invalid_package_lock_is_reported(self):
         with self.assertRaises(ValueError):
             parse_package_lock("[]")
