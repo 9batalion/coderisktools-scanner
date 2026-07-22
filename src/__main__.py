@@ -87,6 +87,7 @@ def main():
     inventory_source.add_argument("--osv-scanner", metavar="FILE", help="Local OSV-Scanner JSON external-evidence report")
     inventory_source.add_argument("--trivy", metavar="FILE", help="Local Trivy JSON external-evidence report")
     inventory_source.add_argument("--grype", metavar="FILE", help="Local Grype JSON external-evidence report")
+    inventory_parser.add_argument("--provenance", metavar="FILE", help="Verified provenance sidecar for external evidence")
     scan_parser = vuln_actions.add_parser("scan", help="Scan a local repository against an active local vulnerability database")
     scan_parser.add_argument("--root", required=True, metavar="DIR")
     scan_parser.add_argument("--database", required=True, metavar="FILE")
@@ -189,21 +190,30 @@ def main():
     if args.command == "vuln":
         try:
             if args.vuln_action == "inventory":
+                evidence_source = None
                 if args.osv_scanner:
                     from .vulnerability.sbom import build_osv_scanner_evidence_report
                     result = build_osv_scanner_evidence_report(args.osv_scanner)
+                    evidence_source = args.osv_scanner
                 elif args.trivy:
                     from .vulnerability.sbom import build_trivy_evidence_report
                     result = build_trivy_evidence_report(args.trivy)
+                    evidence_source = args.trivy
                 elif args.grype:
                     from .vulnerability.sbom import build_grype_evidence_report
                     result = build_grype_evidence_report(args.grype)
+                    evidence_source = args.grype
                 elif args.sbom:
                     from .vulnerability.sbom import build_sbom_inventory_report
                     result = build_sbom_inventory_report(args.sbom)
                 else:
                     from .vulnerability.inventory import build_inventory_report
                     result = build_inventory_report(args.root)
+                if args.provenance:
+                    if evidence_source is None:
+                        raise ValueError("--provenance requires --osv-scanner, --trivy, or --grype")
+                    from .vulnerability.sbom import attach_external_evidence_provenance
+                    result = attach_external_evidence_provenance(result, evidence_source, args.provenance)
                 result = json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2).encode("utf-8")
                 sys.stdout.buffer.write(result + b"\n")
                 sys.exit(0)

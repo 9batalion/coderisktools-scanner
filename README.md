@@ -234,7 +234,16 @@ This is intentionally not dependency inventory. The output schema is:
 coderisktools.vulnerability.external-evidence
 ```
 
-Each finding is marked `evidence_type: external-tool` and retains the OSV-Scanner source path, package identity, vulnerability ID and aliases. The adapter validates tool version, bounded arrays, package identity, PURL and aliases. It does not run OSV-Scanner.
+Each finding is marked `evidence_type: external-tool` and retains the OSV-Scanner source path, package identity, vulnerability ID and aliases. The provenance sidecar is optional and is verified against the actual input bytes:
+
+```bash
+secret-scanner vuln inventory \
+  --osv-scanner osv-scanner.json \
+  --provenance osv-scanner.provenance.json
+```
+
+The sidecar schema is `coderisktools.vulnerability.external-evidence-provenance` v1 and includes `source_id`, `source_format`, `source_sha256`, timezone-aware `collected_at`, `collector` and `tool_version`. The source digest and tool identity must match the evidence report. Tampered or mismatched sidecars fail closed. The adapter also validates tool version, bounded arrays, package identity, PURL and aliases. It does not run OSV-Scanner.
+
 
 ## 4. Local vulnerability scanning
 
