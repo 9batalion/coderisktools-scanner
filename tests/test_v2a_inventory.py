@@ -7,7 +7,7 @@ from pathlib import Path
 
 from src.vulnerability.inventory import InventoryResult, UnresolvedDependency, build_inventory
 from src.vulnerability.parsers.package_lock import parse_package_lock
-from src.vulnerability.parsers.requirements import parse_requirements
+from src.vulnerability.parsers.requirements import parse_requirements, parse_requirements_file
 
 
 class TestV2aRequirements(unittest.TestCase):
@@ -37,6 +37,28 @@ class TestV2aRequirements(unittest.TestCase):
         self.assertEqual(components, [])
         self.assertEqual(unresolved, [])
         self.assertEqual(len(warnings), 2)
+
+    def test_requirement_file_resolves_bounded_relative_includes_and_constraints(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "requirements").mkdir()
+            (root / "requirements.txt").write_text("-r requirements/base.txt\n-c constraints.txt\n", encoding="utf-8")
+            (root / "requirements/base.txt").write_text("requests==2.31.0\n", encoding="utf-8")
+            (root / "constraints.txt").write_text("urllib3==2.0.7\n", encoding="utf-8")
+            components, unresolved, warnings = parse_requirements_file(root / "requirements.txt", root=root)
+        self.assertEqual({item.name for item in components}, {"requests", "urllib3"})
+        self.assertEqual(unresolved, [])
+        self.assertEqual(warnings, [])
+
+    def test_requirement_file_rejects_cycles_and_caps_include_depth(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "a.txt").write_text("-r b.txt\n", encoding="utf-8")
+            (root / "b.txt").write_text("-r a.txt\n", encoding="utf-8")
+            components, unresolved, warnings = parse_requirements_file(root / "a.txt", root=root)
+        self.assertEqual(components, [])
+        self.assertEqual(unresolved, [])
+        self.assertTrue(any("cycle" in warning for warning in warnings))
 
 
 class TestV2aPackageLock(unittest.TestCase):
@@ -92,6 +114,15 @@ class TestV2aInventory(unittest.TestCase):
             result = build_inventory(root)
         self.assertEqual(len(result.components), 1)
         self.assertTrue(any("pyproject.toml" in warning for warning in result.warnings))
+
+    def test_build_inventory_discovers_requirements_directory(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "requirements").mkdir()
+            (root / "requirements" / "base.txt").write_text("flask==3.0.0\n", encoding="utf-8")
+            result = build_inventory(root)
+        self.assertEqual([item.name for item in result.components], ["flask"])
+        self.assertEqual(result.warnings, [])
 
 
 if __name__ == "__main__":
