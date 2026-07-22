@@ -18,6 +18,7 @@ CodeRiskTools Secret Scanner Engine is MIT licensed and has no runtime dependenc
 - local dependency inventory from a repository, CycloneDX JSON, SPDX JSON or Syft JSON;
 - local OSV-Scanner JSON as explicitly separated external evidence;
 - local Trivy JSON as explicitly separated external evidence;
+- local Grype JSON as explicitly separated external evidence;
 - local SQLite vulnerability snapshot scanning and reports;
 - snapshot reconciliation, verification, status, update, rollback, retention pruning and provenance fetch commands;
 - OpenVEX/CycloneDX VEX annotations, suppression and vulnerability baselines;
@@ -207,6 +208,13 @@ secret-scanner vuln inventory --sbom bom.json
 
 The inventory path is read-only and local. It does not resolve packages from the network.
 
+### Grype external evidence
+
+```bash
+secret-scanner vuln inventory --grype grype.json
+```
+
+The Grype adapter accepts bounded native Grype JSON, preserves descriptor version, artifact identity, locations, vulnerability ID and related aliases, and emits `coderisktools.vulnerability.external-evidence` with `evidence_type: external-tool`. It does not execute Grype or convert its matches into dependency inventory.
 ### Trivy external evidence
 
 ```bash

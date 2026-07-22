@@ -86,6 +86,7 @@ def main():
     inventory_source.add_argument("--sbom", metavar="FILE", help="Local CycloneDX, SPDX, or Syft JSON SBOM")
     inventory_source.add_argument("--osv-scanner", metavar="FILE", help="Local OSV-Scanner JSON external-evidence report")
     inventory_source.add_argument("--trivy", metavar="FILE", help="Local Trivy JSON external-evidence report")
+    inventory_source.add_argument("--grype", metavar="FILE", help="Local Grype JSON external-evidence report")
     scan_parser = vuln_actions.add_parser("scan", help="Scan a local repository against an active local vulnerability database")
     scan_parser.add_argument("--root", required=True, metavar="DIR")
     scan_parser.add_argument("--database", required=True, metavar="FILE")
@@ -194,6 +195,9 @@ def main():
                 elif args.trivy:
                     from .vulnerability.sbom import build_trivy_evidence_report
                     result = build_trivy_evidence_report(args.trivy)
+                elif args.grype:
+                    from .vulnerability.sbom import build_grype_evidence_report
+                    result = build_grype_evidence_report(args.grype)
                 elif args.sbom:
                     from .vulnerability.sbom import build_sbom_inventory_report
                     result = build_sbom_inventory_report(args.sbom)
