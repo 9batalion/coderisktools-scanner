@@ -89,6 +89,14 @@ def main():
     status_parser.add_argument("--active", required=True, metavar="PATH")
     verify_snapshot_parser = vuln_db_actions.add_parser("verify", help="Verify one staged or active snapshot")
     verify_snapshot_parser.add_argument("--snapshot", required=True, metavar="DIR")
+    list_snapshots_parser = vuln_db_actions.add_parser("list-snapshots", help="List verified snapshot metadata")
+    list_snapshots_parser.add_argument("--root", required=True, metavar="DIR")
+    list_snapshots_parser.add_argument("--active", required=True, metavar="PATH")
+    prune_parser = vuln_db_actions.add_parser("prune", help="Dry-run or explicitly prune old snapshots")
+    prune_parser.add_argument("--root", required=True, metavar="DIR")
+    prune_parser.add_argument("--active", required=True, metavar="PATH")
+    prune_parser.add_argument("--keep-snapshot-id", action="append", default=[], metavar="ID")
+    prune_parser.add_argument("--apply", action="store_true", help="Actually delete unprotected snapshots")
 
     verify_parser = subparsers.add_parser("verify", help="Optionally verify one credential with explicit network consent")
     verify_parser.add_argument("--provider", required=True, choices=["github", "stripe"])
@@ -129,25 +137,53 @@ def main():
         sys.exit(0 if report.state in {"staged", "active"} else 3)
 
     if args.command == "vuln-db":
-        from .vulnerability.updater import build_reconciliation_report, verify_versioned_snapshot
+        from .vulnerability.updater import (
+            build_reconciliation_report,
+            prune_versioned_snapshots,
+            verify_versioned_snapshot,
+        )
         try:
             emit = True
             if args.vuln_db_action == "verify":
                 result = verify_versioned_snapshot(args.snapshot)
+            elif args.vuln_db_action == "prune":
+                result = prune_versioned_snapshots(
+                    args.root,
+                    args.active,
+                    set(args.keep_snapshot_id),
+                    apply=args.apply,
+                )
             else:
-                result = build_reconciliation_report(args.root, args.active)
-                if args.vuln_db_action == "reconcile" and args.output:
-                    rendered = json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
-                    write_private_atomic(args.output, rendered.encode("utf-8"), "reconciliation report")
-                    emit = False
+                reconciliation = build_reconciliation_report(args.root, args.active)
+                if args.vuln_db_action == "list-snapshots":
+                    result = {
+                        "state": reconciliation["state"],
+                        "active_snapshot_id": reconciliation["active_snapshot_id"],
+                        "snapshot_ids": [item["snapshot_id"] for item in reconciliation["snapshots"]],
+                        "snapshots": reconciliation["snapshots"],
+                        "valid_snapshot_count": reconciliation["valid_snapshot_count"],
+                        "invalid_snapshot_count": reconciliation["invalid_snapshot_count"],
+                        "issues": reconciliation["issues"],
+                        "report_sha256": reconciliation["report_sha256"],
+                    }
+                else:
+                    result = reconciliation
+                    if args.vuln_db_action == "reconcile" and args.output:
+                        rendered = json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+                        write_private_atomic(args.output, rendered.encode("utf-8"), "reconciliation report")
+                        emit = False
             if emit:
                 print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
         except (OSError, ValueError, RuntimeError, KeyError) as exc:
             print(json.dumps({"state": "rejected", "errors": [str(exc)]}), file=sys.stderr)
             sys.exit(3)
+        if args.vuln_db_action in {"status", "list-snapshots"}:
+            sys.exit(0 if result["state"] == "ok" else 3)
         if args.vuln_db_action == "verify":
             sys.exit(0)
-        sys.exit(0 if result["state"] == "ok" else 3)
+        if args.vuln_db_action == "reconcile":
+            sys.exit(0 if result["state"] == "ok" else 3)
+        sys.exit(0)
 
     if args.command == "verify":
         if not re.fullmatch(r"[A-Z_][A-Z0-9_]{0,127}", args.credential_env):
