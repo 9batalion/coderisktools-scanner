@@ -84,6 +84,7 @@ def main():
     inventory_source = inventory_parser.add_mutually_exclusive_group(required=True)
     inventory_source.add_argument("--root", metavar="DIR")
     inventory_source.add_argument("--sbom", metavar="FILE", help="Local CycloneDX JSON SBOM")
+    inventory_source.add_argument("--osv-scanner", metavar="FILE", help="Local OSV-Scanner JSON external-evidence report")
     scan_parser = vuln_actions.add_parser("scan", help="Scan a local repository against an active local vulnerability database")
     scan_parser.add_argument("--root", required=True, metavar="DIR")
     scan_parser.add_argument("--database", required=True, metavar="FILE")
@@ -186,7 +187,10 @@ def main():
     if args.command == "vuln":
         try:
             if args.vuln_action == "inventory":
-                if args.sbom:
+                if args.osv_scanner:
+                    from .vulnerability.sbom import build_osv_scanner_evidence_report
+                    result = build_osv_scanner_evidence_report(args.osv_scanner)
+                elif args.sbom:
                     from .vulnerability.sbom import build_sbom_inventory_report
                     result = build_sbom_inventory_report(args.sbom)
                 else:
