@@ -108,6 +108,9 @@ def main():
     update_parser.add_argument("--snapshot-id", required=True, metavar="ID")
     update_parser.add_argument("--active", metavar="PATH")
     update_parser.add_argument("--apply", action="store_true", help="Actually switch the active pointer")
+    source_status_parser = vuln_db_actions.add_parser("source-status", help="Show read-only source health metadata")
+    source_status_parser.add_argument("--root", required=True, metavar="DIR")
+    source_status_parser.add_argument("--active", required=True, metavar="PATH")
 
     verify_parser = subparsers.add_parser("verify", help="Optionally verify one credential with explicit network consent")
     verify_parser.add_argument("--provider", required=True, choices=["github", "stripe"])
@@ -150,6 +153,7 @@ def main():
     if args.command == "vuln-db":
         from .vulnerability.updater import (
             build_reconciliation_report,
+            build_source_status_report,
             prune_versioned_snapshots,
             stage_offline_update,
             verify_versioned_snapshot,
@@ -172,6 +176,8 @@ def main():
                     args.active,
                     apply=args.apply,
                 )
+            elif args.vuln_db_action == "source-status":
+                result = build_source_status_report(args.root, args.active)
             elif args.vuln_db_action == "prune":
                 result = prune_versioned_snapshots(
                     args.root,
@@ -203,7 +209,7 @@ def main():
         except (OSError, ValueError, RuntimeError, KeyError) as exc:
             print(json.dumps({"state": "rejected", "errors": [str(exc)]}), file=sys.stderr)
             sys.exit(3)
-        if args.vuln_db_action in {"status", "list-snapshots"}:
+        if args.vuln_db_action in {"status", "list-snapshots", "source-status"}:
             sys.exit(0 if result["state"] == "ok" else 3)
         if args.vuln_db_action == "verify":
             sys.exit(0)
