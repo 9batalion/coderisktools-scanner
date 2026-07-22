@@ -62,6 +62,25 @@ class TestV3bImport(unittest.TestCase):
         self.assertEqual(metrics["snapshot_id"], "osv-2025-01-02")
         self.assertEqual(metrics["source_digest"], "sha256:fixture")
 
+    def test_osv_import_has_explicit_record_count_bound_and_keeps_partial_results(self):
+        database = VulnerabilityDatabase(":memory:")
+        first = dict(RECORD, id="OSV-2025-BOUND-1")
+        second = dict(RECORD, id="OSV-2025-BOUND-2")
+        stats = database.import_osv_records([first, second], max_records=1)
+        self.assertEqual(stats.records_seen, 1)
+        self.assertEqual(stats.advisories_imported, 1)
+        self.assertTrue(any("max_records" in error for error in stats.errors))
+        self.assertEqual(database.advisory_count(), 1)
+
+    def test_osv_import_rejects_oversized_record_without_aborting_batch(self):
+        database = VulnerabilityDatabase(":memory:")
+        oversized = dict(RECORD, id="OSV-2025-TOO-LARGE", details="x" * (5 * 1024 * 1024))
+        valid = dict(RECORD, id="OSV-2025-BOUND-VALID")
+        stats = database.import_osv_records([oversized, valid], max_record_bytes=5 * 1024 * 1024)
+        self.assertEqual(stats.records_seen, 2)
+        self.assertEqual(stats.advisories_imported, 1)
+        self.assertTrue(any("max_record_bytes" in error for error in stats.errors))
+
     def test_invalid_json_is_structured_import_error(self):
         database = VulnerabilityDatabase(":memory:")
         stats = database.import_osv_json("{not-json")
