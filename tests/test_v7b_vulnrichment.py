@@ -37,6 +37,7 @@ class TestV7bVulnrichment(unittest.TestCase):
         self.assertEqual(record["source"], "cisa-vulnrichment")
         report = database.exploitation_intelligence_report("CVE-2026-9702")
         self.assertEqual(report["vulnrichment"]["ssvc"][0]["exploitation"], "none")
+        self.assertEqual(report["vulnrichment"]["ssvc"][0]["decision"], "not_evaluable")
         self.assertTrue(report["content_digest"].startswith("sha256:"))
 
     def test_parser_rejects_missing_cisa_container_or_malformed_ssvc(self):
