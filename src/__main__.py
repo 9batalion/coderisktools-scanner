@@ -97,6 +97,10 @@ def main():
     prune_parser.add_argument("--active", required=True, metavar="PATH")
     prune_parser.add_argument("--keep-snapshot-id", action="append", default=[], metavar="ID")
     prune_parser.add_argument("--apply", action="store_true", help="Actually delete unprotected snapshots")
+    rollback_parser = vuln_db_actions.add_parser("rollback", help="Explicitly roll back the active snapshot")
+    rollback_parser.add_argument("--active", required=True, metavar="PATH")
+    rollback_parser.add_argument("--target", required=True, metavar="DIR")
+    rollback_parser.add_argument("--apply", action="store_true", help="Actually switch the active pointer")
 
     verify_parser = subparsers.add_parser("verify", help="Optionally verify one credential with explicit network consent")
     verify_parser.add_argument("--provider", required=True, choices=["github", "stripe"])
@@ -146,6 +150,11 @@ def main():
             emit = True
             if args.vuln_db_action == "verify":
                 result = verify_versioned_snapshot(args.snapshot)
+            elif args.vuln_db_action == "rollback":
+                if not args.apply:
+                    raise ValueError("rollback requires explicit --apply")
+                from .vulnerability.updater import rollback_versioned_snapshot
+                result = rollback_versioned_snapshot(args.active, args.target)
             elif args.vuln_db_action == "prune":
                 result = prune_versioned_snapshots(
                     args.root,
