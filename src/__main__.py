@@ -81,7 +81,9 @@ def main():
     vuln_parser = subparsers.add_parser("vuln", help="Offline vulnerability inventory and scan operations")
     vuln_actions = vuln_parser.add_subparsers(dest="vuln_action", required=True)
     inventory_parser = vuln_actions.add_parser("inventory", help="Build a read-only local dependency inventory")
-    inventory_parser.add_argument("--root", required=True, metavar="DIR")
+    inventory_source = inventory_parser.add_mutually_exclusive_group(required=True)
+    inventory_source.add_argument("--root", metavar="DIR")
+    inventory_source.add_argument("--sbom", metavar="FILE", help="Local CycloneDX JSON SBOM")
     scan_parser = vuln_actions.add_parser("scan", help="Scan a local repository against an active local vulnerability database")
     scan_parser.add_argument("--root", required=True, metavar="DIR")
     scan_parser.add_argument("--database", required=True, metavar="FILE")
@@ -181,8 +183,13 @@ def main():
     if args.command == "vuln":
         try:
             if args.vuln_action == "inventory":
-                from .vulnerability.inventory import build_inventory_report
-                result = json.dumps(build_inventory_report(args.root), ensure_ascii=False, sort_keys=True, indent=2).encode("utf-8")
+                if args.sbom:
+                    from .vulnerability.sbom import build_cyclonedx_inventory_report
+                    result = build_cyclonedx_inventory_report(args.sbom)
+                else:
+                    from .vulnerability.inventory import build_inventory_report
+                    result = build_inventory_report(args.root)
+                result = json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2).encode("utf-8")
                 sys.stdout.buffer.write(result + b"\n")
                 sys.exit(0)
             from .vulnerability.database import VulnerabilityDatabase
