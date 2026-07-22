@@ -111,6 +111,16 @@ def main():
     source_status_parser = vuln_db_actions.add_parser("source-status", help="Show read-only source health metadata")
     source_status_parser.add_argument("--root", required=True, metavar="DIR")
     source_status_parser.add_argument("--active", required=True, metavar="PATH")
+    fetch_parser = vuln_db_actions.add_parser("fetch", help="Explicitly fetch one allowlisted HTTPS JSON artifact")
+    fetch_parser.add_argument("--url", required=True, metavar="URL")
+    fetch_parser.add_argument("--allowed-host", action="append", required=True, metavar="HOST")
+    fetch_parser.add_argument("--source-id", required=True, metavar="ID")
+    fetch_parser.add_argument("--output", required=True, metavar="FILE")
+    fetch_parser.add_argument("--provenance", metavar="FILE")
+    fetch_parser.add_argument("--etag", metavar="VALUE")
+    fetch_parser.add_argument("--last-modified", metavar="VALUE")
+    fetch_parser.add_argument("--max-bytes", type=int, default=64 * 1024 * 1024, metavar="N")
+    fetch_parser.add_argument("--timeout", type=float, default=20.0, metavar="SECONDS")
 
     verify_parser = subparsers.add_parser("verify", help="Optionally verify one credential with explicit network consent")
     verify_parser.add_argument("--provider", required=True, choices=["github", "stripe"])
@@ -154,6 +164,11 @@ def main():
         from .vulnerability.updater import (
             build_reconciliation_report,
             build_source_status_report,
+            build_source_provenance,
+            FetchConditions,
+            FetchPolicy,
+            fetch_json_artifact,
+            persist_downloaded_artifact,
             prune_versioned_snapshots,
             stage_offline_update,
             verify_versioned_snapshot,
@@ -178,6 +193,17 @@ def main():
                 )
             elif args.vuln_db_action == "source-status":
                 result = build_source_status_report(args.root, args.active)
+            elif args.vuln_db_action == "fetch":
+                artifact = fetch_json_artifact(
+                    args.url,
+                    FetchPolicy(frozenset(args.allowed_host), max_bytes=args.max_bytes, timeout=args.timeout),
+                    conditions=FetchConditions(etag=args.etag, last_modified=args.last_modified),
+                )
+                if artifact.not_modified:
+                    result = {**build_source_provenance(args.source_id, artifact), "state": "not_modified"}
+                else:
+                    provenance_path = args.provenance or (args.output + ".provenance.json")
+                    result = persist_downloaded_artifact(artifact, args.output, provenance_path, args.source_id)
             elif args.vuln_db_action == "prune":
                 result = prune_versioned_snapshots(
                     args.root,
