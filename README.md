@@ -30,22 +30,45 @@ Stage 6 research is tracked in [`docs/STAGE6_SECRET_DETECTOR_BACKLOG.md`](docs/S
 
 ## Local vulnerability enrichment
 
-The scanner also has an explicit, offline vulnerability path backed by a supplied SQLite database. It is opt-in and does not change legacy secret/config scan behavior when `--vulnerability-db` is absent.
+The scanner also provides an explicit, offline vulnerability path backed by a supplied local SQLite snapshot. It is opt-in and does not change legacy secret/config scan behavior.
 
 ```bash
-secret-scanner scan --dir . --vulnerability-db vulnerability.sqlite --format json
+# Scan a repository against an active local vulnerability snapshot
+python -m src vuln scan \
+  --root . \
+  --database vulnerability.sqlite \
+  --format json
+
+# Inspect a repository or a local CycloneDX SBOM
+python -m src vuln inventory --root .
+python -m src vuln inventory --sbom bom.json
 ```
 
-The current enrichment track includes:
+The vulnerability path currently supports:
 
-- active-snapshot-only matching and a separate vulnerability baseline;
-- OSV, NVD, KEV, CVE v5 and GHSA import boundaries;
-- deterministic provenance, coverage and quality reports;
-- versioned database schema status and fail-closed future-version handling;
-- NVD configuration semantics (`AND`, `OR`, `negate`, nested children);
-- NVD references, source tags and change-history readback.
+- active-snapshot-only matching with read-only scan access;
+- deterministic JSON, SARIF, Markdown, HTML and CSV reports;
+- exact evidence, location, matched text and provenance preservation;
+- strict vulnerability baseline/delta reporting;
+- additive OpenVEX and CycloneDX VEX annotations;
+- auditable fingerprint suppressions that never remove the original finding;
+- local CycloneDX SBOM inventory import;
+- OSV-based advisory matching plus existing source/import boundaries;
+- fail-closed validation, no network access, no subprocesses and no target-project execution during ordinary scans.
 
-These features are local enrichment capabilities, not a complete or automatically updated vulnerability feed. See [Vulnerability pipeline](docs/V4A-VULNERABILITY-PIPELINE.md), [Vulnerability baseline and SARIF](docs/V4B-VULNERABILITY-BASELINE-SARIF.md), [V5x schema versioning](docs/V5X-SCHEMA-VERSIONING.md), [V5y NVD configuration semantics](docs/V5Y-NVD-CONFIGURATION-SEMANTICS.md), and [V5z NVD references/tags/history](docs/V5Z-NVD-REFERENCES-TAGS-HISTORY.md).
+Optional baseline and VEX annotations:
+
+```bash
+python -m src vuln scan \
+  --root . \
+  --database vulnerability.sqlite \
+  --baseline vulnerability-baseline.json \
+  --vex openvex.json \
+  --suppressions suppressions.json \
+  --format json
+```
+
+These are local enrichment capabilities, not a complete or automatically updated vulnerability feed. A clean result is not proof that no vulnerability exists. See [V11a CycloneDX SBOM](docs/V11A-CYCLONEDX-SBOM.md), [V10 baseline/delta](docs/V10-BASELINE-DELTA.md), [V10 VEX and suppressions](docs/V10-VEX-SUPPRESSION.md), [V9f offline scan CLI](docs/V9F-OFFLINE-SCAN-CLI.md), and [Vulnerability pipeline](docs/V4A-VULNERABILITY-PIPELINE.md).
 
 ## Product boundary
 
@@ -146,8 +169,8 @@ The Scanner can accept strict offline envelopes for generic, Codex-labelled and 
 - offline by default;
 - no telemetry;
 - no runtime dependencies;
-- runtime evidence preservation is a required remediation contract; the current formatter migration is tracked as an open audit finding;
-- publication-safe redaction must be a separate explicit boundary, not an implicit runtime contract;
+- runtime vulnerability evidence is never auto-redacted or truncated; exact finding evidence belongs to the auditable report contract;
+- publication-safe redaction, if ever needed, must be a separate explicit export boundary and must not alter runtime findings;
 - strict malformed-diff rejection;
 - absolute/traversal path rejection;
 - bounded diff, file and line inputs;
