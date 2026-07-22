@@ -111,6 +111,8 @@ def main():
     source_status_parser = vuln_db_actions.add_parser("source-status", help="Show read-only source health metadata")
     source_status_parser.add_argument("--root", required=True, metavar="DIR")
     source_status_parser.add_argument("--active", required=True, metavar="PATH")
+    database_info_parser = vuln_db_actions.add_parser("database-info", help="Show verified active database metadata")
+    database_info_parser.add_argument("--active", required=True, metavar="PATH")
     fetch_parser = vuln_db_actions.add_parser("fetch", help="Explicitly fetch one allowlisted HTTPS JSON artifact")
     fetch_parser.add_argument("--url", required=True, metavar="URL")
     fetch_parser.add_argument("--allowed-host", action="append", required=True, metavar="HOST")
@@ -167,6 +169,7 @@ def main():
         from .vulnerability.updater import (
             build_reconciliation_report,
             build_source_status_report,
+            build_database_info,
             build_source_provenance,
             FetchConditions,
             FetchPolicy,
@@ -197,6 +200,8 @@ def main():
                 )
             elif args.vuln_db_action == "source-status":
                 result = build_source_status_report(args.root, args.active)
+            elif args.vuln_db_action == "database-info":
+                result = build_database_info(args.active)
             elif args.vuln_db_action == "fetch":
                 if args.conditions and (args.etag is not None or args.last_modified is not None):
                     raise ValueError("--conditions cannot be combined with --etag or --last-modified")
@@ -248,7 +253,7 @@ def main():
         except (OSError, ValueError, RuntimeError, KeyError) as exc:
             print(json.dumps({"state": "rejected", "errors": [str(exc)]}), file=sys.stderr)
             sys.exit(3)
-        if args.vuln_db_action in {"status", "list-snapshots", "source-status"}:
+        if args.vuln_db_action in {"status", "list-snapshots", "source-status", "database-info"}:
             sys.exit(0 if result["state"] == "ok" else 3)
         if args.vuln_db_action == "verify":
             sys.exit(0)
