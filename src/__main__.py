@@ -122,6 +122,8 @@ def main():
     fetch_parser.add_argument("--last-modified", metavar="VALUE")
     fetch_parser.add_argument("--max-bytes", type=int, default=64 * 1024 * 1024, metavar="N")
     fetch_parser.add_argument("--timeout", type=float, default=20.0, metavar="SECONDS")
+    fetch_parser.add_argument("--max-attempts", type=int, default=1, metavar="N")
+    fetch_parser.add_argument("--backoff-seconds", type=float, default=0.0, metavar="SECONDS")
 
     verify_parser = subparsers.add_parser("verify", help="Optionally verify one credential with explicit network consent")
     verify_parser.add_argument("--provider", required=True, choices=["github", "stripe"])
@@ -201,7 +203,13 @@ def main():
                 conditions = load_fetch_conditions(args.conditions) if args.conditions else FetchConditions(etag=args.etag, last_modified=args.last_modified)
                 artifact = fetch_json_artifact(
                     args.url,
-                    FetchPolicy(frozenset(args.allowed_host), max_bytes=args.max_bytes, timeout=args.timeout),
+                    FetchPolicy(
+                        frozenset(args.allowed_host),
+                        max_bytes=args.max_bytes,
+                        timeout=args.timeout,
+                        max_attempts=args.max_attempts,
+                        backoff_seconds=args.backoff_seconds,
+                    ),
                     conditions=conditions,
                 )
                 if artifact.not_modified:
