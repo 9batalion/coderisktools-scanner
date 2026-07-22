@@ -88,6 +88,8 @@ def main():
     scan_parser.add_argument("--format", choices=["json", "sarif", "markdown", "html", "csv"], default="json")
     scan_parser.add_argument("--output", metavar="FILE")
     scan_parser.add_argument("--baseline", metavar="FILE", help="Strict local vulnerability baseline; JSON format emits new/existing/resolved delta")
+    scan_parser.add_argument("--vex", metavar="FILE", help="Local OpenVEX or CycloneDX VEX JSON document")
+    scan_parser.add_argument("--suppressions", metavar="FILE", help="Local strict suppression JSON document")
 
     vuln_db_parser = subparsers.add_parser("vuln-db", help="Inspect the local vulnerability snapshot store")
     vuln_db_actions = vuln_db_parser.add_subparsers(dest="vuln_db_action", required=True)
@@ -199,6 +201,13 @@ def main():
             database = VulnerabilityDatabase.read_only(args.database)
             try:
                 findings = scan_inventory(args.root, database)
+                if args.vex or args.suppressions:
+                    from .vulnerability.vex import annotate_vulnerability_findings, load_suppressions, load_vex_document
+                    findings = annotate_vulnerability_findings(
+                        findings,
+                        load_vex_document(args.vex) if args.vex else (),
+                        load_suppressions(args.suppressions) if args.suppressions else (),
+                    )
                 builders = {
                     "json": build_json_vulnerability_report,
                     "sarif": build_sarif_vulnerability_report,
