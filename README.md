@@ -17,6 +17,7 @@ CodeRiskTools Secret Scanner Engine is MIT licensed and has no runtime dependenc
 - pre-commit integration and composite GitHub Action;
 - local dependency inventory from a repository, CycloneDX JSON, SPDX JSON or Syft JSON;
 - local OSV-Scanner JSON as explicitly separated external evidence;
+- local Trivy JSON as explicitly separated external evidence;
 - local SQLite vulnerability snapshot scanning and reports;
 - snapshot reconciliation, verification, status, update, rollback, retention pruning and provenance fetch commands;
 - OpenVEX/CycloneDX VEX annotations, suppression and vulnerability baselines;
@@ -206,6 +207,13 @@ secret-scanner vuln inventory --sbom bom.json
 
 The inventory path is read-only and local. It does not resolve packages from the network.
 
+### Trivy external evidence
+
+```bash
+secret-scanner vuln inventory --trivy trivy.json
+```
+
+The Trivy adapter accepts bounded local Trivy JSON (`SchemaVersion` 1 or 2), preserves target/package/vulnerability data and emits the same `coderisktools.vulnerability.external-evidence` schema with `evidence_type: external-tool`. It does not execute Trivy or convert its findings into dependency inventory.
 ### OSV-Scanner external evidence
 
 ```bash
