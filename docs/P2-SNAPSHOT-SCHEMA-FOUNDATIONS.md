@@ -31,3 +31,12 @@ per-member decompressed bytes and total decompressed bytes. Extraction occurs
 in a private temporary directory and the destination directory is atomically
 published only after all members succeed. Existing destinations are refused;
 the function never merges untrusted archive content into an existing tree.
+
+## Incremental JSON records
+
+`iter_json_records_from_file()` yields object records from a JSON array or
+JSONL file using a bounded decoder buffer and line streaming. It enforces
+maximum file bytes, record bytes and record count. It is intentionally a
+separate parser contract; existing OSV ingestion APIs remain unchanged until
+an explicit integration batch wires this iterator into source import and
+per-record error accounting.
