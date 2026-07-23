@@ -139,6 +139,17 @@ def main():
     source_status_parser.add_argument("--active", required=True, metavar="PATH")
     database_info_parser = vuln_db_actions.add_parser("database-info", help="Show verified active database metadata")
     database_info_parser.add_argument("--active", required=True, metavar="PATH")
+    activate_seed_parser = vuln_db_actions.add_parser("activate", help="Explicitly activate a verified partial seed database")
+    activate_seed_parser.add_argument("--database", required=True, metavar="FILE")
+    activate_seed_parser.add_argument("--manifest", required=True, metavar="FILE")
+    activate_seed_parser.add_argument("--profile", choices=["seed"], required=True)
+    activate_seed_parser.add_argument("--apply", action="store_true", help="Actually activate the staged seed snapshot")
+    bootstrap_seed_parser = vuln_db_actions.add_parser("bootstrap", help="Install one pinned signed seed release as staged")
+    bootstrap_seed_parser.add_argument("--asset-url", required=True, metavar="URL")
+    bootstrap_seed_parser.add_argument("--manifest-url", required=True, metavar="URL")
+    bootstrap_seed_parser.add_argument("--signature-url", required=True, metavar="URL")
+    bootstrap_seed_parser.add_argument("--destination", required=True, metavar="FILE")
+    bootstrap_seed_parser.add_argument("--keyring", required=True, metavar="FILE")
     explain_parser = vuln_db_actions.add_parser("explain", help="Explain one persisted vulnerability match")
     explain_parser.add_argument("--database", required=True, metavar="FILE")
     explain_parser.add_argument("--fingerprint", required=True, metavar="FINGERPRINT")
@@ -299,7 +310,24 @@ def main():
         )
         try:
             emit = True
-            if args.vuln_db_action == "init-config":
+            if args.vuln_db_action == "activate":
+                from .vulnerability.bootstrap import activate_seed_database
+                manifest_path = Path(args.manifest)
+                if manifest_path.is_symlink() or not manifest_path.is_file():
+                    raise ValueError("seed manifest must be a regular non-symlink file")
+                manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+                result = activate_seed_database(args.database, manifest, apply=args.apply)
+            elif args.vuln_db_action == "bootstrap":
+                from .rulepacks import load_trusted_keyring
+                from .vulnerability.bootstrap import bootstrap_seed_asset
+                result = bootstrap_seed_asset(
+                    args.asset_url,
+                    args.manifest_url,
+                    args.signature_url,
+                    args.destination,
+                    trusted_keys=load_trusted_keyring(args.keyring),
+                )
+            elif args.vuln_db_action == "init-config":
                 from .vulnerability.update_config import default_update_config
                 output = Path(args.output).expanduser()
                 if output.exists() or output.is_symlink():

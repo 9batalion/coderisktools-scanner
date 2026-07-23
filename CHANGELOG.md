@@ -4,17 +4,27 @@ All notable changes to `coderisktools-scanner` are documented here.
 
 ## [Unreleased]
 
-### Vulnerability enrichment
+## [3.1.0] — 2026-07-23
 
-- versioned the local vulnerability database schema with explicit initialization, migration, current-state reporting and fail-closed future-version handling;
-- preserved NVD configuration logic instead of flattening it: node `AND`/`OR`, `negate`, nested children and a legacy flat CPE projection are all available;
-- preserved NVD references, source tags and CVE change history through parser, SQLite enrichment and normalized reports;
-- added deterministic readback tests and documentation for the V5x–V5z contracts.
+### Added
 
-### Scanner evidence boundary
+- added the opt-in, read-only vulnerability inventory and matching pipeline with explicit local SQLite selection;
+- added controlled, user-triggered staging/update, verification, reconciliation, rollback and retention operations;
+- added bounded public feed adapters and explicit provenance/quality reports without claiming full-feed coverage;
+- added a real partial `seed` snapshot with 187 advisories, 378 affected-package rows and seven represented OSV ecosystems;
+- added signed, pinned seed bootstrap and a separate explicit `--profile seed --apply` activation command.
 
-- documented the required distinction between runtime remediation evidence and publication-safe redaction;
-- runtime evidence preservation remains an open formatter/pipeline audit finding; checked-in/public artifacts remain synthetic or explicitly redacted.
+### Fixed
+
+- directory self-scan now skips SQLite database artifacts, preventing the real seed from tripping the scanner byte cap in CI;
+- bootstrap now verifies the detached Ed25519 manifest envelope, exact database SHA-256, SQLite integrity, foreign keys, snapshot identity and manifest counts before atomic installation.
+
+### Seed boundary
+
+- the seed is `completeness=partial` and `production_full_database=false`;
+- 1,688 unresolved KEV/EPSS enrichments and 129 exact-alias conflicts are retained and disclosed rather than heuristically merged;
+- an empty seed scan is not evidence that a project has no vulnerabilities;
+- Core/Full activation remains separate and is never replaced automatically by seed bootstrap.
 
 ## [3.0.1] — 2026-07-20
 

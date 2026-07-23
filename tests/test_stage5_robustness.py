@@ -540,6 +540,22 @@ class TestDirectoryScanEdgeCases(unittest.TestCase):
             import shutil
             shutil.rmtree(temp_dir, ignore_errors=True)
 
+    def test_scan_directory_skips_sqlite_database_files(self):
+        """Directory scan should skip SQLite database artifacts, including large seed snapshots."""
+        temp_dir = tempfile.mkdtemp()
+        with open(os.path.join(temp_dir, "seed-vulndb.sqlite"), "wb") as handle:
+            handle.truncate(6 * 1024 * 1024)
+        with open(os.path.join(temp_dir, "app.py"), "w") as handle:
+            handle.write("print('safe')\n")
+
+        try:
+            scanner = SecretScanner()
+            result = scanner.scan_directory(temp_dir)
+            self.assertEqual([], result.findings)
+        finally:
+            import shutil
+            shutil.rmtree(temp_dir, ignore_errors=True)
+
     def test_scan_directory_includes_security_dotfiles(self):
         """Directory scan should include security-relevant dotfiles."""
         temp_dir = tempfile.mkdtemp()

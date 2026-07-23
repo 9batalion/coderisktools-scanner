@@ -19,7 +19,7 @@ class SeedProfileTests(unittest.TestCase):
 
     def test_seed_manifest_is_explicitly_partial(self):
         manifest = build_seed_manifest(
-            {"cisa-kev": {"status": "complete", "records": 1}, "epss": {"status": "bounded", "records": 1}, "ghsa": {"status": "bounded", "records": 1}, "osv": {"status": "partial", "successful_ecosystems": ["PyPI", "npm", "Go", "Maven"], "failed_ecosystems": []}},
+            {"cisa-kev": {"status": "complete", "records": 1, "imported": 1}, "epss": {"status": "bounded", "records": 1, "imported": 1}, "ghsa": {"status": "bounded", "records": 1, "imported": 1}, "osv": {"status": "partial", "imported": 4, "successful_ecosystems": ["PyPI", "npm", "Go", "Maven"], "failed_ecosystems": []}},
             {"advisory_count": 2, "affected_package_count": 1, "content_digest": "sha256:" + "a" * 64},
         )
         self.assertEqual(manifest["profile"], "seed")
@@ -30,6 +30,15 @@ class SeedProfileTests(unittest.TestCase):
     def test_seed_manifest_rejects_missing_required_source(self):
         with self.assertRaises(ValueError):
             validate_seed_manifest({"profile": "seed", "completeness": "partial", "production_full_database": False, "sources": {}})
+
+    def test_seed_manifest_rejects_zero_imported_required_source(self):
+        manifest = build_seed_manifest(
+            {"cisa-kev": {"status": "complete", "records": 1, "imported": 1}, "epss": {"status": "bounded", "records": 1, "imported": 1}, "ghsa": {"status": "bounded", "records": 1, "imported": 1}, "osv": {"status": "partial", "imported": 4, "successful_ecosystems": ["PyPI", "npm", "Go", "Maven"], "failed_ecosystems": []}},
+            {"advisory_count": 2, "affected_package_count": 1, "content_digest": "sha256:" + "a" * 64},
+        )
+        manifest["sources"]["ghsa"]["imported"] = 0
+        with self.assertRaises(ValueError):
+            validate_seed_manifest(manifest)
 
 
 if __name__ == "__main__":
