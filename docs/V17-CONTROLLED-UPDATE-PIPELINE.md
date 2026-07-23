@@ -28,8 +28,10 @@ The default configuration path is:
 ```
 
 The built-in starter configuration contains bounded entries for NVD, CISA KEV,
-EPSS and GitHub Advisory. It is not a claim of complete global coverage; OSV
-JSONL and provider-specific feeds require their dedicated adapter configuration.
+EPSS and GitHub Advisory. It also lists OSV, CVE v5, Debian, Ubuntu and RustSec
+as `enabled: false` until their dedicated format/archive/pagination adapters are
+connected to the multi-source importer. It is not a claim of complete global
+coverage.
 
 The default data root is:
 
