@@ -7,8 +7,6 @@ import zipfile
 from pathlib import Path
 from unittest.mock import patch
 
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from scripts.build_global_osv_vulndb import build_global_osv_snapshot
 from scripts.package_global_osv_release import package_global_osv_release
 from src.vulnerability.database import VulnerabilityDatabase
@@ -139,26 +137,29 @@ class GlobalBootstrapTests(unittest.TestCase):
             release_manifest_path = root / "database.release.manifest.json"
             signature_path = root / "database.sig.json"
             private_key_path = root / "private.key"
-            private_key = Ed25519PrivateKey.generate()
-            private_key_path.write_bytes(private_key.private_bytes(
-                serialization.Encoding.Raw,
-                serialization.PrivateFormat.Raw,
-                serialization.NoEncryption(),
-            ))
-            public_key = private_key.public_key().public_bytes(
-                serialization.Encoding.Raw,
-                serialization.PublicFormat.Raw,
-            )
-            package_global_osv_release(
-                source_database,
-                database_manifest,
-                asset,
-                release_manifest_path,
-                signature_path,
-                private_key_path,
-                key_id="global-key",
-                minimum_records=1,
-            )
+            private_key_path.write_bytes(b"k" * 32)
+            public_key = b"p" * 32
+
+            def fake_sign(payload, key_id, _private_key):
+                return {
+                    "schema": "coderisktools.vulnerability.signed-manifest",
+                    "version": 1,
+                    "key_id": key_id,
+                    "manifest": payload,
+                    "signature": "test-only-envelope",
+                }
+
+            with patch("scripts.package_global_osv_release.sign_manifest", side_effect=fake_sign):
+                package_global_osv_release(
+                    source_database,
+                    database_manifest,
+                    asset,
+                    release_manifest_path,
+                    signature_path,
+                    private_key_path,
+                    key_id="global-key",
+                    minimum_records=1,
+                )
             manifest = json.loads(release_manifest_path.read_text())
             envelope = json.loads(signature_path.read_text())
 
@@ -177,6 +178,7 @@ class GlobalBootstrapTests(unittest.TestCase):
             with (
                 patch("src.vulnerability.global_bootstrap._download", side_effect=metadata_download),
                 patch("src.vulnerability.global_bootstrap._download_to_file", side_effect=asset_download),
+                patch("src.vulnerability.global_bootstrap.verify_manifest", return_value=manifest),
             ):
                 result = bootstrap_global_osv_asset(
                     "https://github.com/database.zip",
