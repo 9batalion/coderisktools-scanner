@@ -59,8 +59,13 @@ The OSV adapter now supports a separate staging operation: an allowlisted HTTPS
 URL is streamed to an atomically replaced file and then passed to the existing
 bounded OSV importer. Activation remains explicit (`activate=False` by default),
 and the adapter reports the downloaded payload digest. Live feed acceptance,
-license verification and a verified full snapshot are still required before
-OSV can become `ready`.
+license verification and a verified full snapshot are still required before OSV
+can become `ready`.
+
+NVD now has a bounded API 2.0 file ingestion contract with source digest,
+strict CVE parsing, exact advisory correlation, partial-record errors and
+explicit activation. Live NVD feed acceptance and terms verification remain
+required before `ready`.
 
 ## Non-goals
 
