@@ -221,3 +221,6 @@ Maven, and NuGet with golden precision/recall/F1 thresholds.
 
 V15f adds repeated performance benchmarking with bounded repetitions and p95
 latency acceptance. Platform-specific absolute baselines remain open.
+
+V15g adds a final benchmark report combining ecosystem status, confusion
+matrix quality metrics, and aggregated performance.
