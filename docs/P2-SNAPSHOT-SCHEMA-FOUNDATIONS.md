@@ -166,3 +166,7 @@ Complete Swift advisory coverage is not claimed.
 V13e adds the same bounded fixture/staging boundary for Dart/pub package names,
 including fixed-version matching and lifecycle provenance. Complete Dart
 advisory coverage is not claimed.
+
+V13f adds the same bounded fixture/staging boundary for Elixir/Hex package
+names, including fixed-version matching and lifecycle provenance. Complete
+Elixir advisory coverage is not claimed.
