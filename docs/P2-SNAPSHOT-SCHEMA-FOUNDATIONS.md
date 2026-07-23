@@ -197,3 +197,6 @@ Registry operations are local and do not perform implicit network calls.
 V14c preserves bounded CSAF remediations and vendor-specific product status in
 source records and `database_specific`. Full remediation semantics remain
 outside the verified subset.
+
+V14d adds `csaf_quality_gate()` for bounded validation of identifiers, product
+references, provenance, remediation shape, and provider extensions.
