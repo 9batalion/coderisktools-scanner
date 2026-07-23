@@ -1,0 +1,16 @@
+{
+  "schema": "coderisktools.vulnerability.benchmark",
+  "version": 1,
+  "name": "public-minimal-v15",
+  "cases": [
+    {"case_id": "affected", "expected": true, "observed": true, "elapsed_ms": 2.0},
+    {"case_id": "clean", "expected": false, "observed": false, "elapsed_ms": 1.0},
+    {"case_id": "miss", "expected": true, "observed": false, "elapsed_ms": 3.0}
+  ],
+  "golden": {
+    "precision": 1.0,
+    "recall": 0.5,
+    "f1": 0.6666666666666666,
+    "latency_ms": {"p50": 2.0, "p95": 3.0}
+  }
+}

@@ -500,7 +500,7 @@ Valid agents: `generic`, `codex`, `claude-code`. This is an explicit input contr
 ```yaml
 repos:
   - repo: https://github.com/9batalion/coderisktools-scanner
-    rev: v3.0.1
+    rev: v3.1.0
     hooks:
       - id: coderisktools-secret-scan
 ```
@@ -522,7 +522,7 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           fetch-depth: 0
-      - uses: 9batalion/coderisktools-scanner@v3.0.1
+      - uses: 9batalion/coderisktools-scanner@v3.1.0
         with:
           profile: balanced
 ```

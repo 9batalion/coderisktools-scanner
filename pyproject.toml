@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "coderisktools-scanner"
-version = "3.0.1"
+version = "3.1.0"
 description = "Local-first open-source scanner for secret-like values and risky configuration changes in code diffs."
 readme = "README.md"
 license = "MIT"

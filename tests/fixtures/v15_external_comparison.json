@@ -1,0 +1,10 @@
+{
+  "schema": "coderisktools.vulnerability.external-comparison",
+  "version": 1,
+  "internal": ["CVE-1", "CVE-2"],
+  "tools": {
+    "OSV-Scanner": ["CVE-1", "CVE-3"],
+    "Trivy": ["CVE-1", "CVE-2"],
+    "Grype": ["CVE-2", "CVE-4"]
+  }
+}

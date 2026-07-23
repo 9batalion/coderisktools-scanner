@@ -120,18 +120,36 @@ def main():
     rollback_parser.add_argument("--active", required=True, metavar="PATH")
     rollback_parser.add_argument("--target", required=True, metavar="DIR")
     rollback_parser.add_argument("--apply", action="store_true", help="Actually switch the active pointer")
-    update_parser = vuln_db_actions.add_parser("update", help="Stage a local feed and optionally activate it")
-    update_parser.add_argument("--input", required=True, metavar="FILE")
-    update_parser.add_argument("--root", required=True, metavar="DIR")
-    update_parser.add_argument("--source-id", required=True, metavar="ID")
-    update_parser.add_argument("--snapshot-id", required=True, metavar="ID")
+    update_parser = vuln_db_actions.add_parser("update", help="Build a new database snapshot from configured sources or stage one local feed")
+    update_parser.add_argument("--full", action="store_true", help="Fetch and import all configured sources in an isolated staging pipeline")
+    update_parser.add_argument("--config", metavar="FILE", default="~/.config/coderisktools/vuln-db.json", help="Full-update source configuration JSON")
+    update_parser.add_argument("--input", metavar="FILE")
+    update_parser.add_argument("--root", default="~/.local/share/coderisktools/vuln-db", metavar="DIR")
+    update_parser.add_argument("--source-id", metavar="ID")
+    update_parser.add_argument("--snapshot-id", metavar="ID")
     update_parser.add_argument("--active", metavar="PATH")
     update_parser.add_argument("--apply", action="store_true", help="Actually switch the active pointer")
+    update_parser.add_argument("--max-bytes", type=int, default=512 * 1024 * 1024, metavar="N")
+    update_parser.add_argument("--timeout", type=float, default=20.0, metavar="SECONDS")
+    update_parser.add_argument("--profile", choices=["core"], default="core", help="Database profile to build (currently: core)")
+    init_config_parser = vuln_db_actions.add_parser("init-config", help="Write the built-in bounded public source configuration")
+    init_config_parser.add_argument("--output", default="~/.config/coderisktools/vuln-db.json", metavar="FILE")
     source_status_parser = vuln_db_actions.add_parser("source-status", help="Show read-only source health metadata")
     source_status_parser.add_argument("--root", required=True, metavar="DIR")
     source_status_parser.add_argument("--active", required=True, metavar="PATH")
     database_info_parser = vuln_db_actions.add_parser("database-info", help="Show verified active database metadata")
     database_info_parser.add_argument("--active", required=True, metavar="PATH")
+    activate_seed_parser = vuln_db_actions.add_parser("activate", help="Explicitly activate a verified partial seed database")
+    activate_seed_parser.add_argument("--database", required=True, metavar="FILE")
+    activate_seed_parser.add_argument("--manifest", required=True, metavar="FILE")
+    activate_seed_parser.add_argument("--profile", choices=["seed"], required=True)
+    activate_seed_parser.add_argument("--apply", action="store_true", help="Actually activate the staged seed snapshot")
+    bootstrap_seed_parser = vuln_db_actions.add_parser("bootstrap", help="Install one pinned signed seed release as staged")
+    bootstrap_seed_parser.add_argument("--asset-url", required=True, metavar="URL")
+    bootstrap_seed_parser.add_argument("--manifest-url", required=True, metavar="URL")
+    bootstrap_seed_parser.add_argument("--signature-url", required=True, metavar="URL")
+    bootstrap_seed_parser.add_argument("--destination", required=True, metavar="FILE")
+    bootstrap_seed_parser.add_argument("--keyring", required=True, metavar="FILE")
     explain_parser = vuln_db_actions.add_parser("explain", help="Explain one persisted vulnerability match")
     explain_parser.add_argument("--database", required=True, metavar="FILE")
     explain_parser.add_argument("--fingerprint", required=True, metavar="FINGERPRINT")
@@ -286,12 +304,38 @@ def main():
             load_fetch_conditions,
             persist_downloaded_artifact,
             prune_versioned_snapshots,
+            run_full_update,
             stage_offline_update,
             verify_versioned_snapshot,
         )
         try:
             emit = True
-            if args.vuln_db_action == "verify":
+            if args.vuln_db_action == "activate":
+                from .vulnerability.bootstrap import activate_seed_database
+                manifest_path = Path(args.manifest)
+                if manifest_path.is_symlink() or not manifest_path.is_file():
+                    raise ValueError("seed manifest must be a regular non-symlink file")
+                manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+                result = activate_seed_database(args.database, manifest, apply=args.apply)
+            elif args.vuln_db_action == "bootstrap":
+                from .rulepacks import load_trusted_keyring
+                from .vulnerability.bootstrap import bootstrap_seed_asset
+                result = bootstrap_seed_asset(
+                    args.asset_url,
+                    args.manifest_url,
+                    args.signature_url,
+                    args.destination,
+                    trusted_keys=load_trusted_keyring(args.keyring),
+                )
+            elif args.vuln_db_action == "init-config":
+                from .vulnerability.update_config import default_update_config
+                output = Path(args.output).expanduser()
+                if output.exists() or output.is_symlink():
+                    raise FileExistsError(f"configuration already exists: {output}")
+                output.parent.mkdir(parents=True, exist_ok=True)
+                write_private_atomic(output, (json.dumps(default_update_config(), indent=2, sort_keys=True) + "\n").encode("utf-8"), "vulnerability update config")
+                result = {"state": "ok", "path": str(output), "sources": [item["source_id"] for item in default_update_config()["sources"]]}
+            elif args.vuln_db_action == "verify":
                 result = verify_versioned_snapshot(args.snapshot)
             elif args.vuln_db_action == "rollback":
                 if not args.apply:
@@ -299,14 +343,29 @@ def main():
                 from .vulnerability.updater import rollback_versioned_snapshot
                 result = rollback_versioned_snapshot(args.active, args.target)
             elif args.vuln_db_action == "update":
-                result = stage_offline_update(
-                    args.input,
-                    args.root,
-                    args.source_id,
-                    args.snapshot_id,
-                    args.active,
-                    apply=args.apply,
-                )
+                if args.full:
+                    root = Path(args.root).expanduser()
+                    active = Path(args.active).expanduser() if args.active else root / "active"
+                    result = run_full_update(
+                        Path(args.config).expanduser(),
+                        root,
+                        active,
+                        profile=args.profile,
+                        apply=args.apply,
+                        max_bytes=args.max_bytes,
+                        timeout=args.timeout,
+                    )
+                else:
+                    if not args.input or not args.source_id or not args.snapshot_id:
+                        raise ValueError("local update requires --input, --source-id and --snapshot-id; use --full for configured sources")
+                    result = stage_offline_update(
+                        args.input,
+                        Path(args.root).expanduser(),
+                        args.source_id,
+                        args.snapshot_id,
+                        Path(args.active).expanduser() if args.active else None,
+                        apply=args.apply,
+                    )
             elif args.vuln_db_action == "source-status":
                 result = build_source_status_report(args.root, args.active)
             elif args.vuln_db_action == "database-info":

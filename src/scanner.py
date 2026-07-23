@@ -506,6 +506,7 @@ class SecretScanner:
                 ".zip", ".tar", ".gz", ".bz2", ".xz", ".7z",
                 ".mp3", ".mp4", ".avi", ".mov", ".wav",
                 ".pdf", ".doc", ".docx", ".xls", ".xlsx",
+                ".sqlite", ".sqlite3", ".db",
                 ".woff", ".woff2", ".ttf", ".eot",
             ):
                 continue
