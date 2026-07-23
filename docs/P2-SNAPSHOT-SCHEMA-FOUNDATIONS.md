@@ -115,3 +115,8 @@ backport boundary testable: a revision below `3.0.11-1~deb12u2` is affected,
 while that revision and later revisions are not affected under the Debian
 comparator. This is bounded matching behavior, not complete Debian archive
 coverage.
+
+The V12b Ubuntu adapter currently provides the same bounded fixture/provenance
+boundary for Ubuntu releases. It is parser-only and does not claim complete
+USN/Ubuntu archive coverage or database staging until its dedicated integration
+batch is completed.
