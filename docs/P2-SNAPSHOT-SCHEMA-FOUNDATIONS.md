@@ -229,6 +229,9 @@ introduced FP/FN cases.
 V15 memory adds a bounded `tracemalloc` peak-memory benchmark with an explicit
 acceptance limit; it is not a cross-platform absolute memory guarantee.
 
+External evidence comparison uses offline supplied-evidence fixtures for
+OSV-Scanner, Trivy and Grype and reports differences without merging results.
+
 V15g adds a final benchmark report combining ecosystem status, confusion
 matrix quality metrics, and aggregated performance.
 
