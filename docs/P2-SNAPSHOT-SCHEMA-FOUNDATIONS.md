@@ -174,3 +174,7 @@ Elixir advisory coverage is not claimed.
 V13g adds the same bounded fixture/staging boundary for Haskell/Hackage package
 names, including fixed-version matching and lifecycle provenance. Complete
 Haskell advisory coverage is not claimed.
+
+V13h adds the same bounded fixture/staging boundary for R/CRAN package names,
+including fixed-version matching and lifecycle provenance. Complete R advisory
+coverage is not claimed.
