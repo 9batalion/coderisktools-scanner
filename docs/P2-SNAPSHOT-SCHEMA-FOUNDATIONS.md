@@ -101,3 +101,10 @@ for the versioned Debian feed fixture format. It preserves release,
 source-package, binary-package, urgency, fixed-version and backport metadata.
 It does not fetch Debian infrastructure, claim complete Security Tracker/OVAL
 coverage, or activate/import records into the vulnerability database yet.
+
+V12a now also provides `ingest_file_to_database()`: it maps Debian binary
+packages and fixed versions into the existing OSV-shaped bounded importer,
+stages a snapshot without implicit activation, preserves Debian backport data
+in `database_specific`, and writes `source_snapshots` plus `quality_metrics`.
+This remains fixture-format support, not a claim of complete Debian feed
+coverage.
