@@ -154,3 +154,7 @@ quality metadata. It does not claim complete Maven advisory coverage.
 V13b adds the same bounded fixture/staging boundary for NuGet package IDs,
 including fixed-version matching and lifecycle provenance. Complete NuGet
 advisory coverage is not claimed.
+
+V13c adds the same bounded fixture/staging boundary for RubyGems names,
+including fixed-version matching and lifecycle provenance. Complete RubyGems
+advisory coverage is not claimed.
