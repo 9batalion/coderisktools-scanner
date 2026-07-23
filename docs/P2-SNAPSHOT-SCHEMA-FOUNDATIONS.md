@@ -244,3 +244,6 @@ recovery test; imported recovery databases remain inactive.
 
 V16e adds a fail-closed final production snapshot report combining readiness,
 health, source coverage, rollback, disaster recovery, and optional benchmark.
+
+V16 reproducibility evidence compares bounded regular-file artifact sets using
+SHA-256 and reports missing, unexpected, or changed artifacts.
