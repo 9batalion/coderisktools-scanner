@@ -224,3 +224,7 @@ latency acceptance. Platform-specific absolute baselines remain open.
 
 V15g adds a final benchmark report combining ecosystem status, confusion
 matrix quality metrics, and aggregated performance.
+
+V16a adds a production snapshot readiness gate covering build identity,
+digests, reproducibility, licenses, attributions, signature, and air-gap
+verification.
