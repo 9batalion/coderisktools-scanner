@@ -120,3 +120,8 @@ The V12b Ubuntu adapter currently provides the same bounded fixture/provenance
 boundary for Ubuntu releases. It is parser-only and does not claim complete
 USN/Ubuntu archive coverage or database staging until its dedicated integration
 batch is completed.
+
+V12c adds the Ubuntu staging bridge using the same lifecycle contract as
+Debian: normalized OSV-shaped records, staged snapshots without implicit
+activation, source provenance, `source_snapshots`, and quality metrics. This
+does not claim complete USN or Ubuntu archive coverage.
