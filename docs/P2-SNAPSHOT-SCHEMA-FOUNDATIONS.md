@@ -206,3 +206,6 @@ Invalid documents return `rejected` and are not activated.
 
 V15a adds offline benchmark foundations with deterministic precision, recall,
 F1 and latency percentile metrics. Public fixture corpus remains open.
+
+V15b adds a versioned public benchmark fixture with golden results and a
+bounded schema-validating loader.
