@@ -146,3 +146,7 @@ V12h adds a cross-distro bounded backport contract test covering Debian,
 Ubuntu, Red Hat, SUSE, and Alpine. It verifies preservation of backport flags,
 fixed versions, and provenance digests without claiming complete real-feed
 backport coverage.
+
+V13a adds a bounded Maven fixture/staging boundary with Maven coordinate
+validation, fixed-version range matching, source provenance, and lifecycle
+quality metadata. It does not claim complete Maven advisory coverage.
