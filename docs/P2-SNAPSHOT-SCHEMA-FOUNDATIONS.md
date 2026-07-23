@@ -125,3 +125,7 @@ V12c adds the Ubuntu staging bridge using the same lifecycle contract as
 Debian: normalized OSV-shaped records, staged snapshots without implicit
 activation, source provenance, `source_snapshots`, and quality metrics. This
 does not claim complete USN or Ubuntu archive coverage.
+
+Ubuntu fixed-version boundaries are covered by an integration test through
+`evaluate_component()`. A version below the normalized fixed revision is
+classified as affected, while the fixed revision is classified as not affected.
