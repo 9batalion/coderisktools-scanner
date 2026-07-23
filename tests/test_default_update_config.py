@@ -8,5 +8,5 @@ class TestDefaultUpdateConfig(unittest.TestCase):
         sources = default_update_config()["sources"]
         active = {item["source_id"] for item in sources if item.get("enabled", True)}
         disabled = {item["source_id"] for item in sources if item.get("enabled") is False}
-        self.assertEqual(active, {"nvd", "cisa-kev", "epss", "github-advisories"})
-        self.assertTrue({"osv", "cve-v5", "debian-security", "ubuntu-security", "rustsec"} <= disabled)
+        self.assertEqual(active, {"osv", "nvd", "cisa-kev", "epss", "github-advisories"})
+        self.assertTrue({"cve-v5", "debian-security", "ubuntu-security", "rustsec"} <= disabled)

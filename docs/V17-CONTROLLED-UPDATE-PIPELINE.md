@@ -7,18 +7,22 @@ against an already active local snapshot:
 python -m src vuln scan --root ./repo --database DATA/snapshots/.../snapshot.sqlite3
 ```
 
-A database update is a separate operation:
+The current supported build profile is `core`:
 
 ```text
-python -m src vuln-db update --full
+python -m src vuln-db update --full --profile core
 ```
 
-At the start of this update operation the updater loads its source configuration
-and fetches the declared feeds. The scanner itself never performs this startup
-fetch. To create the starter configuration explicitly:
+Core includes OSV JSONL streaming, GitHub Advisory, CISA KEV and EPSS. The
+pipeline requires at least 8 GiB free space before network transfer starts;
+this accounts for downloads, staging and the temporary SQLite snapshot. The
+larger extended profile is not enabled by this command yet.
 
-```text
-python -m src vuln-db init-config
+At the start of this explicit update operation the updater loads its source
+configuration and fetches the declared feeds. The scanner itself never performs
+this fetch.
+
+To create the starter configuration explicitly:
 ```
 
 The default configuration path is:

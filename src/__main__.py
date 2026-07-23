@@ -131,6 +131,7 @@ def main():
     update_parser.add_argument("--apply", action="store_true", help="Actually switch the active pointer")
     update_parser.add_argument("--max-bytes", type=int, default=512 * 1024 * 1024, metavar="N")
     update_parser.add_argument("--timeout", type=float, default=20.0, metavar="SECONDS")
+    update_parser.add_argument("--profile", choices=["core"], default="core", help="Database profile to build (currently: core)")
     init_config_parser = vuln_db_actions.add_parser("init-config", help="Write the built-in bounded public source configuration")
     init_config_parser.add_argument("--output", default="~/.config/coderisktools/vuln-db.json", metavar="FILE")
     source_status_parser = vuln_db_actions.add_parser("source-status", help="Show read-only source health metadata")
@@ -321,6 +322,7 @@ def main():
                         Path(args.config).expanduser(),
                         root,
                         active,
+                        profile=args.profile,
                         apply=args.apply,
                         max_bytes=args.max_bytes,
                         timeout=args.timeout,
