@@ -40,3 +40,17 @@ maximum file bytes, record bytes and record count. It is intentionally a
 separate parser contract; existing OSV ingestion APIs remain unchanged until
 an explicit integration batch wires this iterator into source import and
 per-record error accounting.
+
+## Streaming OSV integration
+
+`ingest_osv_streaming_file()` and the OSV source adapter's
+`ingest_streaming_file()` connect the file iterator to a two-pass import:
+
+1. validate all records in an in-memory validation database;
+2. re-iterate the local file and import into the target database only when validation succeeds;
+3. stage the snapshot and record `source_snapshots` plus three bounded `quality_metrics`;
+4. record parser/import failures in `import_errors`.
+
+The API is local-only and unsigned by design. Signed OSV envelopes continue to
+use the existing full-envelope verification path. Activation remains explicit
+through `activate=True` and is never implicit.
