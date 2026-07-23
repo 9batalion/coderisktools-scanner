@@ -218,3 +218,6 @@ V15d adds `run_database_benchmark()` against the real
 
 V15e adds a larger multi-ecosystem fixture covering PyPI, npm, crates.io,
 Maven, and NuGet with golden precision/recall/F1 thresholds.
+
+V15f adds repeated performance benchmarking with bounded repetitions and p95
+latency acceptance. Platform-specific absolute baselines remain open.
