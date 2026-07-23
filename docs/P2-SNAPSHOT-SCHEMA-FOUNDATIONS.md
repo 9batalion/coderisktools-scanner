@@ -178,3 +178,7 @@ Haskell advisory coverage is not claimed.
 V13h adds the same bounded fixture/staging boundary for R/CRAN package names,
 including fixed-version matching and lifecycle provenance. Complete R advisory
 coverage is not claimed.
+
+V13i adds the same bounded fixture/staging boundary for Conan package
+references, including fixed-version matching and lifecycle provenance.
+Complete Conan advisory coverage is not claimed.
