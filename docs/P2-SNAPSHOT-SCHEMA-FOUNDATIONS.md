@@ -54,3 +54,13 @@ per-record error accounting.
 The API is local-only and unsigned by design. Signed OSV envelopes continue to
 use the existing full-envelope verification path. Activation remains explicit
 through `activate=True` and is never implicit.
+
+## Activation quality gate
+
+`VulnerabilityDatabase.snapshot_quality_gate(snapshot_id)` is a read-only
+pre-activation gate. It runs SQLite `PRAGMA integrity_check`,
+`PRAGMA foreign_key_check`, verifies the staged snapshot state and compares the
+stored manifest against the current deterministic manifest for content digest,
+advisory count and affected-package count. `activate_snapshot()` now invokes
+this gate and raises `SnapshotActivationError` on any failed check; no active
+snapshot pointer or metadata is changed on failure.
