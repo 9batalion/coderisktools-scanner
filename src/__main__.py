@@ -131,6 +131,8 @@ def main():
     update_parser.add_argument("--apply", action="store_true", help="Actually switch the active pointer")
     update_parser.add_argument("--max-bytes", type=int, default=512 * 1024 * 1024, metavar="N")
     update_parser.add_argument("--timeout", type=float, default=20.0, metavar="SECONDS")
+    init_config_parser = vuln_db_actions.add_parser("init-config", help="Write the built-in bounded public source configuration")
+    init_config_parser.add_argument("--output", default="~/.config/coderisktools/vuln-db.json", metavar="FILE")
     source_status_parser = vuln_db_actions.add_parser("source-status", help="Show read-only source health metadata")
     source_status_parser.add_argument("--root", required=True, metavar="DIR")
     source_status_parser.add_argument("--active", required=True, metavar="PATH")
@@ -296,7 +298,15 @@ def main():
         )
         try:
             emit = True
-            if args.vuln_db_action == "verify":
+            if args.vuln_db_action == "init-config":
+                from .vulnerability.update_config import default_update_config
+                output = Path(args.output).expanduser()
+                if output.exists() or output.is_symlink():
+                    raise FileExistsError(f"configuration already exists: {output}")
+                output.parent.mkdir(parents=True, exist_ok=True)
+                write_private_atomic(output, (json.dumps(default_update_config(), indent=2, sort_keys=True) + "\n").encode("utf-8"), "vulnerability update config")
+                result = {"state": "ok", "path": str(output), "sources": [item["source_id"] for item in default_update_config()["sources"]]}
+            elif args.vuln_db_action == "verify":
                 result = verify_versioned_snapshot(args.snapshot)
             elif args.vuln_db_action == "rollback":
                 if not args.apply:

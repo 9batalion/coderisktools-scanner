@@ -13,11 +13,23 @@ A database update is a separate operation:
 python -m src vuln-db update --full
 ```
 
+At the start of this update operation the updater loads its source configuration
+and fetches the declared feeds. The scanner itself never performs this startup
+fetch. To create the starter configuration explicitly:
+
+```text
+python -m src vuln-db init-config
+```
+
 The default configuration path is:
 
 ```text
 ~/.config/coderisktools/vuln-db.json
 ```
+
+The built-in starter configuration contains bounded entries for NVD, CISA KEV,
+EPSS and GitHub Advisory. It is not a claim of complete global coverage; OSV
+JSONL and provider-specific feeds require their dedicated adapter configuration.
 
 The default data root is:
 
