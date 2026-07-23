@@ -182,3 +182,7 @@ coverage is not claimed.
 V13i adds the same bounded fixture/staging boundary for Conan package
 references, including fixed-version matching and lifecycle provenance.
 Complete Conan advisory coverage is not claimed.
+
+V13j adds the same bounded fixture/staging boundary for vcpkg port names,
+including fixed-version matching and lifecycle provenance. Complete vcpkg
+advisory coverage is not claimed.
