@@ -215,3 +215,6 @@ latency acceptance thresholds. Failed gates are reported without raising.
 
 V15d adds `run_database_benchmark()` against the real
 `VulnerabilityDatabase.evaluate_component()` API using local cases only.
+
+V15e adds a larger multi-ecosystem fixture covering PyPI, npm, crates.io,
+Maven, and NuGet with golden precision/recall/F1 thresholds.

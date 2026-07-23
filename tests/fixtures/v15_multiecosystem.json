@@ -1,0 +1,25 @@
+{
+  "schema": "coderisktools.vulnerability.benchmark",
+  "version": 1,
+  "name": "public-multiecosystem-v15",
+  "records": [
+    {"id":"CVE-2026-PY","ecosystem":"PyPI","name":"alpha","fixed":"2.0.0"},
+    {"id":"CVE-2026-NPM","ecosystem":"npm","name":"bravo","fixed":"2.0.0"},
+    {"id":"CVE-2026-CR","ecosystem":"crates.io","name":"charlie","fixed":"2.0.0"},
+    {"id":"CVE-2026-MVN","ecosystem":"Maven","name":"delta","fixed":"2.0.0"},
+    {"id":"CVE-2026-NUG","ecosystem":"NuGet","name":"echo","fixed":"2.0.0"}
+  ],
+  "cases": [
+    {"case_id":"pypi-affected","ecosystem":"PyPI","name":"alpha","version":"1.0.0","expected":true},
+    {"case_id":"pypi-clean","ecosystem":"PyPI","name":"alpha","version":"2.0.0","expected":false},
+    {"case_id":"npm-affected","ecosystem":"npm","name":"bravo","version":"1.0.0","expected":true},
+    {"case_id":"npm-clean","ecosystem":"npm","name":"bravo","version":"2.0.0","expected":false},
+    {"case_id":"cargo-affected","ecosystem":"crates.io","name":"charlie","version":"1.0.0","expected":true},
+    {"case_id":"cargo-clean","ecosystem":"crates.io","name":"charlie","version":"2.0.0","expected":false},
+    {"case_id":"maven-affected","ecosystem":"Maven","name":"delta","version":"1.0.0","expected":true},
+    {"case_id":"maven-clean","ecosystem":"Maven","name":"delta","version":"2.0.0","expected":false},
+    {"case_id":"nuget-affected","ecosystem":"NuGet","name":"echo","version":"1.0.0","expected":true},
+    {"case_id":"nuget-clean","ecosystem":"NuGet","name":"echo","version":"2.0.0","expected":false}
+  ],
+  "golden": {"min_precision": 1.0, "min_recall": 1.0, "min_f1": 1.0}
+}
