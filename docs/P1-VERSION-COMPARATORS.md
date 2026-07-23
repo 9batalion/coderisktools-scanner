@@ -5,15 +5,17 @@ The vulnerability matcher now imports its current bounded version semantics from
 ```text
 src/vulnerability/versions/generic.py
 src/vulnerability/versions/pep440.py
+src/vulnerability/versions/semver.py
 ```
 
 Public functions:
 
 - `compare_bounded_version(left, right)`;
 - `compare_pep440_version(left, right)`;
+- `compare_semver_version(left, right)`;
 - `osv_events_match(version, events)`.
 
-PyPI (`pypi`) range matching now uses the stdlib-only bounded PEP 440 implementation. Other ecosystems continue to use the bounded fallback until their own comparator batch is completed.
+PyPI (`pypi`) range matching now uses the stdlib-only bounded PEP 440 implementation. npm (`npm`) range matching now uses the stdlib-only SemVer 2.0 precedence implementation. Other ecosystems continue to use the bounded fallback until their own comparator batch is completed.
 
 The implementation preserves the existing matcher behavior:
 
