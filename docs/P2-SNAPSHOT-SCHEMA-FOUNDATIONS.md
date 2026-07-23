@@ -84,3 +84,12 @@ with any manifest field is rejected.
 opens the staged SQLite database read-only, runs the database health gate and
 compares the deterministic manifest before an fsync plus atomic replacement.
 It never activates a snapshot; activation remains a separate explicit action.
+
+## Explicit retention and prune
+
+`VulnerabilityDatabase.prune_snapshots(keep_snapshot_ids, apply=False)` first
+returns a deterministic dry-run plan. Only an explicit `apply=True` deletes
+snapshot metadata outside the allowlist; active snapshots are never candidates.
+Related `source_snapshots`, `import_errors` and `quality_metrics` rows are
+removed together. This API does not infer retention from timestamps because
+the current snapshot schema has no trusted acquisition timestamp.
