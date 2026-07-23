@@ -231,3 +231,6 @@ verification.
 
 V16b adds database health and source coverage reports with deterministic source
 shares, totals, quality errors, and active snapshot status.
+
+V16c adds non-destructive rollback planning and a real air-gap disaster
+recovery test; imported recovery databases remain inactive.
