@@ -138,3 +138,6 @@ coverage.
 V12f applies the bounded staging contract to SUSE/SLES fixtures through the RPM
 ecosystem, preserving release, severity, backport, and provenance metadata.
 Full SUSE advisory-feed coverage is intentionally not claimed yet.
+
+V12g extends the same bounded staging contract to Alpine APK fixtures and
+verifies APK version revision ordering through `compare_alpine_version()`.
