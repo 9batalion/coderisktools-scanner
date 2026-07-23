@@ -162,3 +162,7 @@ advisory coverage is not claimed.
 V13d adds the same bounded fixture/staging boundary for Swift package
 identities, including fixed-version matching and lifecycle provenance.
 Complete Swift advisory coverage is not claimed.
+
+V13e adds the same bounded fixture/staging boundary for Dart/pub package names,
+including fixed-version matching and lifecycle provenance. Complete Dart
+advisory coverage is not claimed.
