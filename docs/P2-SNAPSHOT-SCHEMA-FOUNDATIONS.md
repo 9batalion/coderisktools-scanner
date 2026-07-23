@@ -75,3 +75,12 @@ backend fail closed rather than silently falling back to HMAC or an unsigned
 manifest. `verify_manifest` uses the repository's existing Ed25519 verifier,
 and `stage_signed_snapshot()` verifies the envelope before staging. Tampering
 with any manifest field is rejected.
+
+## Air-gap bundles
+
+`vulnerability.airgap` provides `export_air_gap_bundle()` and
+`import_air_gap_bundle()`. A bundle contains `manifest.json` and
+`snapshot.sqlite` in a bounded `tar.gz`. Import uses the safe archive extractor,
+opens the staged SQLite database read-only, runs the database health gate and
+compares the deterministic manifest before an fsync plus atomic replacement.
+It never activates a snapshot; activation remains a separate explicit action.
