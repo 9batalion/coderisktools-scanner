@@ -170,3 +170,7 @@ advisory coverage is not claimed.
 V13f adds the same bounded fixture/staging boundary for Elixir/Hex package
 names, including fixed-version matching and lifecycle provenance. Complete
 Elixir advisory coverage is not claimed.
+
+V13g adds the same bounded fixture/staging boundary for Haskell/Hackage package
+names, including fixed-version matching and lifecycle provenance. Complete
+Haskell advisory coverage is not claimed.
