@@ -134,3 +134,7 @@ V12e applies the same bounded staging contract to Red Hat fixtures, using the
 RPM ecosystem and preserving RHSA severity, release, backport, and source
 provenance metadata. This is not a claim of complete Red Hat advisory feed
 coverage.
+
+V12f applies the bounded staging contract to SUSE/SLES fixtures through the RPM
+ecosystem, preserving release, severity, backport, and provenance metadata.
+Full SUSE advisory-feed coverage is intentionally not claimed yet.
