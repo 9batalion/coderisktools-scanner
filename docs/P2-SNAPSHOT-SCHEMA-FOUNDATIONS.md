@@ -93,3 +93,11 @@ snapshot metadata outside the allowlist; active snapshots are never candidates.
 Related `source_snapshots`, `import_errors` and `quality_metrics` rows are
 removed together. This API does not infer retention from timestamps because
 the current snapshot schema has no trusted acquisition timestamp.
+
+## V12a Debian adapter boundary
+
+`vulnerability.sources.debian.ingest_file()` is a bounded, local-only parser
+for the versioned Debian feed fixture format. It preserves release,
+source-package, binary-package, urgency, fixed-version and backport metadata.
+It does not fetch Debian infrastructure, claim complete Security Tracker/OVAL
+coverage, or activate/import records into the vulnerability database yet.
