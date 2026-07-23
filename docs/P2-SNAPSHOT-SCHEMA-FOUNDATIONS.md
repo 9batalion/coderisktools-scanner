@@ -129,3 +129,8 @@ does not claim complete USN or Ubuntu archive coverage.
 Ubuntu fixed-version boundaries are covered by an integration test through
 `evaluate_component()`. A version below the normalized fixed revision is
 classified as affected, while the fixed revision is classified as not affected.
+
+V12e applies the same bounded staging contract to Red Hat fixtures, using the
+RPM ecosystem and preserving RHSA severity, release, backport, and source
+provenance metadata. This is not a claim of complete Red Hat advisory feed
+coverage.
