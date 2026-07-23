@@ -72,6 +72,12 @@ source digest, delegation to existing database importers, partial-error
 reporting and explicit activation. Their live feed, terms and full snapshot
 evidence remain required before `ready`.
 
+When network access is unavailable, `evaluate_feed_artifact()` provides the
+acceptance path for an externally acquired artifact from CI, cache or an
+air-gapped transfer. It verifies JSON envelope, size/record bounds and SHA-256
+without downloading or activating the artifact; this is not equivalent to live
+transport acceptance.
+
 ## Non-goals
 
 - No assertion that all advisories worldwide are covered.
