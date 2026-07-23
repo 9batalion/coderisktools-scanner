@@ -9,6 +9,7 @@ src/vulnerability/versions/semver.py
 src/vulnerability/versions/npm_ranges.py
 src/vulnerability/versions/maven.py
 src/vulnerability/versions/nuget.py
+src/vulnerability/versions/rubygems.py
 ```
 
 Public functions:
@@ -19,9 +20,10 @@ Public functions:
 - `matches_npm_range(version, expression)`;
 - `compare_maven_version(left, right)`;
 - `compare_nuget_version(left, right)`;
+- `compare_rubygems_version(left, right)`;
 - `osv_events_match(version, events)`.
 
-PyPI (`pypi`) range matching now uses the stdlib-only bounded PEP 440 implementation. npm (`npm`) version precedence uses SemVer 2.0, and `matches_npm_range` supports the bounded range subset: exact/partial/wildcard versions, `> >= < <=`, `~`, `^`, whitespace AND and `||` OR. Maven (`maven`) range matching uses the bounded ComparableVersion-style qualifier ordering for common alpha/beta/milestone/rc/snapshot/release/sp forms. NuGet (`nuget`) matching uses the bounded 2–4 segment SemVer-compatible ordering with prerelease and ignored build metadata. Other ecosystems continue to use the bounded fallback until their own comparator batch is completed.
+PyPI (`pypi`) range matching now uses the stdlib-only bounded PEP 440 implementation. npm (`npm`) version precedence uses SemVer 2.0, and `matches_npm_range` supports the bounded range subset: exact/partial/wildcard versions, `> >= < <=`, `~`, `^`, whitespace AND and `||` OR. Maven (`maven`) range matching uses the bounded ComparableVersion-style qualifier ordering for common alpha/beta/milestone/rc/snapshot/release/sp forms. NuGet (`nuget`) matching uses the bounded 2–4 segment SemVer-compatible ordering with prerelease and ignored build metadata. RubyGems (`rubygems`) matching uses bounded numeric and lexical segment ordering with stable release padding. Other ecosystems continue to use the bounded fallback until their own comparator batch is completed.
 
 The implementation preserves the existing matcher behavior:
 
@@ -35,7 +37,7 @@ This is an explicit boundary, not a claim of complete ecosystem version support.
 - full npm range grammar and npm-specific edge cases;
 - full Maven ComparableVersion edge cases;
 - full NuGet client-specific edge cases;
-- RubyGems comparison;
+- full RubyGems Gem::Version edge cases;
 - Composer comparison;
 - Go module versions;
 - Debian epochs/revisions;
