@@ -1,8 +1,8 @@
 # CodeRiskTools Secret Scanner Engine
 
-**Local-first, offline-by-default scanner for secret-like values, risky configuration changes and opt-in local vulnerability analysis.**
+**Local-first scanner for secret-like values, risky configuration changes and opt-in local vulnerability analysis.**
 
-CodeRiskTools Secret Scanner Engine is MIT licensed and has no runtime dependencies. It scans diffs, staged changes, local directories and bounded Git history without executing target-project code. Vulnerability analysis is a separate, explicitly selected local SQLite/SBOM path.
+CodeRiskTools Secret Scanner Engine is MIT licensed and has no runtime dependencies. It scans diffs, staged changes, local directories and bounded Git history without executing target-project code. Vulnerability analysis uses a local SQLite/SBOM path; the pinned signed global database can be installed automatically on its first use.
 
 > Evidence, not guarantees. A clean result is not proof that code is secure. Findings can contain false positives and false negatives. This tool is not a security audit, certification, legal opinion or compliance guarantee.
 
@@ -22,7 +22,7 @@ CodeRiskTools Secret Scanner Engine is MIT licensed and has no runtime dependenc
 - local SQLite vulnerability snapshot scanning and reports;
 - snapshot reconciliation, verification, status, update, rollback, retention pruning and provenance fetch commands;
 - OpenVEX/CycloneDX VEX annotations, suppression and vulnerability baselines;
-- no telemetry, no target-project execution and no network during ordinary scans.
+- no telemetry or target-project execution; secret/config scans and vulnerability scans after database bootstrap perform no network I/O.
 
 The stable detector count excludes provisional candidates. See the detector backlog and source records in [`docs/STAGE6_SECRET_DETECTOR_BACKLOG.md`](docs/STAGE6_SECRET_DETECTOR_BACKLOG.md) and [`docs/STAGE8_CI_CD_BATCH1_SOURCES.md`](docs/STAGE8_CI_CD_BATCH1_SOURCES.md).
 
@@ -34,7 +34,7 @@ This repository contains only the public Scanner flagship. It does not contain o
 
 - Python 3.10–3.13;
 - Git is required for `--staged` and `--git-history` modes;
-- ordinary scanning does not require network access or third-party runtime packages.
+- secret/config scanning does not require network access or third-party runtime packages; first-use default vulnerability scanning downloads a pinned signed database ZIP.
 
 From a checkout:
 
@@ -247,12 +247,11 @@ The sidecar schema is `coderisktools.vulnerability.external-evidence-provenance`
 
 ## 4. Local vulnerability scanning
 
-The vulnerability path requires an explicitly supplied local SQLite database with an active snapshot:
+The vulnerability path uses a local SQLite database with an active snapshot. If `--database` is omitted and the default database is absent, the first run downloads, verifies, extracts and activates the pinned signed global OSV snapshot:
 
 ```bash
 secret-scanner vuln scan \
   --root . \
-  --database vulnerability.sqlite \
   --format json
 ```
 
@@ -272,14 +271,15 @@ secret-scanner vuln scan \
 Options:
 
 - `--root DIR` — local repository root;
-- `--database FILE` — local regular SQLite database;
+- `--database FILE` — local regular SQLite database; defaults to `~/.local/share/coderisktools/vuln-db/global-osv.sqlite`;
+- `--no-bootstrap` — reject a missing default database instead of downloading it;
 - `--format {json,sarif,markdown,html,csv}`;
 - `--output FILE` — write the report atomically;
 - `--baseline FILE` — JSON format emits new/existing/resolved delta;
 - `--vex FILE` — local OpenVEX or CycloneDX VEX;
 - `--suppressions FILE` — strict local suppression document.
 
-Matching is offline, active-snapshot-only and read-only. The database path cannot be a symlink, URL or non-regular file.
+After first-use bootstrap, matching is offline, active-snapshot-only and read-only. The database path cannot be a symlink, URL or non-regular file. Manual installation is available as `secret-scanner vuln-db bootstrap-global`.
 
 ## 5. OSV feed import
 
@@ -396,7 +396,7 @@ secret-scanner vuln-db prune \
 
 ### Explicit allowlisted HTTPS fetch
 
-This is the only `vuln-db` operation that performs network I/O, and it requires an explicit allowlist:
+This explicit generic fetch operation requires an explicit allowlist. The separate `bootstrap-global` operation performs only its built-in, pinned, signature-verified GitHub Release download:
 
 ```bash
 secret-scanner vuln-db fetch \
