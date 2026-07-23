@@ -12,6 +12,9 @@ src/vulnerability/versions/nuget.py
 src/vulnerability/versions/rubygems.py
 src/vulnerability/versions/composer.py
 src/vulnerability/versions/go.py
+src/vulnerability/versions/debian.py
+src/vulnerability/versions/rpm.py
+src/vulnerability/versions/alpine.py
 ```
 
 Public functions:
@@ -25,9 +28,12 @@ Public functions:
 - `compare_rubygems_version(left, right)`;
 - `compare_composer_version(left, right)`;
 - `compare_go_version(left, right)`;
+- `compare_debian_version(left, right)`;
+- `compare_rpm_version(left, right)`;
+- `compare_alpine_version(left, right)`;
 - `osv_events_match(version, events)`.
 
-PyPI (`pypi`) range matching now uses the stdlib-only bounded PEP 440 implementation. npm (`npm`) version precedence uses SemVer 2.0, and `matches_npm_range` supports the bounded range subset: exact/partial/wildcard versions, `> >= < <=`, `~`, `^`, whitespace AND and `||` OR. Maven (`maven`) range matching uses the bounded ComparableVersion-style qualifier ordering for common alpha/beta/milestone/rc/snapshot/release/sp forms. NuGet (`nuget`) matching uses the bounded 2–4 segment SemVer-compatible ordering with prerelease and ignored build metadata. RubyGems (`rubygems`) matching uses bounded numeric and lexical segment ordering with stable release padding. Composer/Packagist (`composer`/`packagist`) matching uses bounded dev/alpha/beta/rc/stable/pl ordering. Go (`go`/`golang`) matching uses bounded Go SemVer and pseudo-version-shaped prerelease ordering with optional `v` prefix and ignored build metadata. Other ecosystems continue to use the bounded fallback until their own comparator batch is completed.
+PyPI (`pypi`) range matching now uses the stdlib-only bounded PEP 440 implementation. npm (`npm`) version precedence uses SemVer 2.0, and `matches_npm_range` supports the bounded range subset: exact/partial/wildcard versions, `> >= < <=`, `~`, `^`, whitespace AND and `||` OR. Maven (`maven`) range matching uses the bounded ComparableVersion-style qualifier ordering for common alpha/beta/milestone/rc/snapshot/release/sp forms. NuGet (`nuget`) matching uses the bounded 2–4 segment SemVer-compatible ordering with prerelease and ignored build metadata. RubyGems (`rubygems`) matching uses bounded numeric and lexical segment ordering with stable release padding. Composer/Packagist (`composer`/`packagist`) matching uses bounded dev/alpha/beta/rc/stable/pl ordering. Go (`go`/`golang`) matching uses bounded Go SemVer and pseudo-version-shaped prerelease ordering with optional `v` prefix and ignored build metadata. Debian/Ubuntu uses bounded epoch and tilde-aware ordering; RPM-family aliases use bounded EVR-like ordering; Alpine uses bounded epoch/version/revision ordering. Other ecosystems continue to use the bounded fallback until their own comparator batch is completed.
 
 The implementation preserves the existing matcher behavior:
 
@@ -44,8 +50,8 @@ This is an explicit boundary, not a claim of complete ecosystem version support.
 - full RubyGems Gem::Version edge cases;
 - full Composer/Packagist constraint grammar and edge cases;
 - full Go pseudo-version and module path edge cases;
-- Debian epochs/revisions;
-- RPM EVR;
-- Alpine package revisions.
+- full Debian dpkg edge cases;
+- full RPM EVR edge cases;
+- full Alpine apk edge cases.
 
 Each ecosystem comparator must be added as a separate bounded RED/GREEN batch with fixtures, differential checks where an authoritative local implementation is available, and no silent fallback from a known ecosystem to incompatible semantics.
