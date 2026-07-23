@@ -203,3 +203,6 @@ references, provenance, remediation shape, and provider extensions.
 
 V14e integrates this gate into CSAF staging before import or snapshot write.
 Invalid documents return `rejected` and are not activated.
+
+V15a adds offline benchmark foundations with deterministic precision, recall,
+F1 and latency percentile metrics. Public fixture corpus remains open.
