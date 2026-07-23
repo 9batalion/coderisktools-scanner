@@ -158,3 +158,7 @@ advisory coverage is not claimed.
 V13c adds the same bounded fixture/staging boundary for RubyGems names,
 including fixed-version matching and lifecycle provenance. Complete RubyGems
 advisory coverage is not claimed.
+
+V13d adds the same bounded fixture/staging boundary for Swift package
+identities, including fixed-version matching and lifecycle provenance.
+Complete Swift advisory coverage is not claimed.
