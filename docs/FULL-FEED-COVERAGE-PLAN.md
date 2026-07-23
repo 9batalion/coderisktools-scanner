@@ -67,6 +67,11 @@ strict CVE parsing, exact advisory correlation, partial-record errors and
 explicit activation. Live NVD feed acceptance and terms verification remain
 required before `ready`.
 
+KEV, EPSS and GitHub Advisory now have bounded local feed orchestration with
+source digest, delegation to existing database importers, partial-error
+reporting and explicit activation. Their live feed, terms and full snapshot
+evidence remain required before `ready`.
+
 ## Non-goals
 
 - No assertion that all advisories worldwide are covered.
