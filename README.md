@@ -555,6 +555,7 @@ Contributions must use synthetic fixtures only. Never submit live credentials, p
 
 ## Documentation map
 
+- [`docs/P1-VERSION-COMPARATORS.md`](docs/P1-VERSION-COMPARATORS.md) — bounded comparator contract and explicit unsupported ecosystem semantics;
 - [`docs/P0-CONSOLIDATION-AUDIT-V0-V11.md`](docs/P0-CONSOLIDATION-AUDIT-V0-V11.md) — executable P0 evidence, reproducibility result and remaining gaps;
 - [`docs/VULNERABILITY-DATABASE-MASTER-TODO-HERMES.md`](docs/VULNERABILITY-DATABASE-MASTER-TODO-HERMES.md) — staged vulnerability roadmap;
 - [`docs/MASTER-TODO-GAPS-AUDIT.md`](docs/MASTER-TODO-GAPS-AUDIT.md) — confirmed implementation gaps;
