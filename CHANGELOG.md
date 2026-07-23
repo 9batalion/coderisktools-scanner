@@ -13,11 +13,14 @@ All notable changes to `coderisktools-scanner` are documented here.
 - added bounded public feed adapters and explicit provenance/quality reports without claiming full-feed coverage;
 - added a real partial `seed` snapshot with 187 advisories, 378 affected-package rows and seven represented OSV ecosystems;
 - added signed, pinned seed bootstrap and a separate explicit `--profile seed --apply` activation command.
+- added a streamed, signed global OSV SQLite ZIP bootstrap that installs and activates the pinned database on first default vulnerability scan;
+- added `vuln-db bootstrap-global` and `vuln scan --no-bootstrap` controls.
 
 ### Fixed
 
 - directory self-scan now skips SQLite database artifacts, preventing the real seed from tripping the scanner byte cap in CI;
 - bootstrap now verifies the detached Ed25519 manifest envelope, exact database SHA-256, SQLite integrity, foreign keys, snapshot identity and manifest counts before atomic installation.
+- global ZIP bootstrap verifies the compressed asset digest, one-member extraction contract, expanded database digest, compact provenance manifest and staged snapshot before local activation.
 
 ### Seed boundary
 

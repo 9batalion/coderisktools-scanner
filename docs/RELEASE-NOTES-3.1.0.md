@@ -1,6 +1,6 @@
 # CodeRiskTools Scanner 3.1.0 — release notes
 
-CodeRiskTools Scanner 3.1.0 adds a controlled, local-first vulnerability database workflow and publishes a real, verified **partial seed** snapshot for bootstrap and integration testing.
+CodeRiskTools Scanner 3.1.0 adds a controlled, local-first vulnerability database workflow, a small verified **partial seed**, and a pinned signed global OSV SQLite ZIP for first-use installation.
 
 ## What is included
 
@@ -12,6 +12,9 @@ CodeRiskTools Scanner 3.1.0 adds a controlled, local-first vulnerability databas
 - signed pinned bootstrap that installs seed as staged only;
 - explicit `vuln-db activate --profile seed --apply` activation;
 - real lodash `4.17.15` end-to-end matching evidence with stable fingerprints.
+- streamed first-use global database bootstrap with ZIP/database SHA-256, Ed25519, SQLite integrity, foreign-key and compact-manifest verification;
+- automatic installation to `~/.local/share/coderisktools/vuln-db/global-osv.sqlite` when the default database is missing;
+- `vuln-db bootstrap-global` for an explicit installation and `vuln scan --no-bootstrap` to disable automatic network bootstrap.
 
 ## Release assets
 
@@ -21,6 +24,7 @@ CodeRiskTools Scanner 3.1.0 adds a controlled, local-first vulnerability databas
 - SHA-256 sidecar;
 - Ed25519 signed manifest envelope (`.sig` JSON);
 - public release keyring.
+- global OSV single-SQLite ZIP, detached manifest and Ed25519 signed manifest envelope.
 
 ## Verified seed facts
 
@@ -37,6 +41,6 @@ CodeRiskTools Scanner 3.1.0 adds a controlled, local-first vulnerability databas
 
 ## Important limitations
 
-This seed is not Core, Full, Production or Complete. It retains 129 exact-alias conflicts rather than heuristically merging advisories. A zero-finding seed scan is not proof that a project has no vulnerabilities. Updates remain user-triggered; ordinary scanner runs do not download feeds.
+The seed is not Core, Full, Production or Complete. The global snapshot is labeled `full-osv-source`, not complete Core coverage or proof that an unmatched component is safe. It retains exact-alias conflicts rather than heuristically merging advisories. A zero-finding scan is not proof that a project has no vulnerabilities. Secret/config scans remain offline; the first default vulnerability scan downloads only the pinned signed release asset, and subsequent matching is local.
 
 A clean scanner result is not proof that code is secure. This release is not a security audit, certification, compliance guarantee or legal opinion.

@@ -13,6 +13,8 @@ from .baseline import write_baseline
 from .safeio import write_private_atomic
 from . import __version__
 
+_DEFAULT_GLOBAL_DATABASE = "~/.local/share/coderisktools/vuln-db/global-osv.sqlite"
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -90,7 +92,8 @@ def main():
     inventory_parser.add_argument("--provenance", metavar="FILE", help="Verified provenance sidecar for external evidence")
     scan_parser = vuln_actions.add_parser("scan", help="Scan a local repository against an active local vulnerability database")
     scan_parser.add_argument("--root", required=True, metavar="DIR")
-    scan_parser.add_argument("--database", required=True, metavar="FILE")
+    scan_parser.add_argument("--database", default=_DEFAULT_GLOBAL_DATABASE, metavar="FILE", help="Local SQLite database; the pinned global snapshot is installed on first use by default")
+    scan_parser.add_argument("--no-bootstrap", action="store_true", help="Do not download the pinned global database when the default path is missing")
     scan_parser.add_argument("--format", choices=["json", "sarif", "markdown", "html", "csv"], default="json")
     scan_parser.add_argument("--output", metavar="FILE")
     scan_parser.add_argument("--baseline", metavar="FILE", help="Strict local vulnerability baseline; JSON format emits new/existing/resolved delta")
@@ -150,6 +153,9 @@ def main():
     bootstrap_seed_parser.add_argument("--signature-url", required=True, metavar="URL")
     bootstrap_seed_parser.add_argument("--destination", required=True, metavar="FILE")
     bootstrap_seed_parser.add_argument("--keyring", required=True, metavar="FILE")
+    bootstrap_global_parser = vuln_db_actions.add_parser("bootstrap-global", help="Install and activate the pinned signed global OSV SQLite ZIP")
+    bootstrap_global_parser.add_argument("--destination", default=_DEFAULT_GLOBAL_DATABASE, metavar="FILE")
+    bootstrap_global_parser.add_argument("--no-activate", action="store_true", help="Install as staged without activating it")
     explain_parser = vuln_db_actions.add_parser("explain", help="Explain one persisted vulnerability match")
     explain_parser.add_argument("--database", required=True, metavar="FILE")
     explain_parser.add_argument("--fingerprint", required=True, metavar="FINGERPRINT")
@@ -245,10 +251,21 @@ def main():
                 build_markdown_vulnerability_report,
                 build_sarif_vulnerability_report,
             )
-            database_path = Path(args.database)
-            if database_path.is_symlink() or not database_path.is_file() or "\n" in args.database or "://" in args.database:
+            database_path = Path(args.database).expanduser()
+            if not database_path.exists() and args.database == _DEFAULT_GLOBAL_DATABASE and not args.no_bootstrap:
+                from .vulnerability.global_bootstrap import DEFAULT_GLOBAL_OSV_RELEASE, bootstrap_global_osv_asset
+                bootstrap_global_osv_asset(
+                    DEFAULT_GLOBAL_OSV_RELEASE["asset_url"],
+                    DEFAULT_GLOBAL_OSV_RELEASE["manifest_url"],
+                    DEFAULT_GLOBAL_OSV_RELEASE["signature_url"],
+                    database_path,
+                    trusted_keys={DEFAULT_GLOBAL_OSV_RELEASE["key_id"]: DEFAULT_GLOBAL_OSV_RELEASE["public_key"]},
+                    activate=True,
+                )
+            database_argument = str(database_path)
+            if database_path.is_symlink() or not database_path.is_file() or "\n" in database_argument or "://" in database_argument:
                 raise ValueError("scan requires a local regular SQLite database path")
-            database = VulnerabilityDatabase.read_only(args.database)
+            database = VulnerabilityDatabase.read_only(database_argument)
             try:
                 findings = scan_inventory(args.root, database)
                 if args.vex or args.suppressions:
@@ -326,6 +343,16 @@ def main():
                     args.signature_url,
                     args.destination,
                     trusted_keys=load_trusted_keyring(args.keyring),
+                )
+            elif args.vuln_db_action == "bootstrap-global":
+                from .vulnerability.global_bootstrap import DEFAULT_GLOBAL_OSV_RELEASE, bootstrap_global_osv_asset
+                result = bootstrap_global_osv_asset(
+                    DEFAULT_GLOBAL_OSV_RELEASE["asset_url"],
+                    DEFAULT_GLOBAL_OSV_RELEASE["manifest_url"],
+                    DEFAULT_GLOBAL_OSV_RELEASE["signature_url"],
+                    Path(args.destination).expanduser(),
+                    trusted_keys={DEFAULT_GLOBAL_OSV_RELEASE["key_id"]: DEFAULT_GLOBAL_OSV_RELEASE["public_key"]},
+                    activate=not args.no_activate,
                 )
             elif args.vuln_db_action == "init-config":
                 from .vulnerability.update_config import default_update_config
