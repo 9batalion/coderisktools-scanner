@@ -209,3 +209,6 @@ F1 and latency percentile metrics. Public fixture corpus remains open.
 
 V15b adds a versioned public benchmark fixture with golden results and a
 bounded schema-validating loader.
+
+V15c adds an offline benchmark runner with precision, recall, F1, and p95
+latency acceptance thresholds. Failed gates are reported without raising.
