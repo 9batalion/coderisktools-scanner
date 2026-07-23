@@ -4,12 +4,16 @@ The vulnerability matcher now imports its current bounded version semantics from
 
 ```text
 src/vulnerability/versions/generic.py
+src/vulnerability/versions/pep440.py
 ```
 
 Public functions:
 
 - `compare_bounded_version(left, right)`;
+- `compare_pep440_version(left, right)`;
 - `osv_events_match(version, events)`.
+
+PyPI (`pypi`) range matching now uses the stdlib-only bounded PEP 440 implementation. Other ecosystems continue to use the bounded fallback until their own comparator batch is completed.
 
 The implementation preserves the existing matcher behavior:
 
@@ -18,10 +22,9 @@ The implementation preserves the existing matcher behavior:
 - compares non-numeric tokens case-insensitively;
 - evaluates the bounded OSV `introduced`, `fixed` and `last_affected` event subset.
 
-This is an explicit boundary, not a claim of complete ecosystem version support. It is not yet a standards-complete implementation of:
+This is an explicit boundary, not a claim of complete ecosystem version support. The PEP 440 implementation covers the supported public/pre/post/dev/epoch/local forms needed by the current PyPI matcher, but it remains independently tested bounded code rather than an external standards library. It is not an implementation of:
 
 - SemVer prerelease/build precedence;
-- PEP 440;
 - npm ranges;
 - Maven comparison;
 - NuGet comparison;
