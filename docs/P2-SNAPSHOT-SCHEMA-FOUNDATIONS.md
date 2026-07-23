@@ -200,3 +200,6 @@ outside the verified subset.
 
 V14d adds `csaf_quality_gate()` for bounded validation of identifiers, product
 references, provenance, remediation shape, and provider extensions.
+
+V14e integrates this gate into CSAF staging before import or snapshot write.
+Invalid documents return `rejected` and are not activated.
