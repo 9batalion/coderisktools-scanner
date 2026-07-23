@@ -108,3 +108,10 @@ stages a snapshot without implicit activation, preserves Debian backport data
 in `database_specific`, and writes `source_snapshots` plus `quality_metrics`.
 This remains fixture-format support, not a claim of complete Debian feed
 coverage.
+
+Debian fixed-only advisories are normalized as an explicit OSV range with
+`introduced: "0"` followed by the Debian fixed revision. This makes the
+backport boundary testable: a revision below `3.0.11-1~deb12u2` is affected,
+while that revision and later revisions are not affected under the Debian
+comparator. This is bounded matching behavior, not complete Debian archive
+coverage.
