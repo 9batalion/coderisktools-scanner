@@ -212,3 +212,6 @@ bounded schema-validating loader.
 
 V15c adds an offline benchmark runner with precision, recall, F1, and p95
 latency acceptance thresholds. Failed gates are reported without raising.
+
+V15d adds `run_database_benchmark()` against the real
+`VulnerabilityDatabase.evaluate_component()` API using local cases only.
