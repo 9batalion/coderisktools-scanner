@@ -190,3 +190,6 @@ advisory coverage is not claimed.
 V14a adds a bounded generic CSAF 2.0 staging boundary with product-tree/PURL
 mapping and `known_affected` preservation. Provider registry, remediations,
 health and complete CSAF coverage are not claimed.
+
+V14b adds a deterministic CSAF provider registry and health-state contract.
+Registry operations are local and do not perform implicit network calls.
