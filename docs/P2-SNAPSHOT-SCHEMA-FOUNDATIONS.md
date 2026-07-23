@@ -226,6 +226,9 @@ V15 quality suites add deterministic precision/recall partitions, explicit
 false-positive/false-negative case IDs, and regression gates for newly
 introduced FP/FN cases.
 
+V15 memory adds a bounded `tracemalloc` peak-memory benchmark with an explicit
+acceptance limit; it is not a cross-platform absolute memory guarantee.
+
 V15g adds a final benchmark report combining ecosystem status, confusion
 matrix quality metrics, and aggregated performance.
 
