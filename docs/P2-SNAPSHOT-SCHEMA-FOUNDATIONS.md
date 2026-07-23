@@ -141,3 +141,8 @@ Full SUSE advisory-feed coverage is intentionally not claimed yet.
 
 V12g extends the same bounded staging contract to Alpine APK fixtures and
 verifies APK version revision ordering through `compare_alpine_version()`.
+
+V12h adds a cross-distro bounded backport contract test covering Debian,
+Ubuntu, Red Hat, SUSE, and Alpine. It verifies preservation of backport flags,
+fixed versions, and provenance digests without claiming complete real-feed
+backport coverage.
