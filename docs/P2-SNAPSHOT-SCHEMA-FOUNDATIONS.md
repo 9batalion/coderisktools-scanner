@@ -150,3 +150,7 @@ backport coverage.
 V13a adds a bounded Maven fixture/staging boundary with Maven coordinate
 validation, fixed-version range matching, source provenance, and lifecycle
 quality metadata. It does not claim complete Maven advisory coverage.
+
+V13b adds the same bounded fixture/staging boundary for NuGet package IDs,
+including fixed-version matching and lifecycle provenance. Complete NuGet
+advisory coverage is not claimed.
