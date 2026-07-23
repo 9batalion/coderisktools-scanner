@@ -186,3 +186,7 @@ Complete Conan advisory coverage is not claimed.
 V13j adds the same bounded fixture/staging boundary for vcpkg port names,
 including fixed-version matching and lifecycle provenance. Complete vcpkg
 advisory coverage is not claimed.
+
+V14a adds a bounded generic CSAF 2.0 staging boundary with product-tree/PURL
+mapping and `known_affected` preservation. Provider registry, remediations,
+health and complete CSAF coverage are not claimed.
