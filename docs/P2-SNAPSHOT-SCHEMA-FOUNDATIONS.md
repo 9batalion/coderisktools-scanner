@@ -64,3 +64,14 @@ stored manifest against the current deterministic manifest for content digest,
 advisory count and affected-package count. `activate_snapshot()` now invokes
 this gate and raises `SnapshotActivationError` on any failed check; no active
 snapshot pointer or metadata is changed on failure.
+
+## Signed snapshot manifests
+
+`vulnerability.manifest_signing` defines the canonical Ed25519 envelope
+`coderisktools.vulnerability.signed-manifest` version `1`. The signed payload
+is deterministic JSON (`sort_keys`, compact separators, UTF-8). `sign_manifest`
+uses the optional `cryptography` backend; installations without that optional
+backend fail closed rather than silently falling back to HMAC or an unsigned
+manifest. `verify_manifest` uses the repository's existing Ed25519 verifier,
+and `stage_signed_snapshot()` verifies the envelope before staging. Tampering
+with any manifest field is rejected.
