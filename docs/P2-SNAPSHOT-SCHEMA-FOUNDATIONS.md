@@ -228,3 +228,6 @@ matrix quality metrics, and aggregated performance.
 V16a adds a production snapshot readiness gate covering build identity,
 digests, reproducibility, licenses, attributions, signature, and air-gap
 verification.
+
+V16b adds database health and source coverage reports with deterministic source
+shares, totals, quality errors, and active snapshot status.
