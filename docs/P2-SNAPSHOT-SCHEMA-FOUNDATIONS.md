@@ -21,3 +21,13 @@ It returns metadata and a SHA-256 digest rather than payload bytes. Existing
 `fetch_json_artifact()` remains unchanged for callers that require the legacy
 in-memory contract. Archive decompression and post-decompression limits remain
 separate tasks.
+
+## Safe archive extraction
+
+`extract_archive_to_directory()` supports bounded ZIP, tar-family and single
+gzip payload extraction. It rejects absolute/parent-traversing member paths,
+ZIP symlinks, tar symlinks/hardlinks/special files, excessive member counts,
+per-member decompressed bytes and total decompressed bytes. Extraction occurs
+in a private temporary directory and the destination directory is atomically
+published only after all members succeed. Existing destinations are refused;
+the function never merges untrusted archive content into an existing tree.
