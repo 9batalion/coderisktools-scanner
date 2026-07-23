@@ -55,11 +55,12 @@ rebuild determinism and rollback path pass.
 9. Verify rollback and air-gap export/import.
 10. Mark the feed `ready` only when all evidence is stored.
 
-## Current status
-
-`src/vulnerability/feed_catalog.py` is metadata-only. It deliberately reports
-all sources as `bounded` or `contract-only`; no source is `ready` yet. The
-catalog never downloads or activates a feed.
+The OSV adapter now supports a separate staging operation: an allowlisted HTTPS
+URL is streamed to an atomically replaced file and then passed to the existing
+bounded OSV importer. Activation remains explicit (`activate=False` by default),
+and the adapter reports the downloaded payload digest. Live feed acceptance,
+license verification and a verified full snapshot are still required before
+OSV can become `ready`.
 
 ## Non-goals
 
