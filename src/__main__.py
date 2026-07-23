@@ -120,13 +120,17 @@ def main():
     rollback_parser.add_argument("--active", required=True, metavar="PATH")
     rollback_parser.add_argument("--target", required=True, metavar="DIR")
     rollback_parser.add_argument("--apply", action="store_true", help="Actually switch the active pointer")
-    update_parser = vuln_db_actions.add_parser("update", help="Stage a local feed and optionally activate it")
-    update_parser.add_argument("--input", required=True, metavar="FILE")
-    update_parser.add_argument("--root", required=True, metavar="DIR")
-    update_parser.add_argument("--source-id", required=True, metavar="ID")
-    update_parser.add_argument("--snapshot-id", required=True, metavar="ID")
+    update_parser = vuln_db_actions.add_parser("update", help="Build a new database snapshot from configured sources or stage one local feed")
+    update_parser.add_argument("--full", action="store_true", help="Fetch and import all configured sources in an isolated staging pipeline")
+    update_parser.add_argument("--config", metavar="FILE", default="~/.config/coderisktools/vuln-db.json", help="Full-update source configuration JSON")
+    update_parser.add_argument("--input", metavar="FILE")
+    update_parser.add_argument("--root", default="~/.local/share/coderisktools/vuln-db", metavar="DIR")
+    update_parser.add_argument("--source-id", metavar="ID")
+    update_parser.add_argument("--snapshot-id", metavar="ID")
     update_parser.add_argument("--active", metavar="PATH")
     update_parser.add_argument("--apply", action="store_true", help="Actually switch the active pointer")
+    update_parser.add_argument("--max-bytes", type=int, default=512 * 1024 * 1024, metavar="N")
+    update_parser.add_argument("--timeout", type=float, default=20.0, metavar="SECONDS")
     source_status_parser = vuln_db_actions.add_parser("source-status", help="Show read-only source health metadata")
     source_status_parser.add_argument("--root", required=True, metavar="DIR")
     source_status_parser.add_argument("--active", required=True, metavar="PATH")
@@ -286,6 +290,7 @@ def main():
             load_fetch_conditions,
             persist_downloaded_artifact,
             prune_versioned_snapshots,
+            run_full_update,
             stage_offline_update,
             verify_versioned_snapshot,
         )
@@ -299,14 +304,28 @@ def main():
                 from .vulnerability.updater import rollback_versioned_snapshot
                 result = rollback_versioned_snapshot(args.active, args.target)
             elif args.vuln_db_action == "update":
-                result = stage_offline_update(
-                    args.input,
-                    args.root,
-                    args.source_id,
-                    args.snapshot_id,
-                    args.active,
-                    apply=args.apply,
-                )
+                if args.full:
+                    root = Path(args.root).expanduser()
+                    active = Path(args.active).expanduser() if args.active else root / "active"
+                    result = run_full_update(
+                        Path(args.config).expanduser(),
+                        root,
+                        active,
+                        apply=args.apply,
+                        max_bytes=args.max_bytes,
+                        timeout=args.timeout,
+                    )
+                else:
+                    if not args.input or not args.source_id or not args.snapshot_id:
+                        raise ValueError("local update requires --input, --source-id and --snapshot-id; use --full for configured sources")
+                    result = stage_offline_update(
+                        args.input,
+                        Path(args.root).expanduser(),
+                        args.source_id,
+                        args.snapshot_id,
+                        Path(args.active).expanduser() if args.active else None,
+                        apply=args.apply,
+                    )
             elif args.vuln_db_action == "source-status":
                 result = build_source_status_report(args.root, args.active)
             elif args.vuln_db_action == "database-info":
